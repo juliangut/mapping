@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <parameterOne>
+        <subParameterOne>valueOne</subParameterOne>
+    </parameterOne>
+    <parameterTwo>valueTwo</parameterTwo>
+</root>

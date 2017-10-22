@@ -1,0 +1,114 @@
+{
+  "name": "juliangut/mapping",
+  "description": "Base for mapping support with Doctrine annotations",
+  "keywords": [
+    "doctrine",
+    "annotations",
+    "mapping",
+    "php",
+    "json",
+    "yaml",
+    "xml"
+  ],
+  "homepage": "https://github.com/juliangut/mapping",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Julián Gutiérrez",
+      "email": "juliangut@gmail.com",
+      "homepage": "http://juliangut.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/juliangut/mapping",
+    "issues": "https://github.com/juliangut/mapping/issues"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.0",
+    "symfony/polyfill-php71": "^1.0"
+  },
+  "require-dev": {
+    "brainmaestro/composer-git-hooks": "^2.1",
+    "doctrine/annotations": "^1.4",
+    "editorconfig-checker/editorconfig-checker": "^7.0",
+    "friendsofphp/php-cs-fixer": "^2.0",
+    "humbug/humbug": "~1.0@dev",
+    "phpmd/phpmd": "^2.0",
+    "phpmetrics/phpmetrics": "^2.0",
+    "phpstan/phpstan": "~0.8",
+    "phpunit/phpunit": "^5.7|^6.0",
+    "sebastian/phpcpd": "^2.0",
+    "squizlabs/php_codesniffer": "^2.0",
+    "symfony/yaml": "^3.0"
+  },
+  "suggest": {
+    "doctrine/annotations": "In order to load mappings from class annotations",
+    "symfony/yaml": "In order to load mappings from YAML files"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jgut\\Mapping\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jgut\\Mapping\\Tests\\": "tests/Mapping/"
+    }
+  },
+  "bin": [
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "scripts": {
+    "cghooks": "cghooks",
+    "post-install-cmd": "cghooks add --ignore-lock",
+    "post-update-cmd": "cghooks update",
+    "php-lint": "php -l src && php -l tests",
+    "editorconfig-lint": "editorconfig-checker src/* tests/*",
+    "editorconfig-fix": "editorconfig-checker --auto-fix src/* tests/*",
+    "phpcs": "phpcs --standard=PSR2 src tests",
+    "phpcs-lint": "php-cs-fixer fix --dry-run --verbose",
+    "phpcs-fix": "php-cs-fixer fix --verbose",
+    "phpcpd": "phpcpd src",
+    "phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
+    "phpmetrics-report": "phpmetrics --report-html=build/metrics/index.html --offline src",
+    "phpstan": "phpstan analyse --level 7 src",
+    "phpunit": "phpunit",
+    "phpunit-coverage": "phpunit --coverage-html build/coverage",
+    "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
+    "humbug": "humbug",
+    "qa": [
+      "@php-lint",
+      "@editorconfig-lint",
+      "@phpcs",
+      "@phpcs-lint",
+      "@phpcpd",
+      "@phpmd",
+      "@phpstan"
+    ],
+    "reports": [
+      "@phpmetrics-report",
+      "@phpunit-coverage"
+    ],
+    "fix": [
+      "@editorconfig-fix",
+      "@phpcs-fix"
+    ],
+    "security": "composer outdated",
+    "test": [
+      "@php-lint",
+      "@phpunit",
+      "@humbug"
+    ]
+  },
+  "extra": {
+    "hooks": {
+      "pre-commit": "composer qa && composer phpunit"
+    }
+  }
+}

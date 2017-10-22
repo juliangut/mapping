@@ -1,0 +1,48 @@
+<?php
+
+/*
+ * mapping (https://github.com/juliangut/mapping).
+ * Mapping parsing base library.
+ *
+ * @license BSD-3-Clause
+ * @link https://github.com/juliangut/mapping
+ * @author Julián Gutiérrez <juliangut@gmail.com>
+ */
+
+declare(strict_types=1);
+
+namespace Jgut\Mapping\Tests\Annotation;
+
+use Jgut\Mapping\Tests\Stubs\AnnotationStub;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Abstract annotation tests.
+ */
+class AbstractAnnotationTest extends TestCase
+{
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Parameters must be an iterable
+     */
+    public function testInvalidParameters()
+    {
+        new AnnotationStub('invalid');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The following annotation parameters are not recognized: unknown
+     */
+    public function testUnknownParameter()
+    {
+        new AnnotationStub(['unknown' => '']);
+    }
+
+    public function testParameters()
+    {
+        $annotation = new AnnotationStub(['known' => 'Text']);
+
+        self::assertEquals('Text', $annotation->getKnown());
+    }
+}
