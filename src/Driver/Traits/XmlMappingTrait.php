@@ -94,7 +94,7 @@ trait XmlMappingTrait
         }
 
         if (self::$boolValues === null) {
-            self::$boolValues = array_merge(static::$truthlyValues, static::$falsyValues);
+            self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
         }
 
         return $this->parseSimpleXML($mappingData);
@@ -105,7 +105,7 @@ trait XmlMappingTrait
      *
      * @param \SimpleXMLElement $element
      *
-     * @return mixed|mixed[]
+     * @return string|float|int|bool|array
      */
     final protected function parseSimpleXML(\SimpleXMLElement $element)
     {
@@ -113,7 +113,7 @@ trait XmlMappingTrait
             $value = (string) $element;
 
             if (in_array($value, self::$boolValues)) {
-                return $this->getBooleanFromString($value);
+                return in_array($value, self::$truthlyValues);
             }
 
             if (is_numeric($value)) {
@@ -134,24 +134,6 @@ trait XmlMappingTrait
         }
 
         return $elements;
-    }
-
-    /**
-     * Get boolean value from string.
-     *
-     * @param string $value
-     *
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
-     *
-     * @return bool
-     */
-    private function getBooleanFromString(string $value): bool
-    {
-        if (in_array($value, static::$truthlyValues)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
