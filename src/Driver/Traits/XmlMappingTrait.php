@@ -19,6 +19,35 @@ namespace Jgut\Mapping\Driver\Traits;
 trait XmlMappingTrait
 {
     /**
+     * Truthly values.
+     *
+     * @var array
+     */
+    private static $truthlyValues = [
+        'true',
+        'on',
+        'yes',
+    ];
+
+    /**
+     * Falsy values.
+     *
+     * @var array
+     */
+    private static $falsyValues = [
+        'false',
+        'off',
+        'no',
+    ];
+
+    /**
+     * List of boolean values.
+     *
+     * @var array
+     */
+    private static $boolValues;
+
+    /**
      * Get supported mapping file extensions.
      *
      * @return string[]
@@ -64,34 +93,80 @@ trait XmlMappingTrait
             );
         }
 
-        return $this->simpleXML2Array($mappingData);
+        if (self::$boolValues === null) {
+            self::$boolValues = array_merge(static::$truthlyValues, static::$falsyValues);
+        }
+
+        return $this->parseSimpleXML($mappingData);
     }
 
     /**
-     * Get array from SimpleXMLElement.
+     * Parse xml to array.
      *
-     * @param \SimpleXMLElement $xml
+     * @param \SimpleXMLElement $element
      *
-     * @return array
+     * @return mixed|mixed[]
      */
-    final protected function simpleXML2Array(\SimpleXMLElement $xml): array
+    final protected function parseSimpleXML(\SimpleXMLElement $element)
     {
-        $array = [];
+        if ($element->count() === 0) {
+            $value = (string) $element;
 
-        foreach ($xml as $element) {
-            /* @var \SimpleXMLElement $element */
-            $elementName = $element->getName();
-            $elementVars = get_object_vars($element);
+            if (in_array($value, self::$boolValues)) {
+                return $this->getBooleanFromString($value);
+            }
 
-            if (!empty($elementVars)) {
-                $array[$elementName] = $element instanceof \SimpleXMLElement
-                    ? $this->simpleXML2Array($element)
-                    : $elementVars;
+            if (is_numeric($value)) {
+                $value = $this->getNumericFromString($value);
+            }
+
+            return $value;
+        }
+
+        $elements = [];
+
+        foreach ($element->children() as $child) {
+            if ($child instanceof \SimpleXMLElement) {
+                $elements[$child->getName()] = $this->parseSimpleXML($child);
             } else {
-                $array[$elementName] = trim((string) $element);
+                $elements[] = $child;
             }
         }
 
-        return $array;
+        return $elements;
+    }
+
+    /**
+     * Get boolean value from string.
+     *
+     * @param string $value
+     *
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     *
+     * @return bool
+     */
+    private function getBooleanFromString(string $value): bool
+    {
+        if (in_array($value, static::$truthlyValues)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get numeric value from string.
+     *
+     * @param string $value
+     *
+     * @return float|int
+     */
+    private function getNumericFromString(string $value)
+    {
+        if (strpos($value, '.') !== false) {
+            return (float) $value;
+        }
+
+        return (int) $value;
     }
 }

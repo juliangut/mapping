@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
     <parameterOne>
-        <subParameterOne>valueOne</subParameterOne>
+        <trueValue>true</trueValue>
+        <falseValue>false</falseValue>
+        <floatValue>1.1</floatValue>
+        <intValue>2</intValue>
     </parameterOne>
     <parameterTwo>valueTwo</parameterTwo>
 </root>

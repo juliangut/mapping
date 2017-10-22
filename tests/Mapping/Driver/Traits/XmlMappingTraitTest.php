@@ -53,7 +53,10 @@ class XmlMappingTraitTest extends TestCase
         self::assertEquals(
             [
                 'parameterOne' => [
-                    'subParameterOne' => 'valueOne',
+                    'trueValue' => true,
+                    'falseValue' => false,
+                    'floatValue' => 1.1,
+                    'intValue' => 2,
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
