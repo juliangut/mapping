@@ -42,11 +42,11 @@
     "phpunit/phpunit": "^5.7|^6.0",
     "sebastian/phpcpd": "^2.0",
     "squizlabs/php_codesniffer": "^2.0",
-    "symfony/yaml": "^3.0"
+    "symfony/yaml": "^3.1"
   },
   "suggest": {
-    "doctrine/annotations": "In order to load mappings from class annotations",
-    "symfony/yaml": "In order to load mappings from YAML files"
+    "doctrine/annotations": "(^1.4) In order to load mappings from class annotations",
+    "symfony/yaml": "(^3.1) In order to load mappings from YAML files"
   },
   "autoload": {
     "psr-4": {
