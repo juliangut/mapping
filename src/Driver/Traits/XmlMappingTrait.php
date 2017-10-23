@@ -110,7 +110,7 @@ trait XmlMappingTrait
     final protected function parseSimpleXML(\SimpleXMLElement $element)
     {
         if ($element->count() === 0) {
-            return $this->getTyped((string) $element);
+            return $this->getTypedValue((string) $element);
         }
 
         $elements = [];
@@ -133,14 +133,14 @@ trait XmlMappingTrait
      *
      * @return bool|float|int|string
      */
-    private function getTyped(string $value)
+    private function getTypedValue(string $value)
     {
         if (in_array($value, self::$boolValues)) {
             return in_array($value, self::$truthlyValues);
         }
 
         if (is_numeric($value)) {
-            $value = $this->getNumericFromString($value);
+            return $this->getNumericValue($value);
         }
 
         return $value;
@@ -153,7 +153,7 @@ trait XmlMappingTrait
      *
      * @return float|int
      */
-    private function getNumericFromString(string $value)
+    private function getNumericValue(string $value)
     {
         if (strpos($value, '.') !== false) {
             return (float) $value;
