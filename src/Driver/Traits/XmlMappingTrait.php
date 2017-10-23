@@ -110,30 +110,40 @@ trait XmlMappingTrait
     final protected function parseSimpleXML(\SimpleXMLElement $element)
     {
         if ($element->count() === 0) {
-            $value = (string) $element;
-
-            if (in_array($value, self::$boolValues)) {
-                return in_array($value, self::$truthlyValues);
-            }
-
-            if (is_numeric($value)) {
-                $value = $this->getNumericFromString($value);
-            }
-
-            return $value;
+            return $this->getTyped((string) $element);
         }
 
         $elements = [];
 
-        foreach ($element->children() as $child) {
-            if ($child instanceof \SimpleXMLElement) {
-                $elements[$child->getName()] = $this->parseSimpleXML($child);
-            } else {
-                $elements[] = $child;
-            }
+        foreach ($element->attributes() as $attribute => $value) {
+            $elements[$attribute] = $value instanceof \SimpleXMLElement ? $this->parseSimpleXML($value) : $value;
+        }
+
+        foreach ($element->children() as $node => $child) {
+            $elements[$node] = $child instanceof \SimpleXMLElement ? $this->parseSimpleXML($child) : $child;
         }
 
         return $elements;
+    }
+
+    /**
+     * Transforms string to type.
+     *
+     * @param string $value
+     *
+     * @return bool|float|int|string
+     */
+    private function getTyped(string $value)
+    {
+        if (in_array($value, self::$boolValues)) {
+            return in_array($value, self::$truthlyValues);
+        }
+
+        if (is_numeric($value)) {
+            $value = $this->getNumericFromString($value);
+        }
+
+        return $value;
     }
 
     /**
