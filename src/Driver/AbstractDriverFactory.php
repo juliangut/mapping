@@ -43,7 +43,8 @@ abstract class AbstractDriverFactory
             return $driver;
         }
 
-        if (count(array_intersect(['type', 'path'], array_keys($mapping))) === 2) {
+        $supportedKeys = ['type', 'path'];
+        if (count(array_intersect($supportedKeys, array_keys($mapping))) === count($supportedKeys)) {
             return static::getDriverImplementation($mapping['type'], (array) $mapping['path']);
         }
 
