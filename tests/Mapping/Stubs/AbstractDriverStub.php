@@ -39,6 +39,6 @@ class AbstractDriverStub extends AbstractDriver
      */
     public function getMetadata(): array
     {
-        return [];
+        return [new MetadataStub()];
     }
 }

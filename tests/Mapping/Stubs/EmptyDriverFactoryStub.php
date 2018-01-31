@@ -11,17 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Driver;
+namespace Jgut\Mapping\Tests\Stubs;
+
+use Jgut\Mapping\Driver\AbstractDriverFactory;
 
 /**
- * Mapping driver interface.
+ * Empty driver factory stub.
  */
-interface DriverInterface
+class EmptyDriverFactoryStub extends AbstractDriverFactory
 {
-    /**
-     * Get mapped metadata.
-     *
-     * @return \Jgut\Mapping\Metadata\MetadataInterface[]
-     */
-    public function getMetadata(): array;
 }

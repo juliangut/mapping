@@ -16,21 +16,21 @@ namespace Jgut\Mapping\Driver;
 /**
  * Abstract driver factory.
  */
-abstract class AbstractDriverFactory
+abstract class AbstractDriverFactory implements DriverFactoryInterface
 {
     /**
      * Get mapping driver.
      *
-     * @param array $mapping
+     * @param array $mappingSource
      *
      * @throws \UnexpectedValueException
      *
      * @return DriverInterface
      */
-    public static function getDriver(array $mapping): DriverInterface
+    public function getDriver(array $mappingSource): DriverInterface
     {
-        if (array_key_exists('driver', $mapping)) {
-            $driver = $mapping['driver'];
+        if (array_key_exists('driver', $mappingSource)) {
+            $driver = $mappingSource['driver'];
 
             if (!$driver instanceof DriverInterface) {
                 throw new \UnexpectedValueException(sprintf(
@@ -44,8 +44,8 @@ abstract class AbstractDriverFactory
         }
 
         $supportedKeys = ['type', 'path'];
-        if (count(array_intersect($supportedKeys, array_keys($mapping))) === count($supportedKeys)) {
-            return static::getDriverImplementation($mapping['type'], (array) $mapping['path']);
+        if (count(array_intersect($supportedKeys, array_keys($mappingSource))) === count($supportedKeys)) {
+            return $this->getDriverImplementation($mappingSource['type'], (array) $mappingSource['path']);
         }
 
         throw new \UnexpectedValueException(
@@ -63,23 +63,23 @@ abstract class AbstractDriverFactory
      *
      * @return DriverInterface
      */
-    protected static function getDriverImplementation(string $type, array $paths): DriverInterface
+    protected function getDriverImplementation(string $type, array $paths): DriverInterface
     {
         switch ($type) {
-            case DriverInterface::DRIVER_ANNOTATION:
-                return static::getAnnotationDriver($paths);
+            case DriverFactoryInterface::DRIVER_ANNOTATION:
+                return $this->getAnnotationDriver($paths);
 
-            case DriverInterface::DRIVER_PHP:
-                return static::getPhpDriver($paths);
+            case DriverFactoryInterface::DRIVER_PHP:
+                return $this->getPhpDriver($paths);
 
-            case DriverInterface::DRIVER_XML:
-                return static::getXmlDriver($paths);
+            case DriverFactoryInterface::DRIVER_XML:
+                return $this->getXmlDriver($paths);
 
-            case DriverInterface::DRIVER_JSON:
-                return static::getJsonDriver($paths);
+            case DriverFactoryInterface::DRIVER_JSON:
+                return $this->getJsonDriver($paths);
 
-            case DriverInterface::DRIVER_YAML:
-                return static::getYamlDriver($paths);
+            case DriverFactoryInterface::DRIVER_YAML:
+                return $this->getYamlDriver($paths);
         }
 
         throw new \UnexpectedValueException(
@@ -92,43 +92,78 @@ abstract class AbstractDriverFactory
      *
      * @param array $paths
      *
+     * @throws \RuntimeException
+     *
      * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    abstract protected static function getAnnotationDriver(array $paths): DriverInterface;
+    protected function getAnnotationDriver(array $paths): DriverInterface
+    {
+        throw new \RuntimeException('Annotation driver is not supported');
+    }
 
     /**
      * Get native PHP file based mapping driver.
      *
      * @param array $paths
      *
+     * @throws \RuntimeException
+     *
      * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    abstract protected static function getPhpDriver(array $paths): DriverInterface;
+    protected function getPhpDriver(array $paths): DriverInterface
+    {
+        throw new \RuntimeException('PHP driver is not supported');
+    }
 
     /**
      * Get XML file based mapping driver.
      *
      * @param array $paths
      *
+     * @throws \RuntimeException
+     *
      * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    abstract protected static function getXmlDriver(array $paths): DriverInterface;
+    protected function getXmlDriver(array $paths): DriverInterface
+    {
+        throw new \RuntimeException('XML driver is not supported');
+    }
 
     /**
      * Get JSON file based mapping driver.
      *
      * @param array $paths
      *
+     * @throws \RuntimeException
+     *
      * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    abstract protected static function getJsonDriver(array $paths): DriverInterface;
+    protected function getJsonDriver(array $paths): DriverInterface
+    {
+        throw new \RuntimeException('JSON driver is not supported');
+    }
 
     /**
      * Get YAML file based mapping driver.
      *
      * @param array $paths
      *
+     * @throws \RuntimeException
+     *
      * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    abstract protected static function getYamlDriver(array $paths): DriverInterface;
+    protected function getYamlDriver(array $paths): DriverInterface
+    {
+        throw new \RuntimeException('YAML driver is not supported');
+    }
 }

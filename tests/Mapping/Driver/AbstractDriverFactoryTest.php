@@ -15,9 +15,10 @@ namespace Jgut\Mapping\Tests\Driver;
 
 use Jgut\Mapping\Driver\AbstractAnnotationDriver;
 use Jgut\Mapping\Driver\AbstractMappingDriver;
-use Jgut\Mapping\Driver\DriverInterface;
+use Jgut\Mapping\Driver\DriverFactoryInterface;
 use Jgut\Mapping\Tests\Stubs\AbstractDriverFactoryStub;
 use Jgut\Mapping\Tests\Stubs\AbstractMappingDriverStub;
+use Jgut\Mapping\Tests\Stubs\EmptyDriverFactoryStub;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,12 +27,70 @@ use PHPUnit\Framework\TestCase;
 class AbstractDriverFactoryTest extends TestCase
 {
     /**
+     * @var AbstractDriverFactoryStub
+     */
+    protected $factory;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
+    {
+        $this->factory = new AbstractDriverFactoryStub();
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Annotation driver is not supported
+     */
+    public function testAnnotationDriverNotImplemented()
+    {
+        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage PHP driver is not supported
+     */
+    public function testPhpDriverNotImplemented()
+    {
+        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage XML driver is not supported
+     */
+    public function testXmlDriverNotImplemented()
+    {
+        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage JSON driver is not supported
+     */
+    public function testJsonDriverNotImplemented()
+    {
+        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []]);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage YAML driver is not supported
+     */
+    public function testYamlDriverNotImplemented()
+    {
+        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []]);
+    }
+
+    /**
      * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage Mapping must be array with "driver" key or "type" and "path" keys
      */
     public function testInvalidData()
     {
-        AbstractDriverFactoryStub::getDriver([]);
+        $this->factory->getDriver([]);
     }
 
     /**
@@ -40,7 +99,7 @@ class AbstractDriverFactoryTest extends TestCase
      */
     public function testInvalidType()
     {
-        AbstractDriverFactoryStub::getDriver(['type' => 'unknown', 'path' => []]);
+        $this->factory->getDriver(['type' => 'unknown', 'path' => []]);
     }
 
     /**
@@ -49,21 +108,21 @@ class AbstractDriverFactoryTest extends TestCase
      */
     public function testInvalidDriver()
     {
-        AbstractDriverFactoryStub::getDriver(['driver' => 'invalid']);
+        $this->factory->getDriver(['driver' => 'invalid']);
     }
 
     public function testDriver()
     {
         $driver = new AbstractMappingDriverStub([]);
 
-        self::assertEquals($driver, AbstractDriverFactoryStub::getDriver(['driver' => $driver]));
+        self::assertEquals($driver, $this->factory->getDriver(['driver' => $driver]));
     }
 
     public function testAnnotationDriver()
     {
         self::assertInstanceOf(
             AbstractAnnotationDriver::class,
-            AbstractDriverFactoryStub::getDriver(['type' => DriverInterface::DRIVER_ANNOTATION, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []])
         );
     }
 
@@ -71,7 +130,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
-            AbstractDriverFactoryStub::getDriver(['type' => DriverInterface::DRIVER_PHP, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []])
         );
     }
 
@@ -79,7 +138,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
-            AbstractDriverFactoryStub::getDriver(['type' => DriverInterface::DRIVER_JSON, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []])
         );
     }
 
@@ -87,7 +146,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
-            AbstractDriverFactoryStub::getDriver(['type' => DriverInterface::DRIVER_XML, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []])
         );
     }
 
@@ -95,7 +154,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
-            AbstractDriverFactoryStub::getDriver(['type' => DriverInterface::DRIVER_YAML, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []])
         );
     }
 }

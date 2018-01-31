@@ -46,6 +46,8 @@ require './vendor/autoload.php';
 
 ### Drivers
 
+Should retrieve parsed metadata stored in a specific format 
+
 #### Annotation mapping
 
 ```php
@@ -74,12 +76,14 @@ $driver->getMetadata();
 
 #### File mapping
 
+Any kind of format that can be returned on an array can be used
+
 ```php
 use Jgut\Mapping\Driver\AbstractMappingDriver;
 use Jgut\Mapping\Driver\Traits\PhpMappingTrait;
 use Jgut\Mapping\Driver\DriverInterface;
 
-class MappingDriver extends AbstractMappingDriver
+class PhpDriver extends AbstractMappingDriver
 {
     use PhpMappingTrait;
 
@@ -99,12 +103,62 @@ $driver = new MappingDriver(['path/to/classes'], DriverInterface::DRIVER_PHP);
 $driver->getMetadata();
 ```
 
-There are mapping traits to support four types of mapping files:
+There are mapping traits to easily support four types of mapping files:
 
 * DriverInterface::DRIVER_PHP => Jgut\Mapping\Driver\Traits\PhpMappingTrait
 * DriverInterface::DRIVER_JSON => Jgut\Mapping\Driver\Traits\JsonMappingTrait
 * DriverInterface::DRIVER_XML => Jgut\Mapping\Driver\Traits\XmlMappingTrait
 * DriverInterface::DRIVER_YAML => Jgut\Mapping\Driver\Traits\YamlMappingTrait
+
+#### Factory
+
+Driver factory allows to automatically get a mapping driver given 
+
+```php
+use Jgut\Mapping\Driver\AbstractDriverFactory;
+use Jgut\Mapping\Driver\DriverFactoryInterface;
+use Jgut\Mapping\Driver\DriverInterface;
+
+class DriverFactory extends AbstractDriverFactory
+{
+    protected function getAnnotationDriver(array $paths): DriverInterface
+    {
+        return new AnnotationDriver($paths);
+    }
+    
+    protected function getPhpDriver(array $paths): DriverInterface
+    {
+        return new PhpDriver($paths);
+    }
+    
+    // ...
+}
+```
+
+### Resolver
+
+Given mapping source definitions will resolve metadata from drivers
+
+```php
+use Jgut\Mapping\Metadata\MetadataResolver;
+
+$mappingSources = [
+    [
+        'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
+        'path' => '/path/to/mapping/files',
+    ]
+];
+
+$metadataResolver = new MetadataResolver(new DriverFactory());
+
+$metadata = $metadataResolver->getMetadata($mappingSources);
+```
+
+#### Mapping source
+
+* `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ANNOTATION`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML` or `DRIVER_YAML` **defaults to DRIVER_ANNOTATION if no driver**
+* `path` a string path or array of paths to where mapping files are located (files or directories) **REQUIRED if no driver**
+* `driver` an already created \Jgut\Mapping\Driver\DriverInterface object **REQUIRED if no type AND path**
 
 ### Annotations
 

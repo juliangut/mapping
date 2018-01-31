@@ -35,7 +35,7 @@
     "doctrine/annotations": "^1.4",
     "editorconfig-checker/editorconfig-checker": "^7.0",
     "friendsofphp/php-cs-fixer": "^2.0",
-    "humbug/humbug": "~1.0@dev",
+    "infection/infection": "^0.7.0",
     "phpmd/phpmd": "^2.0",
     "phpmetrics/phpmetrics": "^2.0",
     "phpstan/phpstan": "~0.8",
@@ -83,7 +83,7 @@
     "phpunit": "phpunit",
     "phpunit-coverage": "phpunit --coverage-html build/coverage",
     "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
-    "humbug": "humbug",
+    "infection": "infection",
     "qa": [
       "@php-lint",
       "@editorconfig-lint",
@@ -104,9 +104,9 @@
     ],
     "security": "composer outdated",
     "test": [
-      "@php-lint",
+      "@qa",
       "@phpunit",
-      "@humbug"
+      "@infection"
     ]
   },
   "extra": {

@@ -11,17 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Driver;
+namespace Jgut\Mapping\Tests\Stubs;
+
+use Jgut\Mapping\Metadata\MetadataInterface;
 
 /**
- * Mapping driver interface.
+ * Empty metadata stub.
  */
-interface DriverInterface
+class MetadataStub implements MetadataInterface
 {
-    /**
-     * Get mapped metadata.
-     *
-     * @return \Jgut\Mapping\Metadata\MetadataInterface[]
-     */
-    public function getMetadata(): array;
 }
