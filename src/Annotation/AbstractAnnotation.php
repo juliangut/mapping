@@ -34,7 +34,7 @@ abstract class AbstractAnnotation
         $configs = array_keys(get_object_vars($this));
 
         $unknownParameters = array_diff(array_keys($parameters), $configs);
-        if (count($unknownParameters)) {
+        if (count($unknownParameters) > 0) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'The following annotation parameters are not recognized: %s',

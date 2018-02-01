@@ -58,6 +58,6 @@ class MetadataResolver
             $metadata[] = $this->driverFactory->getDriver($mappingSource)->getMetadata();
         }
 
-        return count($metadata) ? array_merge(...$metadata) : [];
+        return count($metadata) > 0 ? array_merge(...$metadata) : [];
     }
 }

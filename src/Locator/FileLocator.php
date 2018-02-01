@@ -83,7 +83,7 @@ class FileLocator
             }
         }
 
-        return count($mappingPaths) ? array_merge(...$mappingPaths) : [];
+        return count($mappingPaths) > 0 ? array_merge(...$mappingPaths) : [];
     }
 
     /**
