@@ -14,7 +14,7 @@
 
 Mapping parsing base library for any kind of project or library.
 
-This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from Doctrine annotations or files of different formats (PHP, Json, XML, YAML), so you can focus on the actual parsing of mappings into metadata you can use onwards.
+This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from Doctrine annotations or files of different formats (PHP, JSON, XML, YAML), so you can focus on the actual parsing of mappings into metadata you can use onwards.
 
 ## Installation
 
@@ -125,12 +125,12 @@ class DriverFactory extends AbstractDriverFactory
     {
         return new AnnotationDriver($paths);
     }
-    
+
     protected function getPhpDriver(array $paths): DriverInterface
     {
         return new PhpDriver($paths);
     }
-    
+
     // ...
 }
 ```
@@ -177,6 +177,10 @@ class Custom extends AbstractAnnotation
 {
 }
 ```
+
+## Example
+
+If you want to see a full implementation example of this library head to [juliangu/slim-routing](https://github.com/juliangut/slim-routing)
 
 ## Contributing
 
