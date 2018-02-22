@@ -21,7 +21,7 @@ abstract class AbstractMappingDriver extends AbstractDriver
     /**
      * Get mapping data.
      *
-     * @throws \RuntimeException
+     * @throws \Jgut\Mapping\Exception\DriverException
      *
      * @return mixed[]
      */
@@ -61,10 +61,10 @@ abstract class AbstractMappingDriver extends AbstractDriver
     final protected function mergeMappings(array $mappingsA, array $mappingsB): array
     {
         foreach ($mappingsB as $key => $value) {
-            if (isset($mappingsA[$key]) || array_key_exists($key, $mappingsA)) {
-                if (is_int($key)) {
+            if (isset($mappingsA[$key]) || \array_key_exists($key, $mappingsA)) {
+                if (\is_int($key)) {
                     $mappingsA[] = $value;
-                } elseif (is_array($value) && is_array($mappingsA[$key])) {
+                } elseif (\is_array($value) && \is_array($mappingsA[$key])) {
                     $mappingsA[$key] = $this->mergeMappings($mappingsA[$key], $value);
                 } else {
                     $mappingsA[$key] = $value;

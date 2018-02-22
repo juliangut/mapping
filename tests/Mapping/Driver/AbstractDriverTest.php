@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver;
 
-use Jgut\Mapping\Locator\FileLocator;
+use Jgut\Mapping\Driver\Locator\FileLocator;
 use Jgut\Mapping\Tests\Stubs\AbstractDriverStub;
 use PHPUnit\Framework\TestCase;
 

@@ -48,7 +48,7 @@ class MetadataResolver
     {
         $metadata = [];
         foreach ($mappingSources as $mappingSource) {
-            if (!is_array($mappingSource)) {
+            if (!\is_array($mappingSource)) {
                 $mappingSource = [
                     'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
                     'path' => $mappingSource,
@@ -58,6 +58,6 @@ class MetadataResolver
             $metadata[] = $this->driverFactory->getDriver($mappingSource)->getMetadata();
         }
 
-        return count($metadata) > 0 ? array_merge(...$metadata) : [];
+        return \count($metadata) > 0 ? \array_merge(...$metadata) : [];
     }
 }

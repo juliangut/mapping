@@ -40,12 +40,12 @@ class XmlMappingTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessageRegExp /XML mapping file .+ parsing error: ""/
      */
     public function testLoadError()
     {
-        $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/invalid/invalid.xml');
+        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.xml');
     }
 
     public function testLoad()
@@ -60,7 +60,7 @@ class XmlMappingTraitTest extends TestCase
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
-            $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/valid/valid.xml')
+            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.xml')
         );
     }
 }

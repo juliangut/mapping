@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver\Traits;
 
+use Jgut\Mapping\Exception\DriverException;
+
 /**
  * XML file mapping trait.
  */
@@ -62,39 +64,39 @@ trait XmlMappingTrait
      *
      * @param string $mappingFile
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return array
      */
     protected function loadMappingFile(string $mappingFile): array
     {
-        $disableEntityLoader = libxml_disable_entity_loader(true);
-        $useInternalErrors = libxml_use_internal_errors(true);
+        $disableEntityLoader = \libxml_disable_entity_loader(true);
+        $useInternalErrors = \libxml_use_internal_errors(true);
 
-        $mappingData = simplexml_load_string(file_get_contents($mappingFile));
+        $mappingData = \simplexml_load_string(\file_get_contents($mappingFile));
 
-        libxml_use_internal_errors($useInternalErrors);
-        libxml_disable_entity_loader($disableEntityLoader);
+        \libxml_use_internal_errors($useInternalErrors);
+        \libxml_disable_entity_loader($disableEntityLoader);
 
         if ($mappingData === false) {
             // @codeCoverageIgnoreStart
-            $errors = array_map(
+            $errors = \array_map(
                 function (\LibXMLError $error) {
                     return '"' . $error->message . '"';
                 },
-                libxml_get_errors()
+                \libxml_get_errors()
             );
             // @codeCoverageIgnoreEnd
 
-            libxml_clear_errors();
+            \libxml_clear_errors();
 
-            throw new \RuntimeException(
-                sprintf('XML mapping file %s parsing error: "%s"', $mappingFile, implode(',', $errors))
+            throw new DriverException(
+                \sprintf('XML mapping file %s parsing error: "%s"', $mappingFile, \implode(',', $errors))
             );
         }
 
         if (self::$boolValues === null) {
-            self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
+            self::$boolValues = \array_merge(self::$truthlyValues, self::$falsyValues);
         }
 
         return $this->parseSimpleXML($mappingData);
@@ -135,11 +137,11 @@ trait XmlMappingTrait
      */
     private function getTypedValue(string $value)
     {
-        if (in_array($value, self::$boolValues)) {
-            return in_array($value, self::$truthlyValues);
+        if (\in_array($value, self::$boolValues)) {
+            return \in_array($value, self::$truthlyValues);
         }
 
-        if (is_numeric($value)) {
+        if (\is_numeric($value)) {
             return $this->getNumericValue($value);
         }
 
@@ -155,7 +157,7 @@ trait XmlMappingTrait
      */
     private function getNumericValue(string $value)
     {
-        if (strpos($value, '.') !== false) {
+        if (\strpos($value, '.') !== false) {
             return (float) $value;
         }
 

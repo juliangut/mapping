@@ -49,7 +49,7 @@ class PhpMappingTraitTest extends TestCase
                 'parameterTwo' => 'valueTwo',
                 0 => 'parameterThree',
             ],
-            $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/valid/validA.php')
+            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/validA.php')
         );
     }
 }

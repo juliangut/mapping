@@ -80,7 +80,7 @@
     "phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
     "phpmnd": "phpmnd ./ --exclude=tests",
     "phpmetrics-report": "phpmetrics --report-html=build/metrics/index.html --offline src",
-    "phpstan": "phpstan analyse --level 7 -c phpstan.neon src",
+    "phpstan": "phpstan analyse --level max -c phpstan.neon src",
     "phpunit": "phpunit",
     "phpunit-coverage": "phpunit --coverage-html build/coverage",
     "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
@@ -105,7 +105,7 @@
     ],
     "security": "composer outdated",
     "test": [
-      "@qa",
+      "@php-lint",
       "@phpunit",
       "@infection"
     ]

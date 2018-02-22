@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Locator;
+namespace Jgut\Mapping\Tests\Driver\Locator;
 
-use Jgut\Mapping\Locator\FileLocator;
+use Jgut\Mapping\Driver\Locator\FileLocator;
 use Jgut\Mapping\Tests\Files\Classes\ClassA;
 use Jgut\Mapping\Tests\Files\Classes\ClassB;
 use Jgut\Mapping\Tests\Stubs\AnnotationStub;
@@ -35,7 +35,7 @@ class FileLocatorTest extends TestCase
 
     public function testValidPath()
     {
-        $paths = [dirname(__DIR__) . '/Files/Classes', dirname(__DIR__) . '/Stubs/AnnotationStub.php'];
+        $paths = [\dirname(__DIR__, 2) . '/Files/Classes', \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php'];
         $extensions = ['php'];
 
         $locator = new FileLocator($paths, $extensions);
@@ -47,15 +47,15 @@ class FileLocatorTest extends TestCase
         $routing = $locator->getMappingFiles();
 
         self::assertEquals(
-            dirname(__DIR__) . '/Files/Classes/ClassA.php',
+            \dirname(__DIR__, 2) . '/Files/Classes/ClassA.php',
             $routing[0]
         );
         self::assertEquals(
-            dirname(__DIR__) . '/Files/Classes/ClassB.php',
+            \dirname(__DIR__, 2) . '/Files/Classes/ClassB.php',
             $routing[1]
         );
         self::assertEquals(
-            dirname(__DIR__) . '/Stubs/AnnotationStub.php',
+            \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php',
             $routing[2]
         );
     }

@@ -31,7 +31,7 @@ class AbstractAnnotationDriverTest extends TestCase
             ->getMock();
         /* @var AnnotationReader $annotationReader */
 
-        $driver = new AbstractAnnotationDriverStub([dirname(__DIR__) . '/Files/Classes'], $annotationReader);
+        $driver = new AbstractAnnotationDriverStub([\dirname(__DIR__) . '/Files/Classes'], $annotationReader);
 
         /** @var \ReflectionClass[] $classes */
         $classes = $driver->getMappingClasses();

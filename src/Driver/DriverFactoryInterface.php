@@ -19,9 +19,13 @@ namespace Jgut\Mapping\Driver;
 interface DriverFactoryInterface
 {
     const DRIVER_ANNOTATION = 'annotation';
+
     const DRIVER_PHP = 'php';
+
     const DRIVER_XML = 'xml';
+
     const DRIVER_JSON = 'json';
+
     const DRIVER_YAML = 'yaml';
 
     /**

@@ -40,12 +40,12 @@ class YamlMappingTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessageRegExp /YAML mapping file .+ parsing error: A colon cannot be used in an unquoted .+/
      */
     public function testLoadError()
     {
-        $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/invalid/invalid.yml');
+        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.yml');
     }
 
     public function testLoad()
@@ -57,7 +57,7 @@ class YamlMappingTraitTest extends TestCase
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
-            $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/valid/valid.yml')
+            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.yml')
         );
     }
 }

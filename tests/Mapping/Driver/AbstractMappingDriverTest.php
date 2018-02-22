@@ -23,7 +23,7 @@ class AbstractMappingDriverTest extends TestCase
 {
     public function testMappings()
     {
-        $driver = new AbstractMappingDriverStub([dirname(__DIR__) . '/Files/files/valid']);
+        $driver = new AbstractMappingDriverStub([\dirname(__DIR__) . '/Files/files/valid']);
 
         self::assertEquals(
             [

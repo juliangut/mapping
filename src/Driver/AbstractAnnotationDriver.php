@@ -52,7 +52,7 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
     /**
      * Get mapping classes.
      *
-     * @throws \ReflectionException
+     * @throws \Jgut\Mapping\Exception\DriverException
      *
      * @return \ReflectionClass[]
      */
@@ -66,11 +66,11 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
             $mappingClasses[] = $this->loadClassFromFile($annotationFile);
         }
 
-        return array_map(
+        return \array_map(
             function (string $sourceClass) {
                 return new \ReflectionClass($sourceClass);
             },
-            array_filter(array_unique($mappingClasses))
+            \array_filter(\array_unique($mappingClasses))
         );
     }
 
@@ -86,16 +86,16 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
      */
     protected function loadClassFromFile(string $annotationFile): string
     {
-        $tokens = token_get_all(file_get_contents($annotationFile));
+        $tokens = \token_get_all(\file_get_contents($annotationFile));
         $hasClass = false;
         $class = null;
         $hasNamespace = false;
         $namespace = '';
 
-        for ($i = 0, $length = count($tokens); $i < $length; $i++) {
+        for ($i = 0, $length = \count($tokens); $i < $length; $i++) {
             $token = $tokens[$i];
 
-            if (!is_array($token)) {
+            if (!\is_array($token)) {
                 continue;
             }
 
@@ -112,7 +112,7 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
                     $namespace .= $token[1];
 
                     $token = $tokens[++$i];
-                } while ($i < $length && is_array($token) && in_array($token[0], [T_NS_SEPARATOR, T_STRING], true));
+                } while ($i < $length && \is_array($token) && \in_array($token[0], [T_NS_SEPARATOR, T_STRING], true));
 
                 $hasNamespace = false;
             }

@@ -40,12 +40,12 @@ class JsonMappingTraitTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessageRegExp /JSON mapping file .+ parsing error: Syntax error/
      */
     public function testLoadError()
     {
-        $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/invalid/invalid.json');
+        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.json');
     }
 
     public function testLoad()
@@ -57,7 +57,7 @@ class JsonMappingTraitTest extends TestCase
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
-            $this->mapping->loadMappingFile(dirname(__DIR__, 2) . '/Files/files/valid/valid.json')
+            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.json')
         );
     }
 }

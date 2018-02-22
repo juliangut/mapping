@@ -40,7 +40,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage Annotation driver is not supported
      */
     public function testAnnotationDriverNotImplemented()
@@ -49,7 +49,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage PHP driver is not supported
      */
     public function testPhpDriverNotImplemented()
@@ -58,7 +58,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage XML driver is not supported
      */
     public function testXmlDriverNotImplemented()
@@ -67,7 +67,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage JSON driver is not supported
      */
     public function testJsonDriverNotImplemented()
@@ -76,7 +76,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage YAML driver is not supported
      */
     public function testYamlDriverNotImplemented()
@@ -85,7 +85,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage Mapping must be array with "driver" key or "type" and "path" keys
      */
     public function testInvalidData()
@@ -94,7 +94,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage "unknown" is not a valid metadata mapping type
      */
     public function testInvalidType()
@@ -103,7 +103,7 @@ class AbstractDriverFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * @expectedException \Jgut\Mapping\Exception\DriverException
      * @expectedExceptionMessage Mapping driver should be of the type Jgut\Mapping\Driver\DriverInterface, string given
      */
     public function testInvalidDriver()

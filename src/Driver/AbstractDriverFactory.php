@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver;
 
+use Jgut\Mapping\Exception\DriverException;
+
 /**
  * Abstract driver factory.
  */
@@ -23,20 +25,20 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $mappingSource
      *
-     * @throws \UnexpectedValueException
+     * @throws DriverException
      *
      * @return DriverInterface
      */
     public function getDriver(array $mappingSource): DriverInterface
     {
-        if (array_key_exists('driver', $mappingSource)) {
+        if (\array_key_exists('driver', $mappingSource)) {
             $driver = $mappingSource['driver'];
 
             if (!$driver instanceof DriverInterface) {
-                throw new \UnexpectedValueException(sprintf(
+                throw new DriverException(\sprintf(
                     'Mapping driver should be of the type %s, %s given',
                     DriverInterface::class,
-                    is_object($driver) ? get_class($driver) : gettype($driver)
+                    \is_object($driver) ? \get_class($driver) : \gettype($driver)
                 ));
             }
 
@@ -44,11 +46,11 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         $supportedKeys = ['type', 'path'];
-        if (count(array_intersect($supportedKeys, array_keys($mappingSource))) === count($supportedKeys)) {
+        if (\count(\array_intersect($supportedKeys, \array_keys($mappingSource))) === \count($supportedKeys)) {
             return $this->getDriverImplementation($mappingSource['type'], (array) $mappingSource['path']);
         }
 
-        throw new \UnexpectedValueException(
+        throw new DriverException(
             'Mapping must be array with "driver" key or "type" and "path" keys'
         );
     }
@@ -59,7 +61,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      * @param string $type
      * @param array  $paths
      *
-     * @throws \UnexpectedValueException
+     * @throws DriverException
      *
      * @return DriverInterface
      */
@@ -82,8 +84,8 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
                 return $this->getYamlDriver($paths);
         }
 
-        throw new \UnexpectedValueException(
-            sprintf('"%s" is not a valid metadata mapping type', $type)
+        throw new DriverException(
+            \sprintf('"%s" is not a valid metadata mapping type', $type)
         );
     }
 
@@ -92,7 +94,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $paths
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return DriverInterface
      *
@@ -100,7 +102,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getAnnotationDriver(array $paths): DriverInterface
     {
-        throw new \RuntimeException('Annotation driver is not supported');
+        throw new DriverException('Annotation driver is not supported');
     }
 
     /**
@@ -108,7 +110,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $paths
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return DriverInterface
      *
@@ -116,7 +118,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getPhpDriver(array $paths): DriverInterface
     {
-        throw new \RuntimeException('PHP driver is not supported');
+        throw new DriverException('PHP driver is not supported');
     }
 
     /**
@@ -124,7 +126,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $paths
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return DriverInterface
      *
@@ -132,7 +134,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getXmlDriver(array $paths): DriverInterface
     {
-        throw new \RuntimeException('XML driver is not supported');
+        throw new DriverException('XML driver is not supported');
     }
 
     /**
@@ -140,7 +142,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $paths
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return DriverInterface
      *
@@ -148,7 +150,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getJsonDriver(array $paths): DriverInterface
     {
-        throw new \RuntimeException('JSON driver is not supported');
+        throw new DriverException('JSON driver is not supported');
     }
 
     /**
@@ -156,7 +158,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      *
      * @param array $paths
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      *
      * @return DriverInterface
      *
@@ -164,6 +166,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getYamlDriver(array $paths): DriverInterface
     {
-        throw new \RuntimeException('YAML driver is not supported');
+        throw new DriverException('YAML driver is not supported');
     }
 }

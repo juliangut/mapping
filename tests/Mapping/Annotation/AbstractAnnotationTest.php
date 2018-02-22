@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class AbstractAnnotationTest extends TestCase
 {
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Jgut\Mapping\Exception\AnnotationException
      * @expectedExceptionMessage Parameters must be an iterable
      */
     public function testInvalidParameters()
@@ -31,7 +31,7 @@ class AbstractAnnotationTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Jgut\Mapping\Exception\AnnotationException
      * @expectedExceptionMessage The following annotation parameters are not recognized: unknown
      */
     public function testUnknownParameter()

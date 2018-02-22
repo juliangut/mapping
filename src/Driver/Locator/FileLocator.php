@@ -11,7 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Locator;
+namespace Jgut\Mapping\Driver\Locator;
+
+use Jgut\Mapping\Exception\DriverException;
 
 /**
  * Mapping files locator.
@@ -67,23 +69,23 @@ class FileLocator
     /**
      * Get mapping files.
      *
-     * @throws \RuntimeException
+     * @throws DriverException
      */
     public function getMappingFiles(): array
     {
         $mappingPaths = [];
 
         foreach ($this->paths as $mappingPath) {
-            if (is_dir($mappingPath)) {
+            if (\is_dir($mappingPath)) {
                 $mappingPaths[] = $this->getFilesFromDirectory($mappingPath);
-            } elseif (is_file($mappingPath)) {
+            } elseif (\is_file($mappingPath)) {
                 $mappingPaths[] = [$mappingPath];
             } else {
-                throw new \RuntimeException(sprintf('Path "%s" does not exist', $mappingPath));
+                throw new DriverException(\sprintf('Path "%s" does not exist', $mappingPath));
             }
         }
 
-        return count($mappingPaths) > 0 ? array_merge(...$mappingPaths) : [];
+        return \count($mappingPaths) > 0 ? \array_merge(...$mappingPaths) : [];
     }
 
     /**
@@ -97,7 +99,7 @@ class FileLocator
     {
         $mappingPaths = [];
 
-        $filePattern = sprintf('/^.+\.(%s)$/i', implode('|', $this->extensions));
+        $filePattern = \sprintf('/^.+\.(%s)$/i', \implode('|', $this->extensions));
         $recursiveIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($mappingDirectory));
         $regexIterator = new \RegexIterator($recursiveIterator, $filePattern, \RecursiveRegexIterator::GET_MATCH);
 
@@ -105,7 +107,7 @@ class FileLocator
             $mappingPaths[] = $mappingFile[0];
         }
 
-        sort($mappingPaths);
+        \sort($mappingPaths);
 
         return $mappingPaths;
     }

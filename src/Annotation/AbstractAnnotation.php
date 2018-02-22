@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Annotation;
 
+use Jgut\Mapping\Exception\AnnotationException;
+
 /**
  * Annotation base.
  */
@@ -23,31 +25,31 @@ abstract class AbstractAnnotation
      *
      * @param mixed[]|\Traversable $parameters
      *
-     * @throws \InvalidArgumentException
+     * @throws AnnotationException
      */
     public function __construct($parameters)
     {
-        if (!is_iterable($parameters)) {
-            throw new \InvalidArgumentException('Parameters must be an iterable');
+        if (!\is_iterable($parameters)) {
+            throw new AnnotationException('Parameters must be an iterable');
         }
 
-        $configs = array_keys(get_object_vars($this));
+        $configs = \array_keys(\get_object_vars($this));
 
-        $unknownParameters = array_diff(array_keys($parameters), $configs);
-        if (count($unknownParameters) > 0) {
-            throw new \InvalidArgumentException(
-                sprintf(
+        $unknownParameters = \array_diff(\array_keys($parameters), $configs);
+        if (\count($unknownParameters) > 0) {
+            throw new AnnotationException(
+                \sprintf(
                     'The following annotation parameters are not recognized: %s',
-                    implode(', ', $unknownParameters)
+                    \implode(', ', $unknownParameters)
                 )
             );
         }
 
         foreach ($configs as $config) {
             if (isset($parameters[$config])) {
-                $callback = [$this, 'set' . ucfirst($config)];
+                $callback = [$this, 'set' . \ucfirst($config)];
 
-                call_user_func($callback, $parameters[$config]);
+                \call_user_func($callback, $parameters[$config]);
             }
         }
     }

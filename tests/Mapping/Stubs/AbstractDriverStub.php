@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractDriver;
-use Jgut\Mapping\Locator\FileLocator;
+use Jgut\Mapping\Driver\Locator\FileLocator;
 
 /**
  * Abstract mapping driver stub.
