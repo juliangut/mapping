@@ -12,9 +12,16 @@
 
 # Mapping
 
-Mapping parsing base library for any kind of project or library.
+Base mapping parsing library for any kind of project or library.
 
 This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from Doctrine annotations or files of different formats (PHP, JSON, XML, YAML), so you can focus on the actual parsing of mappings into metadata you can use onwards.
+
+## Examples
+
+Full implementation examples of this library can be found at
+
+* [juliangut/slim-routing](https://github.com/juliangut/slim-routing)
+* [juliangut/json-api](https://github.com/juliangut/json-api)
 
 ## Installation
 
@@ -112,7 +119,7 @@ There are mapping traits to easily support four types of mapping files:
 
 #### Factory
 
-Driver factory allows to automatically get a mapping driver given 
+Create your driver factory extending from Jgut\Mapping\Driver\AbstractDriverFactory, it allows to automatically get a mapping driver from mapping sources
 
 ```php
 use Jgut\Mapping\Driver\AbstractDriverFactory;
@@ -137,7 +144,7 @@ class DriverFactory extends AbstractDriverFactory
 
 ### Resolver
 
-Given mapping source definitions will resolve metadata from drivers
+Given mapping source definitions, metadata resolver will resolve final metadata using a driver factory
 
 ```php
 use Jgut\Mapping\Metadata\MetadataResolver;
@@ -149,12 +156,16 @@ $mappingSources = [
     ]
 ];
 
-$metadataResolver = new MetadataResolver(new DriverFactory());
+$metadataResolver = new MetadataResolver(new DriverFactory(), new PSR16Cache());
 
 $metadata = $metadataResolver->getMetadata($mappingSources);
 ```
 
+> It's not mandatory but highly recommended to add a PSR-16 cache implementation to metadata resolver, collecting mapping data from annotations and/or files and transforming them into metadata objects can be an intensive operation that benefits vastly of caching
+
 #### Mapping source
+
+Define where your mapping data is and how it will be parsed
 
 * `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ANNOTATION`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML` or `DRIVER_YAML` **defaults to DRIVER_ANNOTATION if no driver**
 * `path` a string path or array of paths to where mapping files are located (files or directories) **REQUIRED if no driver**
@@ -177,10 +188,6 @@ class Custom extends AbstractAnnotation
 {
 }
 ```
-
-## Example
-
-If you want to see a full implementation example of this library head to [juliangu/slim-routing](https://github.com/juliangut/slim-routing)
 
 ## Contributing
 

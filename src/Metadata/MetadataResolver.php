@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Metadata;
 
 use Jgut\Mapping\Driver\DriverFactoryInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Metadata resolver.
@@ -28,36 +29,101 @@ class MetadataResolver
     protected $driverFactory;
 
     /**
+     * Metadata cache.
+     *
+     * @var CacheInterface|null
+     */
+    protected $cache;
+
+    /**
      * MetadataResolver constructor.
      *
      * @param DriverFactoryInterface $driverFactory
+     * @param CacheInterface         $cache
      */
-    public function __construct(DriverFactoryInterface $driverFactory)
+    public function __construct(DriverFactoryInterface $driverFactory, CacheInterface $cache = null)
     {
         $this->driverFactory = $driverFactory;
+        $this->cache = $cache;
     }
 
     /**
      * Get metadata.
      *
-     * @param array $mappingSources
+     * @param mixed[] $mappingSources
      *
      * @return MetadataInterface[]
      */
     public function getMetadata(array $mappingSources): array
     {
-        $metadata = [];
-        foreach ($mappingSources as $mappingSource) {
-            if (!\is_array($mappingSource)) {
-                $mappingSource = [
-                    'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
-                    'path' => $mappingSource,
-                ];
-            }
+        $mappingSources = $this->normalizeMappingSources($mappingSources);
 
-            $metadata[] = $this->driverFactory->getDriver($mappingSource)->getMetadata();
+        $cacheKey = $this->getCacheKey($mappingSources);
+
+        if ($this->cache !== null && $this->cache->has($cacheKey)) {
+            return $this->cache->get($cacheKey);
         }
 
-        return \count($metadata) > 0 ? \array_merge(...$metadata) : [];
+        $metadata = \array_map(
+            function (array $mappingSource) {
+                return $this->driverFactory->getDriver($mappingSource)->getMetadata();
+            },
+            $mappingSources
+        );
+        $metadata = \count($metadata) > 0 ? \array_merge(...$metadata) : [];
+
+        if ($this->cache !== null) {
+            $this->cache->set($cacheKey, $metadata);
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * Get cache key.
+     *
+     * @param array $mappingSources
+     *
+     * @return string
+     */
+    protected function getCacheKey(array $mappingSources): string
+    {
+        return \implode(
+            '.',
+            \array_map(
+                function (array $mappingSource): string {
+                    $path = \is_array($mappingSource['path'])
+                        ? \implode('', $mappingSource['path'])
+                        : $mappingSource['path'];
+
+                    return $mappingSource['type'] . '.' . $path;
+                },
+                $mappingSources
+            )
+        );
+    }
+
+    /**
+     * Normalize mapping sources format.
+     *
+     * @param mixed[] $mappingSources
+     *
+     * @return string[][]
+     */
+    protected function normalizeMappingSources(array $mappingSources): array
+    {
+        return \array_map(
+            function ($mappingSource): array {
+                if (!\is_array($mappingSource)) {
+                    $mappingSource = [
+                        'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
+                        'path' => $mappingSource,
+                    ];
+                }
+
+                return $mappingSource;
+            },
+            $mappingSources
+        );
     }
 }

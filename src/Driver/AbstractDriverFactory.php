@@ -36,7 +36,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
 
             if (!$driver instanceof DriverInterface) {
                 throw new DriverException(\sprintf(
-                    'Mapping driver should be of the type %s, %s given',
+                    'Metadata mapping driver should be of the type %s, %s given',
                     DriverInterface::class,
                     \is_object($driver) ? \get_class($driver) : \gettype($driver)
                 ));
@@ -85,7 +85,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         throw new DriverException(
-            \sprintf('"%s" is not a valid metadata mapping type', $type)
+            \sprintf('"%s" is not a valid metadata mapping driver', $type)
         );
     }
 
@@ -102,7 +102,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getAnnotationDriver(array $paths): DriverInterface
     {
-        throw new DriverException('Annotation driver is not supported');
+        throw new DriverException('Annotation metadata mapping driver is not supported');
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getPhpDriver(array $paths): DriverInterface
     {
-        throw new DriverException('PHP driver is not supported');
+        throw new DriverException('PHP metadata mapping driver is not supported');
     }
 
     /**
@@ -134,7 +134,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getXmlDriver(array $paths): DriverInterface
     {
-        throw new DriverException('XML driver is not supported');
+        throw new DriverException('XML metadata mapping driver is not supported');
     }
 
     /**
@@ -150,7 +150,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getJsonDriver(array $paths): DriverInterface
     {
-        throw new DriverException('JSON driver is not supported');
+        throw new DriverException('JSON metadata mapping driver is not supported');
     }
 
     /**
@@ -166,6 +166,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getYamlDriver(array $paths): DriverInterface
     {
-        throw new DriverException('YAML driver is not supported');
+        throw new DriverException('YAML metadata mapping driver is not supported');
     }
 }

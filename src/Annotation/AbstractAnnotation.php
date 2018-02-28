@@ -29,7 +29,7 @@ abstract class AbstractAnnotation
      */
     public function __construct($parameters)
     {
-        if (!\is_iterable($parameters)) {
+        if (!\is_array($parameters) && !$parameters instanceof \Traversable) {
             throw new AnnotationException('Parameters must be an iterable');
         }
 

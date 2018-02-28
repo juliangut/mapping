@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\Reader;
 
 /**
  * Abstract annotation mapping driver.
@@ -24,17 +24,17 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
     /**
      * Annotations reader.
      *
-     * @var AnnotationReader
+     * @var Reader
      */
     protected $annotationReader;
 
     /**
      * AnnotationDriver constructor.
      *
-     * @param string[]         $paths
-     * @param AnnotationReader $annotationReader
+     * @param string[] $paths
+     * @param Reader   $annotationReader
      */
-    public function __construct(array $paths, AnnotationReader $annotationReader)
+    public function __construct(array $paths, Reader $annotationReader)
     {
         parent::__construct($paths);
 
@@ -117,7 +117,7 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
                 $hasNamespace = false;
             }
 
-            if ($token[0] == T_CLASS) {
+            if ($token[0] === T_CLASS) {
                 $hasClass = true;
             }
             if ($token[0] === T_NAMESPACE) {

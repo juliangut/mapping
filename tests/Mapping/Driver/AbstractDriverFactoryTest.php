@@ -41,7 +41,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage Annotation driver is not supported
+     * @expectedExceptionMessage Annotation metadata mapping driver is not supported
      */
     public function testAnnotationDriverNotImplemented()
     {
@@ -50,7 +50,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage PHP driver is not supported
+     * @expectedExceptionMessage PHP metadata mapping driver is not supported
      */
     public function testPhpDriverNotImplemented()
     {
@@ -59,7 +59,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage XML driver is not supported
+     * @expectedExceptionMessage XML metadata mapping driver is not supported
      */
     public function testXmlDriverNotImplemented()
     {
@@ -68,7 +68,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage JSON driver is not supported
+     * @expectedExceptionMessage JSON metadata mapping driver is not supported
      */
     public function testJsonDriverNotImplemented()
     {
@@ -77,7 +77,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage YAML driver is not supported
+     * @expectedExceptionMessage YAML metadata mapping driver is not supported
      */
     public function testYamlDriverNotImplemented()
     {
@@ -95,7 +95,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage "unknown" is not a valid metadata mapping type
+     * @expectedExceptionMessage "unknown" is not a valid metadata mapping driver
      */
     public function testInvalidType()
     {
@@ -104,7 +104,7 @@ class AbstractDriverFactoryTest extends TestCase
 
     /**
      * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage Mapping driver should be of the type Jgut\Mapping\Driver\DriverInterface, string given
+     * @expectedExceptionMessageRegExp /^Metadata mapping driver should be of the type .+, string given/
      */
     public function testInvalidDriver()
     {
