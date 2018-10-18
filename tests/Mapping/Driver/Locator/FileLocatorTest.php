@@ -14,9 +14,6 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Tests\Driver\Locator;
 
 use Jgut\Mapping\Driver\Locator\FileLocator;
-use Jgut\Mapping\Tests\Files\Classes\ClassA;
-use Jgut\Mapping\Tests\Files\Classes\ClassB;
-use Jgut\Mapping\Tests\Stubs\AnnotationStub;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -41,9 +41,9 @@ trait JsonMappingTrait
      */
     protected function loadMappingFile(string $mappingFile): array
     {
-        $mappingData = \json_decode(\file_get_contents($mappingFile), true);
+        $mappingData = \json_decode(\file_get_contents($mappingFile), true, 512, \JSON_BIGINT_AS_STRING);
 
-        if (\json_last_error() !== JSON_ERROR_NONE) {
+        if (\json_last_error() !== \JSON_ERROR_NONE) {
             throw new DriverException(
                 \sprintf('JSON mapping file %s parsing error: %s', $mappingFile, \json_last_error_msg())
             );

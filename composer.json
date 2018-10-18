@@ -28,6 +28,9 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.0",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "ext-libxml": "*",
     "psr/simple-cache": "^1.0"
   },
   "require-dev": {

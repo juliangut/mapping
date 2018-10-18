@@ -137,8 +137,8 @@ trait XmlMappingTrait
      */
     private function getTypedValue(string $value)
     {
-        if (\in_array($value, self::$boolValues)) {
-            return \in_array($value, self::$truthlyValues);
+        if (\in_array($value, self::$boolValues, true)) {
+            return \in_array($value, self::$truthlyValues, true);
         }
 
         if (\is_numeric($value)) {
