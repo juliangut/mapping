@@ -36,7 +36,6 @@
   "require-dev": {
     "brainmaestro/composer-git-hooks": "^2.1",
     "doctrine/annotations": "^1.4",
-    "editorconfig-checker/editorconfig-checker": "^7.0",
     "friendsofphp/php-cs-fixer": "^2.0",
     "infection/infection": "^0.7.0",
     "phpmd/phpmd": "^2.0",
@@ -73,49 +72,46 @@
     "cghooks": "cghooks",
     "post-install-cmd": "cghooks add --ignore-lock",
     "post-update-cmd": "cghooks update",
-    "php-lint": "php -l src && php -l tests",
-    "editorconfig-lint": "editorconfig-checker src/* tests/*",
-    "editorconfig-fix": "editorconfig-checker --auto-fix src/* tests/*",
-    "phpcs": "phpcs --standard=PSR2 src tests",
-    "phpcs-lint": "php-cs-fixer fix --dry-run --verbose",
-    "phpcs-fix": "php-cs-fixer fix --verbose",
-    "phpcpd": "phpcpd src",
-    "phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
-    "phpmnd": "phpmnd ./ --exclude=tests",
-    "phpmetrics-report": "phpmetrics --report-html=build/metrics/index.html --offline src",
-    "phpstan": "phpstan analyse --level max -c phpstan.neon src",
-    "phpunit": "phpunit",
-    "phpunit-coverage": "phpunit --coverage-html build/coverage",
-    "phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
-    "infection": "infection",
-    "qa": [
-      "@php-lint",
-      "@editorconfig-lint",
-      "@phpcs",
-      "@phpcs-lint",
-      "@phpcpd",
-      "@phpmd",
-      "@phpmnd",
-      "@phpstan"
-    ],
-    "reports": [
-      "@phpmetrics-report",
-      "@phpunit-coverage"
+    "lint-php": "php -l src && php -l tests",
+    "lint-phpcs": "phpcs --standard=PSR2 src tests",
+    "lint-phpcs-fixer": "php-cs-fixer fix --config=.php_cs --dry-run --verbose",
+    "fix-phpcs": "php-cs-fixer fix --config=.php_cs --verbose",
+    "qa-phpcpd": "phpcpd src",
+    "qa-phpmd": "phpmd src text unusedcode,naming,design,controversial,codesize",
+    "qa-phpmnd": "phpmnd ./ --exclude=tests",
+    "qa-phpstan": "phpstan analyse --level max --configuration=phpstan.neon --memory-limit=2G --no-progress src",
+    "test-phpunit": "phpunit",
+    "test-infection": "infection",
+    "report-phpmetrics": "phpmetrics --report-html=build/metrics --offline .",
+    "report-phpunit-coverage": "phpunit --coverage-html build/coverage",
+    "report-phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
+    "lint": [
+      "@lint-php",
+      "@lint-phpcs",
+      "@lint-phpcs-fixer"
     ],
     "fix": [
-      "@editorconfig-fix",
-      "@phpcs-fix"
+      "@fix-phpcs"
+    ],
+    "qa": [
+      "@qa-phpcpd",
+      "@qa-phpmd",
+      "@qa-phpmnd",
+      "@qa-phpstan"
+    ],
+    "report": [
+      "@report-phpmetrics",
+      "@report-phpunit-coverage"
     ],
     "security": "composer outdated",
     "test": [
-      "@php-lint",
-      "@phpunit",
-      "@infection"
+      "@test-phpunit",
+      "@test-infection"
     ]
   },
   "extra": {
     "hooks": {
-      "pre-commit": "composer qa && composer phpunit"
+      "pre-commit": "composer lint && composer qa && composer test-phpunit"
     }
   }
 }

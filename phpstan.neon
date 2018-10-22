@@ -2,5 +2,8 @@ includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
+  level: max
+  paths:
+    - src
   ignoreErrors:
     - '/^Call to function is_array\(\) will always evaluate to false\.$/'

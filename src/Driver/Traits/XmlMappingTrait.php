@@ -111,10 +111,6 @@ trait XmlMappingTrait
      */
     final protected function parseSimpleXML(\SimpleXMLElement $element)
     {
-        if ($element->count() === 0) {
-            return $this->getTypedValue((string) $element);
-        }
-
         $elements = [];
 
         foreach ($element->attributes() as $attribute => $value) {
@@ -123,6 +119,16 @@ trait XmlMappingTrait
 
         foreach ($element->children() as $node => $child) {
             $elements[$node] = $child instanceof \SimpleXMLElement ? $this->parseSimpleXML($child) : $child;
+        }
+
+        if ($element->count() === 0 && \trim((string) $element) !== '') {
+            $value = $this->getTypedValue((string) $element);
+
+            if (\count($elements) === 0) {
+                return $value;
+            }
+
+            $elements['_value_'] = $value;
         }
 
         return $elements;

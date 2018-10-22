@@ -55,10 +55,15 @@ class XmlMappingTraitTest extends TestCase
                 'parameterOne' => [
                     'trueValue' => true,
                     'falseValue' => false,
+                ],
+                'parameterTwo' => [
                     'floatValue' => 1.1,
                     'intValue' => 2,
                 ],
-                'parameterTwo' => 'valueTwo',
+                'parameterThree' => [
+                    'foo' => 'bar',
+                    '_value_' => 'valueThree',
+                ],
             ],
             $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.xml')
         );

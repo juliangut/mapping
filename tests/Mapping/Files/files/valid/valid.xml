@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-    <parameterOne trueValue="true" falseValue="false">
+    <parameterOne trueValue="true" falseValue="false"/>
+    <parameterTwo>
         <floatValue>1.1</floatValue>
         <intValue>2</intValue>
-    </parameterOne>
-    <parameterTwo>valueTwo</parameterTwo>
+    </parameterTwo>
+    <parameterThree foo="bar">valueThree</parameterThree>
 </root>
