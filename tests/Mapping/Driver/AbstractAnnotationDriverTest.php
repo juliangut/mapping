@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractAnnotationDriverTest extends TestCase
 {
-    public function testMappings()
+    public function testMappings(): void
     {
         $annotationReader = $this->getMockBuilder(AnnotationReader::class)
             ->disableOriginalConstructor()

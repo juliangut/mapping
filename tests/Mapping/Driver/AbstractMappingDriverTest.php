@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractMappingDriverTest extends TestCase
 {
-    public function testMappings()
+    public function testMappings(): void
     {
         $driver = new AbstractMappingDriverStub([\dirname(__DIR__) . '/Files/files/valid']);
 

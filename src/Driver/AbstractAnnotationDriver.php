@@ -60,6 +60,7 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
     {
         AnnotationRegistry::registerLoader('class_exists');
 
+        /** @var class-string[] $mappingClasses */
         $mappingClasses = [];
 
         foreach ($this->locator->getMappingFiles() as $annotationFile) {
@@ -67,7 +68,7 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
         }
 
         return \array_map(
-            function (string $sourceClass) {
+            function (string $sourceClass): \ReflectionClass {
                 return new \ReflectionClass($sourceClass);
             },
             \array_filter(\array_unique($mappingClasses))
@@ -86,7 +87,8 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
      */
     protected function loadClassFromFile(string $annotationFile): string
     {
-        $tokens = \token_get_all(\file_get_contents($annotationFile));
+        $content = \file_get_contents($annotationFile);
+        $tokens = \token_get_all($content !== false ? $content : '');
         $hasClass = false;
         $class = null;
         $hasNamespace = false;
@@ -99,32 +101,32 @@ abstract class AbstractAnnotationDriver extends AbstractDriver
                 continue;
             }
 
-            if ($hasClass && $token[0] === T_STRING) {
+            if ($hasClass && $token[0] === \T_STRING) {
                 $class = $namespace . '\\' . $token[1];
 
                 break;
             }
 
-            if ($hasNamespace && $token[0] === T_STRING) {
+            if ($hasNamespace && $token[0] === \T_STRING) {
                 $namespace = '';
 
                 do {
                     $namespace .= $token[1];
 
                     $token = $tokens[++$i];
-                } while ($i < $length && \is_array($token) && \in_array($token[0], [T_NS_SEPARATOR, T_STRING], true));
+                } while ($i < $length && \is_array($token) && \in_array($token[0], [\T_NS_SEPARATOR, \T_STRING], true));
 
                 $hasNamespace = false;
             }
 
-            if ($token[0] === T_CLASS) {
+            if ($token[0] === \T_CLASS) {
                 $hasClass = true;
             }
-            if ($token[0] === T_NAMESPACE) {
+            if ($token[0] === \T_NAMESPACE) {
                 $hasNamespace = true;
             }
         }
 
-        return $class ?: '';
+        return $class ?? '';
     }
 }

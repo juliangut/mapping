@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver\Traits;
 
+use Jgut\Mapping\Exception\DriverException;
 use Jgut\Mapping\Tests\Stubs\YamlMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
@@ -29,26 +30,27 @@ class YamlMappingTraitTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapping = new YamlMappingDriverStub();
     }
 
-    public function testExtensions()
+    public function testExtensions(): void
     {
         self::assertEquals(['yml', 'yaml'], $this->mapping->getExtensions());
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessageRegExp /YAML mapping file .+ parsing error: A colon cannot be used in an unquoted .+/
-     */
-    public function testLoadError()
+    public function testLoadError(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessageRegExp(
+            '/YAML mapping file .+ parsing error: A colon cannot be used in an unquoted .+/'
+        );
+
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.yml');
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         self::assertEquals(
             [

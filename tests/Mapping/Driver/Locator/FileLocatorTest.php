@@ -21,16 +21,15 @@ use PHPUnit\Framework\TestCase;
  */
 class FileLocatorTest extends TestCase
 {
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Path "non/existing/path" does not exist
-     */
-    public function testInvalidPath()
+    public function testInvalidPath(): void
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Path "non/existing/path" does not exist');
+
         (new FileLocator(['non/existing/path'], ['php']))->getMappingFiles();
     }
 
-    public function testValidPath()
+    public function testValidPath(): void
     {
         $paths = [\dirname(__DIR__, 2) . '/Files/Classes', \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php'];
         $extensions = ['php'];

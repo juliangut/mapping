@@ -33,7 +33,7 @@ trait PhpMappingTrait
      *
      * @param string $mappingFile
      *
-     * @return array
+     * @return mixed[]
      */
     protected function loadMappingFile(string $mappingFile): array
     {

@@ -70,6 +70,8 @@ class FileLocator
      * Get mapping files.
      *
      * @throws DriverException
+     *
+     * @return string[]
      */
     public function getMappingFiles(): array
     {
@@ -93,7 +95,7 @@ class FileLocator
      *
      * @param string $mappingDirectory
      *
-     * @return array
+     * @return string[]
      */
     protected function getFilesFromDirectory(string $mappingDirectory): array
     {

@@ -27,7 +27,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.0",
+    "php": "^7.1",
     "ext-json": "*",
     "ext-simplexml": "*",
     "ext-libxml": "*",
@@ -37,15 +37,18 @@
     "brainmaestro/composer-git-hooks": "^2.1",
     "doctrine/annotations": "^1.4",
     "friendsofphp/php-cs-fixer": "^2.0",
-    "infection/infection": "^0.7.0",
+    "infection/infection": "^0.9",
     "phpmd/phpmd": "^2.0",
-    "phpmetrics/phpmetrics": "^2.0",
-    "phpstan/phpstan": "^0.9",
-    "phpstan/phpstan-strict-rules": "^0.9",
-    "phpunit/phpunit": "^5.7|^6.0",
-    "povils/phpmnd": "^1.1",
-    "sebastian/phpcpd": "^2.0",
-    "squizlabs/php_codesniffer": "^2.0",
+    "phpstan/extension-installer": "^1.0.1",
+    "phpstan/phpstan": "~0.12",
+    "phpstan/phpstan-deprecation-rules": "~0.12",
+    "phpstan/phpstan-strict-rules": "~0.12",
+    "phpunit/phpunit": "^7.1|^8.0",
+    "povils/phpmnd": "^2.0",
+    "roave/security-advisories": "dev-master",
+    "sebastian/phpcpd": "^4.0",
+    "squizlabs/php_codesniffer": "^3.0",
+    "thecodingmachine/phpstan-strict-rules": "~0.12",
     "symfony/yaml": "^3.1"
   },
   "suggest": {
@@ -82,7 +85,6 @@
     "qa-phpstan": "phpstan analyse --level max --configuration=phpstan.neon --memory-limit=2G --no-progress src",
     "test-phpunit": "phpunit",
     "test-infection": "infection",
-    "report-phpmetrics": "phpmetrics --report-html=build/metrics --offline .",
     "report-phpunit-coverage": "phpunit --coverage-html build/coverage",
     "report-phpunit-clover": "phpunit --coverage-clover build/logs/clover.xml",
     "lint": [
@@ -99,14 +101,14 @@
       "@qa-phpmnd",
       "@qa-phpstan"
     ],
-    "report": [
-      "@report-phpmetrics",
-      "@report-phpunit-coverage"
-    ],
     "security": "composer outdated",
     "test": [
       "@test-phpunit",
       "@test-infection"
+    ],
+    "report": [
+      "@report-phpunit-coverage",
+      "@report-phpunit-clover"
     ]
   },
   "extra": {

@@ -46,17 +46,17 @@ abstract class AbstractMappingDriver extends AbstractDriver
      *
      * @param string $mappingFile
      *
-     * @return array
+     * @return mixed[]
      */
     abstract protected function loadMappingFile(string $mappingFile): array;
 
     /**
      * Merge mapping data.
      *
-     * @param array $mappingsA
-     * @param array $mappingsB
+     * @param mixed[] $mappingsA
+     * @param mixed[] $mappingsB
      *
-     * @return array
+     * @return mixed[]
      */
     final protected function mergeMappings(array $mappingsA, array $mappingsB): array
     {

@@ -29,17 +29,17 @@ class PhpMappingTraitTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapping = new PhpMappingDriverStub();
     }
 
-    public function testExtensions()
+    public function testExtensions(): void
     {
         self::assertEquals(['php'], $this->mapping->getExtensions());
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         self::assertEquals(
             [

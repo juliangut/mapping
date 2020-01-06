@@ -16,6 +16,7 @@ namespace Jgut\Mapping\Tests\Driver;
 use Jgut\Mapping\Driver\AbstractAnnotationDriver;
 use Jgut\Mapping\Driver\AbstractMappingDriver;
 use Jgut\Mapping\Driver\DriverFactoryInterface;
+use Jgut\Mapping\Exception\DriverException;
 use Jgut\Mapping\Tests\Stubs\AbstractDriverFactoryStub;
 use Jgut\Mapping\Tests\Stubs\AbstractMappingDriverStub;
 use Jgut\Mapping\Tests\Stubs\EmptyDriverFactoryStub;
@@ -34,91 +35,83 @@ class AbstractDriverFactoryTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->factory = new AbstractDriverFactoryStub();
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage Annotation metadata mapping driver is not supported
-     */
-    public function testAnnotationDriverNotImplemented()
+    public function testAnnotationDriverNotImplemented(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('Annotation metadata mapping driver is not supported');
+
         (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage PHP metadata mapping driver is not supported
-     */
-    public function testPhpDriverNotImplemented()
+    public function testPhpDriverNotImplemented(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('PHP metadata mapping driver is not supported');
+
         (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage XML metadata mapping driver is not supported
-     */
-    public function testXmlDriverNotImplemented()
+    public function testXmlDriverNotImplemented(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('XML metadata mapping driver is not supported');
+
         (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage JSON metadata mapping driver is not supported
-     */
-    public function testJsonDriverNotImplemented()
+    public function testJsonDriverNotImplemented(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('JSON metadata mapping driver is not supported');
+
         (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage YAML metadata mapping driver is not supported
-     */
-    public function testYamlDriverNotImplemented()
+    public function testYamlDriverNotImplemented(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('YAML metadata mapping driver is not supported');
+
         (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage Mapping must be array with "driver" key or "type" and "path" keys
-     */
-    public function testInvalidData()
+    public function testInvalidData(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('Mapping must be array with "driver" key or "type" and "path" keys');
+
         $this->factory->getDriver([]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessage "unknown" is not a valid metadata mapping driver
-     */
-    public function testInvalidType()
+    public function testInvalidType(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessage('"unknown" is not a valid metadata mapping driver');
+
         $this->factory->getDriver(['type' => 'unknown', 'path' => []]);
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessageRegExp /^Metadata mapping driver should be of the type .+, string given/
-     */
-    public function testInvalidDriver()
+    public function testInvalidDriver(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessageRegExp('/^Metadata mapping driver should be of the type .+, string given/');
+
         $this->factory->getDriver(['driver' => 'invalid']);
     }
 
-    public function testDriver()
+    public function testDriver(): void
     {
         $driver = new AbstractMappingDriverStub([]);
 
         self::assertEquals($driver, $this->factory->getDriver(['driver' => $driver]));
     }
 
-    public function testAnnotationDriver()
+    public function testAnnotationDriver(): void
     {
         self::assertInstanceOf(
             AbstractAnnotationDriver::class,
@@ -126,7 +119,7 @@ class AbstractDriverFactoryTest extends TestCase
         );
     }
 
-    public function testPhpDriver()
+    public function testPhpDriver(): void
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
@@ -134,7 +127,7 @@ class AbstractDriverFactoryTest extends TestCase
         );
     }
 
-    public function testJsonDriver()
+    public function testJsonDriver(): void
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
@@ -142,7 +135,7 @@ class AbstractDriverFactoryTest extends TestCase
         );
     }
 
-    public function testXmlDriver()
+    public function testXmlDriver(): void
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,
@@ -150,7 +143,7 @@ class AbstractDriverFactoryTest extends TestCase
         );
     }
 
-    public function testYamlDriver()
+    public function testYamlDriver(): void
     {
         self::assertInstanceOf(
             AbstractMappingDriver::class,

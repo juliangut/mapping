@@ -23,7 +23,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get mapping driver.
      *
-     * @param array $mappingSource
+     * @param mixed[] $mappingSource
      *
      * @throws DriverException
      *
@@ -58,8 +58,8 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get mapping driver implementation.
      *
-     * @param string $type
-     * @param array  $paths
+     * @param string   $type
+     * @param string[] $paths
      *
      * @throws DriverException
      *
@@ -92,7 +92,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get annotation based mapping driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @throws DriverException
      *
@@ -108,7 +108,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get native PHP file based mapping driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @throws DriverException
      *
@@ -124,7 +124,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get XML file based mapping driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @throws DriverException
      *
@@ -140,7 +140,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get JSON file based mapping driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @throws DriverException
      *
@@ -156,7 +156,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get YAML file based mapping driver.
      *
-     * @param array $paths
+     * @param string[] $paths
      *
      * @throws DriverException
      *

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver\Traits;
 
+use Jgut\Mapping\Exception\DriverException;
 use Jgut\Mapping\Tests\Stubs\JsonMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
@@ -29,26 +30,25 @@ class JsonMappingTraitTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapping = new JsonMappingDriverStub();
     }
 
-    public function testExtensions()
+    public function testExtensions(): void
     {
         self::assertEquals(['json'], $this->mapping->getExtensions());
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessageRegExp /JSON mapping file .+ parsing error: Syntax error/
-     */
-    public function testLoadError()
+    public function testLoadError(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessageRegExp('/JSON mapping file .+ parsing error: Syntax error/');
+
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.json');
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         self::assertEquals(
             [

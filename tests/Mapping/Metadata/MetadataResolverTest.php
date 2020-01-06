@@ -25,7 +25,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 class MetadataResolverTest extends TestCase
 {
-    public function testResolver()
+    public function testResolver(): void
     {
         $factory = $this->getMockBuilder(DriverFactoryInterface::class)
             ->getMock();
@@ -55,7 +55,7 @@ class MetadataResolverTest extends TestCase
         self::assertInstanceOf(MetadataStub::class, $metadata[1]);
     }
 
-    public function testCachedResolver()
+    public function testCachedResolver(): void
     {
         $factory = $this->getMockBuilder(DriverFactoryInterface::class)
             ->getMock();

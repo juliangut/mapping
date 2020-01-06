@@ -23,7 +23,7 @@ abstract class AbstractAnnotation
     /**
      * Abstract annotation constructor.
      *
-     * @param mixed[]|\Traversable $parameters
+     * @param mixed[]|\Traversable|mixed $parameters
      *
      * @throws AnnotationException
      */
@@ -31,6 +31,9 @@ abstract class AbstractAnnotation
     {
         if (!\is_array($parameters) && !$parameters instanceof \Traversable) {
             throw new AnnotationException('Parameters must be an iterable');
+        }
+        if ($parameters instanceof \Traversable) {
+            $parameters = \iterator_to_array($parameters);
         }
 
         $configs = \array_keys(\get_object_vars($this));
@@ -47,6 +50,7 @@ abstract class AbstractAnnotation
 
         foreach ($configs as $config) {
             if (isset($parameters[$config])) {
+                /** @var callable $callback */
                 $callback = [$this, 'set' . \ucfirst($config)];
 
                 \call_user_func($callback, $parameters[$config]);

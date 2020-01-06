@@ -31,7 +31,7 @@ interface DriverFactoryInterface
     /**
      * Get mapping driver.
      *
-     * @param array $mappingSource
+     * @param string[] $mappingSource
      *
      * @return DriverInterface
      */

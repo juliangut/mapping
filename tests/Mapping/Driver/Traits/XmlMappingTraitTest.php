@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver\Traits;
 
+use Jgut\Mapping\Exception\DriverException;
 use Jgut\Mapping\Tests\Stubs\XmlMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
@@ -29,26 +30,25 @@ class XmlMappingTraitTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapping = new XmlMappingDriverStub();
     }
 
-    public function testExtensions()
+    public function testExtensions(): void
     {
         self::assertEquals(['xml'], $this->mapping->getExtensions());
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\DriverException
-     * @expectedExceptionMessageRegExp /XML mapping file .+ parsing error: ""/
-     */
-    public function testLoadError()
+    public function testLoadError(): void
     {
+        $this->expectException(DriverException::class);
+        $this->expectExceptionMessageRegExp('/XML mapping file .+ parsing error: ""/');
+
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.xml');
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         self::assertEquals(
             [

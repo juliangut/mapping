@@ -36,7 +36,7 @@ class AnnotationStub extends AbstractAnnotation
     /**
      * @param string $known
      */
-    public function setKnown(string $known)
+    public function setKnown(string $known): void
     {
         $this->known = $known;
     }

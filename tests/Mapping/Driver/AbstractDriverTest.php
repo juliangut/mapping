@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractDriverTest extends TestCase
 {
-    public function testLocator()
+    public function testLocator(): void
     {
         self::assertInstanceOf(FileLocator::class, (new AbstractDriverStub([]))->getLocator());
     }

@@ -65,7 +65,7 @@ class MetadataResolver
         }
 
         $metadata = \array_map(
-            function (array $mappingSource) {
+            function (array $mappingSource): array {
                 return $this->driverFactory->getDriver($mappingSource)->getMetadata();
             },
             $mappingSources
@@ -82,7 +82,7 @@ class MetadataResolver
     /**
      * Get cache key.
      *
-     * @param array $mappingSources
+     * @param mixed[] $mappingSources
      *
      * @return string
      */

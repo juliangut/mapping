@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Annotation;
 
+use Jgut\Mapping\Exception\AnnotationException;
 use Jgut\Mapping\Tests\Stubs\AnnotationStub;
 use PHPUnit\Framework\TestCase;
 
@@ -21,25 +22,23 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractAnnotationTest extends TestCase
 {
-    /**
-     * @expectedException \Jgut\Mapping\Exception\AnnotationException
-     * @expectedExceptionMessage Parameters must be an iterable
-     */
-    public function testInvalidParameters()
+    public function testInvalidParameters(): void
     {
+        $this->expectException(AnnotationException::class);
+        $this->expectExceptionMessage('Parameters must be an iterable');
+
         new AnnotationStub('invalid');
     }
 
-    /**
-     * @expectedException \Jgut\Mapping\Exception\AnnotationException
-     * @expectedExceptionMessage The following annotation parameters are not recognized: unknown
-     */
-    public function testUnknownParameter()
+    public function testUnknownParameter(): void
     {
+        $this->expectException(AnnotationException::class);
+        $this->expectExceptionMessage('The following annotation parameters are not recognized: unknown');
+
         new AnnotationStub(['unknown' => '']);
     }
 
-    public function testParameters()
+    public function testParameters(): void
     {
         $annotation = new AnnotationStub(['known' => 'Text']);
 
