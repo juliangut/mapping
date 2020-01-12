@@ -88,7 +88,7 @@ class MetadataResolver
      */
     protected function getCacheKey(array $mappingSources): string
     {
-        return \implode(
+        $key = \implode(
             '.',
             \array_map(
                 function (array $mappingSource): string {
@@ -101,6 +101,8 @@ class MetadataResolver
                 $mappingSources
             )
         );
+
+        return \sha1($key);
     }
 
     /**
