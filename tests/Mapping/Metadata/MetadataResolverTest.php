@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Driver;
+namespace Jgut\Mapping\Tests\Metadata;
 
 use Jgut\Mapping\Driver\DriverFactoryInterface;
 use Jgut\Mapping\Metadata\MetadataResolver;
