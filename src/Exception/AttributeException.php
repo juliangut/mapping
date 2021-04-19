@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Files\Classes;
+namespace Jgut\Mapping\Exception;
 
 /**
- * Dummy class.
+ * Attribute exception.
  */
-class ClassA
+class AttributeException extends \RuntimeException
 {
 }

@@ -13,20 +13,24 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Stubs;
 
-use Jgut\Mapping\Annotation\AbstractAnnotation;
-
+#[\Attribute(\Attribute::TARGET_CLASS)]
 /**
- * Abstract annotation stub.
- *
- * @Annotation
- * @Target("CLASS")
+ * Abstract attribute stub.
  */
-class AnnotationStub extends AbstractAnnotation
+class AttributeStub
 {
     /**
      * @var string
      */
     protected $name;
+
+    /**
+     * AttributeStub constructor.
+     */
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @return string

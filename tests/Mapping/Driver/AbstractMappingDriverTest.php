@@ -25,7 +25,7 @@ class AbstractMappingDriverTest extends TestCase
     {
         $driver = new AbstractMappingDriverStub([\dirname(__DIR__) . '/Files/files/valid']);
 
-        self::assertEquals(
+        static::assertSame(
             [
                 'parameterOne' => [
                     'subParameterOne' => 1,

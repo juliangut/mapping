@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 class YamlMappingTraitTest extends TestCase
 {
     /**
-     * @var \Jgut\Mapping\Driver\Traits\YamlMappingTrait
+     * @var YamlMappingDriverStub
      */
     protected $mapping;
 
@@ -37,14 +37,14 @@ class YamlMappingTraitTest extends TestCase
 
     public function testExtensions(): void
     {
-        self::assertEquals(['yml', 'yaml'], $this->mapping->getExtensions());
+        static::assertSame(['yml', 'yaml'], $this->mapping->getExtensions());
     }
 
     public function testLoadError(): void
     {
         $this->expectException(DriverException::class);
-        $this->expectExceptionMessageRegExp(
-            '/YAML mapping file .+ parsing error: A colon cannot be used in an unquoted .+/'
+        $this->expectExceptionMessageMatches(
+            '/^YAML mapping file ".+" parsing error: A colon cannot be used in an unquoted .+\.$/'
         );
 
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.yml');
@@ -52,7 +52,7 @@ class YamlMappingTraitTest extends TestCase
 
     public function testLoad(): void
     {
-        self::assertEquals(
+        static::assertSame(
             [
                 'parameterOne' => [
                     'subParameterOne' => 'valueOne',

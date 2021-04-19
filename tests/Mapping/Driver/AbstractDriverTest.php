@@ -24,6 +24,6 @@ class AbstractDriverTest extends TestCase
 {
     public function testLocator(): void
     {
-        self::assertInstanceOf(FileLocator::class, (new AbstractDriverStub([]))->getLocator());
+        static::assertInstanceOf(FileLocator::class, (new AbstractDriverStub([]))->getLocator());
     }
 }

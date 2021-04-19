@@ -51,7 +51,7 @@ trait YamlMappingTrait
             // @codeCoverageIgnoreStart
         } catch (ParseException $exception) {
             throw new DriverException(
-                \sprintf('YAML mapping file %s parsing error: %s', $mappingFile, $exception->getMessage())
+                \sprintf('YAML mapping file "%s" parsing error: %s.', $mappingFile, \rtrim($exception->getMessage()))
             );
         }
         // @codeCoverageIgnoreEnd

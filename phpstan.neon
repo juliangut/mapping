@@ -2,9 +2,3 @@ parameters:
   level: max
   paths:
     - src
-  checkGenericClassInNonGenericObjectType: false
-  ignoreErrors:
-    - message: '/^Call to deprecated method registerLoader\(\) of class Doctrine\\Common\\Annotations\\AnnotationRegistry:\nthis method is deprecated and will be removed in doctrine\/annotations 2\.0\nautoloading should be deferred to the globally registered autoloader by then\. For now,\nuse @example AnnotationRegistry::registerLoader\(.+\)$/'
-      path: src/Driver/AbstractAnnotationDriver.php
-    - message: '/^Parameter #1 \$argument of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given\.$/'
-      path: src/Driver/AbstractAnnotationDriver.php

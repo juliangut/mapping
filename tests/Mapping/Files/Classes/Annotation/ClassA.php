@@ -11,19 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Driver;
+namespace Jgut\Mapping\Tests\Files\Classes\Annotation;
 
-use Jgut\Mapping\Metadata\MetadataInterface;
+use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 
 /**
- * Mapping driver interface.
+ * Dummy class.
+ *
+ * @Stub(name="myClassA")
  */
-interface DriverInterface
+class ClassA
 {
-    /**
-     * Get mapped metadata.
-     *
-     * @return MetadataInterface[]
-     */
-    public function getMetadata(): array;
 }

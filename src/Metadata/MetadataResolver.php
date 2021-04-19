@@ -39,9 +39,9 @@ class MetadataResolver
      * MetadataResolver constructor.
      *
      * @param DriverFactoryInterface $driverFactory
-     * @param CacheInterface         $cache
+     * @param CacheInterface|null    $cache
      */
-    public function __construct(DriverFactoryInterface $driverFactory, CacheInterface $cache = null)
+    public function __construct(DriverFactoryInterface $driverFactory, ?CacheInterface $cache = null)
     {
         $this->driverFactory = $driverFactory;
         $this->cache = $cache;
@@ -114,11 +114,15 @@ class MetadataResolver
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
+        $defaultDriver = \version_compare(\PHP_VERSION, '8.0.0') >= 0
+            ? DriverFactoryInterface::DRIVER_ATTRIBUTE
+            : DriverFactoryInterface::DRIVER_ANNOTATION;
+
         return \array_map(
-            function ($mappingSource): array {
+            function ($mappingSource) use ($defaultDriver): array {
                 if (!\is_array($mappingSource)) {
                     $mappingSource = [
-                        'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
+                        'type' => $defaultDriver,
                         'path' => $mappingSource,
                     ];
                 }

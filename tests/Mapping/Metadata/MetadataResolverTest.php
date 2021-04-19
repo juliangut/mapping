@@ -29,19 +29,30 @@ class MetadataResolverTest extends TestCase
     {
         $factory = $this->getMockBuilder(DriverFactoryInterface::class)
             ->getMock();
-        $factory->expects($this->exactly(2))
+        $factory->expects(static::exactly(2))
             ->method('getDriver')
-            ->will($this->returnValue(new AbstractDriverStub([])));
-        /* @var DriverFactoryInterface $factory */
+            ->withConsecutive(
+                [
+                    [
+                        'type' => \version_compare(\PHP_VERSION, '8.0.0') >= 0
+                            ? DriverFactoryInterface::DRIVER_ATTRIBUTE
+                            : DriverFactoryInterface::DRIVER_ANNOTATION,
+                        'path' => __DIR__,
+                    ],
+                ],
+                [
+                    ['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => __DIR__],
+                ]
+            )
+            ->willReturn(new AbstractDriverStub([]));
 
         $cache = $this->getMockBuilder(CacheInterface::class)
             ->getMock();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('has')
-            ->will($this->returnValue(false));
-        $cache->expects($this->once())
+            ->willReturn(false);
+        $cache->expects(static::once())
             ->method('set');
-        /* @var CacheInterface $cache */
 
         $mappingSources = [
             __DIR__,
@@ -50,28 +61,26 @@ class MetadataResolverTest extends TestCase
 
         $metadata = (new MetadataResolver($factory, $cache))->getMetadata($mappingSources);
 
-        self::assertCount(2, $metadata);
-        self::assertInstanceOf(MetadataStub::class, $metadata[0]);
-        self::assertInstanceOf(MetadataStub::class, $metadata[1]);
+        static::assertCount(2, $metadata);
+        static::assertInstanceOf(MetadataStub::class, $metadata[0]);
+        static::assertInstanceOf(MetadataStub::class, $metadata[1]);
     }
 
     public function testCachedResolver(): void
     {
         $factory = $this->getMockBuilder(DriverFactoryInterface::class)
             ->getMock();
-        /* @var DriverFactoryInterface $factory */
 
         $metadataStub = new MetadataStub();
 
         $cache = $this->getMockBuilder(CacheInterface::class)
             ->getMock();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('has')
-            ->will($this->returnValue(true));
-        $cache->expects($this->once())
+            ->willReturn(true);
+        $cache->expects(static::once())
             ->method('get')
-            ->will($this->returnValue([$metadataStub]));
-        /* @var CacheInterface $cache */
+            ->willReturn([$metadataStub]);
 
         $mappingSources = [
             __DIR__,
@@ -80,7 +89,7 @@ class MetadataResolverTest extends TestCase
 
         $metadata = (new MetadataResolver($factory, $cache))->getMetadata($mappingSources);
 
-        self::assertCount(1, $metadata);
-        self::assertEquals($metadataStub, $metadata[0]);
+        static::assertCount(1, $metadata);
+        static::assertSame($metadataStub, $metadata[0]);
     }
 }

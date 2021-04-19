@@ -11,4 +11,14 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+namespace Jgut\Mapping\Tests\Files\Classes\Attribute;
+
+use Jgut\Mapping\Tests\Stubs\AttributeStub as Stub;
+
+#[Stub(name: 'myClassA')]
+/**
+ * Dummy class.
+ */
+class ClassA
+{
+}

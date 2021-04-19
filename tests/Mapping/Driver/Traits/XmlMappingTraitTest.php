@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 class XmlMappingTraitTest extends TestCase
 {
     /**
-     * @var \Jgut\Mapping\Driver\Traits\XmlMappingTrait
+     * @var XmlMappingDriverStub
      */
     protected $mapping;
 
@@ -37,20 +37,20 @@ class XmlMappingTraitTest extends TestCase
 
     public function testExtensions(): void
     {
-        self::assertEquals(['xml'], $this->mapping->getExtensions());
+        static::assertSame(['xml'], $this->mapping->getExtensions());
     }
 
     public function testLoadError(): void
     {
         $this->expectException(DriverException::class);
-        $this->expectExceptionMessageRegExp('/XML mapping file .+ parsing error: ""/');
+        $this->expectExceptionMessageMatches('/^XML mapping file ".+" parsing error: \.$/');
 
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.xml');
     }
 
     public function testLoad(): void
     {
-        self::assertEquals(
+        static::assertSame(
             [
                 'parameterOne' => [
                     'trueValue' => true,

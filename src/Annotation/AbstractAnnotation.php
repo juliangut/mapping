@@ -30,7 +30,7 @@ abstract class AbstractAnnotation
     public function __construct($parameters)
     {
         if (!\is_array($parameters) && !$parameters instanceof \Traversable) {
-            throw new AnnotationException('Parameters must be an iterable');
+            throw new AnnotationException('Parameters must be an iterable.');
         }
         if ($parameters instanceof \Traversable) {
             $parameters = \iterator_to_array($parameters);
@@ -42,7 +42,7 @@ abstract class AbstractAnnotation
         if (\count($unknownParameters) > 0) {
             throw new AnnotationException(
                 \sprintf(
-                    'The following annotation parameters are not recognized: %s',
+                    'The following annotation parameters are not recognized: %s.',
                     \implode(', ', $unknownParameters)
                 )
             );

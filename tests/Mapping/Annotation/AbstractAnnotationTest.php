@@ -25,7 +25,7 @@ class AbstractAnnotationTest extends TestCase
     public function testInvalidParameters(): void
     {
         $this->expectException(AnnotationException::class);
-        $this->expectExceptionMessage('Parameters must be an iterable');
+        $this->expectExceptionMessage('Parameters must be an iterable.');
 
         new AnnotationStub('invalid');
     }
@@ -33,15 +33,15 @@ class AbstractAnnotationTest extends TestCase
     public function testUnknownParameter(): void
     {
         $this->expectException(AnnotationException::class);
-        $this->expectExceptionMessage('The following annotation parameters are not recognized: unknown');
+        $this->expectExceptionMessage('The following annotation parameters are not recognized: unknown.');
 
         new AnnotationStub(['unknown' => '']);
     }
 
     public function testParameters(): void
     {
-        $annotation = new AnnotationStub(['known' => 'Text']);
+        $annotation = new AnnotationStub(['name' => 'Text']);
 
-        self::assertEquals('Text', $annotation->getKnown());
+        static::assertSame('Text', $annotation->getName());
     }
 }

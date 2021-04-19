@@ -24,7 +24,7 @@ class FileLocatorTest extends TestCase
     public function testInvalidPath(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Path "non/existing/path" does not exist');
+        $this->expectExceptionMessage('Path "non/existing/path" does not exist.');
 
         (new FileLocator(['non/existing/path'], ['php']))->getMappingFiles();
     }
@@ -36,23 +36,30 @@ class FileLocatorTest extends TestCase
 
         $locator = new FileLocator($paths, $extensions);
 
-        self::assertEquals($paths, $locator->getPaths());
-        self::assertEquals($extensions, $locator->getExtensions());
+        static::assertSame($paths, $locator->getPaths());
+        static::assertSame($extensions, $locator->getExtensions());
 
-        /** @var \ReflectionClass[] $routing */
         $routing = $locator->getMappingFiles();
 
-        self::assertEquals(
-            \dirname(__DIR__, 2) . '/Files/Classes/ClassA.php',
+        static::assertSame(
+            \dirname(__DIR__, 2) . '/Files/Classes/Annotation/ClassA.php',
             $routing[0]
         );
-        self::assertEquals(
-            \dirname(__DIR__, 2) . '/Files/Classes/ClassB.php',
+        static::assertSame(
+            \dirname(__DIR__, 2) . '/Files/Classes/Annotation/ClassB.php',
             $routing[1]
         );
-        self::assertEquals(
-            \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php',
+        static::assertSame(
+            \dirname(__DIR__, 2) . '/Files/Classes/Attribute/ClassA.php',
             $routing[2]
+        );
+        static::assertSame(
+            \dirname(__DIR__, 2) . '/Files/Classes/Attribute/ClassB.php',
+            $routing[3]
+        );
+        static::assertSame(
+            \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php',
+            $routing[4]
         );
     }
 }

@@ -45,7 +45,7 @@ trait JsonMappingTrait
 
         if (\json_last_error() !== \JSON_ERROR_NONE) {
             throw new DriverException(
-                \sprintf('JSON mapping file %s parsing error: %s', $mappingFile, \json_last_error_msg())
+                \sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, \rtrim(\json_last_error_msg(), '.'))
             );
         }
 

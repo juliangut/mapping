@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class PhpMappingTraitTest extends TestCase
 {
     /**
-     * @var \Jgut\Mapping\Driver\Traits\PhpMappingTrait
+     * @var PhpMappingDriverStub
      */
     protected $mapping;
 
@@ -36,12 +36,12 @@ class PhpMappingTraitTest extends TestCase
 
     public function testExtensions(): void
     {
-        self::assertEquals(['php'], $this->mapping->getExtensions());
+        static::assertSame(['php'], $this->mapping->getExtensions());
     }
 
     public function testLoad(): void
     {
-        self::assertEquals(
+        static::assertSame(
             [
                 'parameterOne' => [
                     'subParameterOne' => 'valueOne',

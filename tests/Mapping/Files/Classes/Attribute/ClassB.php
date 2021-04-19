@@ -11,8 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Files\Classes;
+namespace Jgut\Mapping\Tests\Files\Classes\Attribute;
 
+use Jgut\Mapping\Tests\Stubs\AttributeStub as Stub;
+
+#[Stub(name: 'myClassB')]
 /**
  * Dummy class.
  */

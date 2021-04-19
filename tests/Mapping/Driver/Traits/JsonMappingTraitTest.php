@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 class JsonMappingTraitTest extends TestCase
 {
     /**
-     * @var \Jgut\Mapping\Driver\Traits\JsonMappingTrait
+     * @var JsonMappingDriverStub
      */
     protected $mapping;
 
@@ -37,20 +37,20 @@ class JsonMappingTraitTest extends TestCase
 
     public function testExtensions(): void
     {
-        self::assertEquals(['json'], $this->mapping->getExtensions());
+        static::assertSame(['json'], $this->mapping->getExtensions());
     }
 
     public function testLoadError(): void
     {
         $this->expectException(DriverException::class);
-        $this->expectExceptionMessageRegExp('/JSON mapping file .+ parsing error: Syntax error/');
+        $this->expectExceptionMessageMatches('/^JSON mapping file ".+" parsing error: Syntax error\.$/');
 
         $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.json');
     }
 
     public function testLoad(): void
     {
-        self::assertEquals(
+        static::assertSame(
             [
                 'parameterOne' => [
                     'subParameterOne' => 'valueOne',

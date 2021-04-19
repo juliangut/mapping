@@ -25,14 +25,6 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     /**
      * {@inheritdoc}
      */
-    protected function getAnnotationDriver(array $paths): DriverInterface
-    {
-        return new AbstractAnnotationDriverStub($paths, new AnnotationReader());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function getPhpDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
@@ -60,5 +52,21 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     protected function getYamlDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAttributeDriver(array $paths): DriverInterface
+    {
+        return new AbstractAttributeDriverStub($paths);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAnnotationDriver(array $paths): DriverInterface
+    {
+        return new AbstractAnnotationDriverStub($paths, new AnnotationReader());
     }
 }

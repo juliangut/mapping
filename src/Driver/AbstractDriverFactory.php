@@ -36,7 +36,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
 
             if (!$driver instanceof DriverInterface) {
                 throw new DriverException(\sprintf(
-                    'Metadata mapping driver should be of the type %s, %s given',
+                    'Metadata mapping driver should be of the type "%s", "%s" given.',
                     DriverInterface::class,
                     \is_object($driver) ? \get_class($driver) : \gettype($driver)
                 ));
@@ -51,7 +51,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         throw new DriverException(
-            'Mapping must be array with "driver" key or "type" and "path" keys'
+            'Mapping must be array with "driver" key or "type" and "path" keys.'
         );
     }
 
@@ -68,9 +68,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     protected function getDriverImplementation(string $type, array $paths): DriverInterface
     {
         switch ($type) {
-            case DriverFactoryInterface::DRIVER_ANNOTATION:
-                return $this->getAnnotationDriver($paths);
-
             case DriverFactoryInterface::DRIVER_PHP:
                 return $this->getPhpDriver($paths);
 
@@ -82,27 +79,17 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
 
             case DriverFactoryInterface::DRIVER_YAML:
                 return $this->getYamlDriver($paths);
+
+            case DriverFactoryInterface::DRIVER_ATTRIBUTE:
+                return $this->getAttributeDriver($paths);
+
+            case DriverFactoryInterface::DRIVER_ANNOTATION:
+                return $this->getAnnotationDriver($paths);
         }
 
         throw new DriverException(
-            \sprintf('"%s" is not a valid metadata mapping driver', $type)
+            \sprintf('"%s" is not a valid metadata mapping driver.', $type)
         );
-    }
-
-    /**
-     * Get annotation based mapping driver.
-     *
-     * @param string[] $paths
-     *
-     * @throws DriverException
-     *
-     * @return DriverInterface
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    protected function getAnnotationDriver(array $paths): DriverInterface
-    {
-        throw new DriverException('Annotation metadata mapping driver is not supported');
     }
 
     /**
@@ -118,7 +105,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getPhpDriver(array $paths): DriverInterface
     {
-        throw new DriverException('PHP metadata mapping driver is not supported');
+        throw new DriverException('PHP metadata mapping driver is not supported.');
     }
 
     /**
@@ -134,7 +121,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getXmlDriver(array $paths): DriverInterface
     {
-        throw new DriverException('XML metadata mapping driver is not supported');
+        throw new DriverException('XML metadata mapping driver is not supported.');
     }
 
     /**
@@ -150,7 +137,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getJsonDriver(array $paths): DriverInterface
     {
-        throw new DriverException('JSON metadata mapping driver is not supported');
+        throw new DriverException('JSON metadata mapping driver is not supported.');
     }
 
     /**
@@ -166,6 +153,38 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getYamlDriver(array $paths): DriverInterface
     {
-        throw new DriverException('YAML metadata mapping driver is not supported');
+        throw new DriverException('YAML metadata mapping driver is not supported.');
+    }
+
+    /**
+     * Get PHP class attribute based mapping driver.
+     *
+     * @param string[] $paths
+     *
+     * @throws DriverException
+     *
+     * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    protected function getAttributeDriver(array $paths): DriverInterface
+    {
+        throw new DriverException('PHP class attribute metadata mapping driver is not supported.');
+    }
+
+    /**
+     * Get annotation based mapping driver.
+     *
+     * @param string[] $paths
+     *
+     * @throws DriverException
+     *
+     * @return DriverInterface
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    protected function getAnnotationDriver(array $paths): DriverInterface
+    {
+        throw new DriverException('Annotation metadata mapping driver is not supported.');
     }
 }

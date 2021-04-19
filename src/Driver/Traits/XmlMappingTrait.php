@@ -70,13 +70,11 @@ trait XmlMappingTrait
      */
     protected function loadMappingFile(string $mappingFile): array
     {
-        $disableEntityLoader = \libxml_disable_entity_loader(true);
         $useInternalErrors = \libxml_use_internal_errors(true);
 
         $mappingData = \simplexml_load_string(\file_get_contents($mappingFile));
 
         \libxml_use_internal_errors($useInternalErrors);
-        \libxml_disable_entity_loader($disableEntityLoader);
 
         if ($mappingData === false) {
             // @codeCoverageIgnoreStart
@@ -91,7 +89,7 @@ trait XmlMappingTrait
             \libxml_clear_errors();
 
             throw new DriverException(
-                \sprintf('XML mapping file %s parsing error: "%s"', $mappingFile, \implode(',', $errors))
+                \sprintf('XML mapping file "%s" parsing error: %s.', $mappingFile, \rtrim(\implode(',', $errors), '.'))
             );
         }
 

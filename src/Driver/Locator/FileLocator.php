@@ -83,7 +83,7 @@ class FileLocator
             } elseif (\is_file($mappingPath)) {
                 $mappingPaths[] = [$mappingPath];
             } else {
-                throw new DriverException(\sprintf('Path "%s" does not exist', $mappingPath));
+                throw new DriverException(\sprintf('Path "%s" does not exist.', $mappingPath));
             }
         }
 

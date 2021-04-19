@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Stubs;
 
-use Jgut\Mapping\Driver\AbstractAnnotationDriver;
+use Jgut\Mapping\Driver\AbstractClassDriver;
 
 /**
- * Abstract annotation mapping driver stub.
+ * Abstract PHP class attribute mapping driver stub.
  */
-class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
+class AbstractAttributeDriverStub extends AbstractClassDriver
 {
     /**
      * {@inheritdoc}
@@ -37,16 +37,16 @@ class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
     }
 
     /**
-     * @return array<mixed>
+     * @return array<mixed>>
      */
-    public function getAnnotations(): array
+    public function getAttributes(): array
     {
-        $annotations = [];
+        $attributes = [];
 
         foreach ($this->getMappingClasses() as $mappingClass) {
-            $annotations[] = $this->annotationReader->getClassAnnotation($mappingClass, AnnotationStub::class);
+            $attributes[] = $mappingClass->getAttributes(AttributeStub::class)[0]->newInstance();
         }
 
-        return $annotations;
+        return $attributes;
     }
 }
