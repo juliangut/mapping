@@ -80,6 +80,3 @@ jobs:
 
       - name: Run static analysis
         run: make qa-phpstan
-
-      - name: Run binary
-        run: make taquion
