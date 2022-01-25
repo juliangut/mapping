@@ -89,7 +89,8 @@ abstract class AbstractClassDriver extends AbstractDriver
                         $namespace .= $token[1];
 
                         $token = $tokens[++$i];
-                    } while ($i < $length
+                    } while (
+                        $i < $length
                         && \is_array($token)
                         && \in_array($token[0], [\T_NS_SEPARATOR, \T_STRING], true)
                     );
