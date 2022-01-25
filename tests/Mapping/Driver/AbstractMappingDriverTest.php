@@ -17,13 +17,13 @@ use Jgut\Mapping\Tests\Stubs\AbstractMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Abstract file based mapping driver tests.
+ * @internal
  */
 class AbstractMappingDriverTest extends TestCase
 {
     public function testMappings(): void
     {
-        $driver = new AbstractMappingDriverStub([\dirname(__DIR__) . '/Files/files/valid']);
+        $driver = new AbstractMappingDriverStub([__DIR__ . '/../Files/files/valid']);
 
         static::assertSame(
             [
@@ -34,7 +34,7 @@ class AbstractMappingDriverTest extends TestCase
                 0 => 'parameterThree',
                 1 => 'parameterFour',
             ],
-            $driver->getMappingData()
+            $driver->getMappingData(),
         );
     }
 }

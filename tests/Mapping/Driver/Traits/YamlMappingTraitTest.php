@@ -18,17 +18,14 @@ use Jgut\Mapping\Tests\Stubs\YamlMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * YAML file mapping trait tests.
+ * @internal
  */
 class YamlMappingTraitTest extends TestCase
 {
-    /**
-     * @var YamlMappingDriverStub
-     */
-    protected $mapping;
+    protected YamlMappingDriverStub $mapping;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -44,10 +41,10 @@ class YamlMappingTraitTest extends TestCase
     {
         $this->expectException(DriverException::class);
         $this->expectExceptionMessageMatches(
-            '/^YAML mapping file ".+" parsing error: A colon cannot be used in an unquoted .+\.$/'
+            '/^YAML mapping file ".+" parsing error: A colon cannot be used in an unquoted .+\.$/',
         );
 
-        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.yml');
+        $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/invalid/invalid.yml');
     }
 
     public function testLoad(): void
@@ -59,7 +56,7 @@ class YamlMappingTraitTest extends TestCase
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
-            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.yml')
+            $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/valid/valid.yml'),
         );
     }
 }

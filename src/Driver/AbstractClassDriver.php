@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver;
 
-/**
- * Abstract PHP class mapping driver.
- */
+use Jgut\Mapping\Exception\DriverException;
+use ReflectionClass;
+
 abstract class AbstractClassDriver extends AbstractDriver
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getExtensions(): array
     {
@@ -29,9 +29,9 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * Get mapping classes.
      *
-     * @throws \Jgut\Mapping\Exception\DriverException
+     * @throws DriverException
      *
-     * @return array<\ReflectionClass<object>>
+     * @return array<ReflectionClass<object>>
      */
     protected function getMappingClasses(): array
     {
@@ -42,29 +42,25 @@ abstract class AbstractClassDriver extends AbstractDriver
             $mappingClasses[] = $this->loadClassFromFile($annotationFile);
         }
 
-        return \array_map(
-            function (string $sourceClass): \ReflectionClass {
+        return array_map(
+            static function (string $sourceClass): ReflectionClass {
                 /** @var class-string<object> $sourceClass */
-                return new \ReflectionClass($sourceClass);
+                return new ReflectionClass($sourceClass);
             },
-            \array_filter(\array_unique($mappingClasses))
+            array_filter(array_unique($mappingClasses)),
         );
     }
 
     /**
      * Load fully qualified class name from file.
      *
-     * @param string $annotationFile
-     *
-     * @return string
-     *
      * @SuppressWarnings(PMD.CyclomaticComplexity)
      * @SuppressWarnings(PMD.NPathComplexity)
      */
     protected function loadClassFromFile(string $annotationFile): string
     {
-        $content = \file_get_contents($annotationFile);
-        $tokens = \token_get_all($content !== false ? $content : '');
+        $content = file_get_contents($annotationFile);
+        $tokens = token_get_all($content !== false ? $content : '');
         $hasClass = false;
         $class = null;
         $hasNamespace = false;
@@ -84,7 +80,7 @@ abstract class AbstractClassDriver extends AbstractDriver
             }
 
             if ($hasNamespace) {
-                if (\version_compare(\PHP_VERSION, '8.0.0') >= 0 && $token[0] === \T_NAME_QUALIFIED) {
+                if (version_compare(\PHP_VERSION, '8.0.0') >= 0 && $token[0] === T_NAME_QUALIFIED) {
                     $namespace .= $token[1];
 
                     $hasNamespace = false;

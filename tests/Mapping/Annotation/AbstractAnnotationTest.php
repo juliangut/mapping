@@ -18,7 +18,7 @@ use Jgut\Mapping\Tests\Stubs\AnnotationStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Abstract annotation tests.
+ * @internal
  */
 class AbstractAnnotationTest extends TestCase
 {

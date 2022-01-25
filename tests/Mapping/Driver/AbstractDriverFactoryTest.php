@@ -23,19 +23,16 @@ use Jgut\Mapping\Tests\Stubs\EmptyDriverFactoryStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Abstract driver factory tests.
- *
  * @SuppressWarnings(PMD.TooManyPublicMethods)
+ *
+ * @internal
  */
 class AbstractDriverFactoryTest extends TestCase
 {
-    /**
-     * @var AbstractDriverFactoryStub
-     */
-    protected $factory;
+    protected AbstractDriverFactoryStub $factory;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -102,7 +99,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         $this->expectException(DriverException::class);
         $this->expectExceptionMessageMatches(
-            '/^Metadata mapping driver should be of the type ".+", "string" given\.$/'
+            '/^Metadata mapping driver should be of the type ".+", "string" given\.$/',
         );
 
         $this->factory->getDriver(['driver' => 'invalid']);
@@ -119,7 +116,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         static::assertInstanceOf(
             AbstractAnnotationDriver::class,
-            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []]),
         );
     }
 
@@ -127,7 +124,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         static::assertInstanceOf(
             AbstractMappingDriver::class,
-            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []]),
         );
     }
 
@@ -135,7 +132,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         static::assertInstanceOf(
             AbstractMappingDriver::class,
-            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []]),
         );
     }
 
@@ -143,7 +140,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         static::assertInstanceOf(
             AbstractMappingDriver::class,
-            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []]),
         );
     }
 
@@ -151,7 +148,7 @@ class AbstractDriverFactoryTest extends TestCase
     {
         static::assertInstanceOf(
             AbstractMappingDriver::class,
-            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []])
+            $this->factory->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []]),
         );
     }
 }

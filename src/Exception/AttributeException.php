@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Exception;
 
-/**
- * Attribute exception.
- */
-class AttributeException extends \RuntimeException
+use RuntimeException;
+
+class AttributeException extends RuntimeException
 {
 }

@@ -18,17 +18,14 @@ use Jgut\Mapping\Tests\Stubs\JsonMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * JSON file mapping trait tests.
+ * @internal
  */
 class JsonMappingTraitTest extends TestCase
 {
-    /**
-     * @var JsonMappingDriverStub
-     */
-    protected $mapping;
+    protected JsonMappingDriverStub $mapping;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -45,7 +42,7 @@ class JsonMappingTraitTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessageMatches('/^JSON mapping file ".+" parsing error: Syntax error\.$/');
 
-        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.json');
+        $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/invalid/invalid.json');
     }
 
     public function testLoad(): void
@@ -57,7 +54,7 @@ class JsonMappingTraitTest extends TestCase
                 ],
                 'parameterTwo' => 'valueTwo',
             ],
-            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.json')
+            $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/valid/valid.json'),
         );
     }
 }

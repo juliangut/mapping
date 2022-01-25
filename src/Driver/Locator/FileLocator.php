@@ -14,31 +14,26 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Driver\Locator;
 
 use Jgut\Mapping\Exception\DriverException;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use RegexIterator;
+use RecursiveRegexIterator;
 
-/**
- * Mapping files locator.
- */
 class FileLocator
 {
     /**
-     * File paths.
-     *
-     * @var string[]
+     * @var array<string>
      */
-    protected $paths = [];
+    protected array $paths = [];
 
     /**
-     * Supported file extensions.
-     *
-     * @var string[]
+     * @var array<string>
      */
-    protected $extensions;
+    protected array $extensions;
 
     /**
-     * AbstractSource constructor.
-     *
-     * @param string[] $paths
-     * @param string[] $extensions
+     * @param array<string> $paths
+     * @param array<string> $extensions
      */
     public function __construct(array $paths, array $extensions)
     {
@@ -49,7 +44,7 @@ class FileLocator
     /**
      * Get file paths.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPaths(): array
     {
@@ -59,7 +54,7 @@ class FileLocator
     /**
      * Get supported file extensions.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExtensions(): array
     {
@@ -71,45 +66,44 @@ class FileLocator
      *
      * @throws DriverException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMappingFiles(): array
     {
         $mappingPaths = [];
 
         foreach ($this->paths as $mappingPath) {
-            if (\is_dir($mappingPath)) {
+            if (is_dir($mappingPath)) {
                 $mappingPaths[] = $this->getFilesFromDirectory($mappingPath);
-            } elseif (\is_file($mappingPath)) {
+            } elseif (is_file($mappingPath)) {
                 $mappingPaths[] = [$mappingPath];
             } else {
-                throw new DriverException(\sprintf('Path "%s" does not exist.', $mappingPath));
+                throw new DriverException(sprintf('Path "%s" does not exist.', $mappingPath));
             }
         }
 
-        return \count($mappingPaths) > 0 ? \array_merge(...$mappingPaths) : [];
+        return \count($mappingPaths) > 0 ? array_merge(...$mappingPaths) : [];
     }
 
     /**
      * Get mapping files from directory.
      *
-     * @param string $mappingDirectory
-     *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFilesFromDirectory(string $mappingDirectory): array
     {
         $mappingPaths = [];
 
-        $filePattern = \sprintf('/^.+\.(%s)$/i', \implode('|', $this->extensions));
-        $recursiveIterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($mappingDirectory));
-        $regexIterator = new \RegexIterator($recursiveIterator, $filePattern, \RecursiveRegexIterator::GET_MATCH);
+        $filePattern = sprintf('/^.+\.(%s)$/i', implode('|', $this->extensions));
+        $recursiveIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($mappingDirectory));
+        $regexIterator = new RegexIterator($recursiveIterator, $filePattern, RecursiveRegexIterator::GET_MATCH);
 
+        /** @var array<string> $mappingFile */
         foreach ($regexIterator as $mappingFile) {
             $mappingPaths[] = $mappingFile[0];
         }
 
-        \sort($mappingPaths);
+        sort($mappingPaths);
 
         return $mappingPaths;
     }

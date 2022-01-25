@@ -15,15 +15,16 @@ namespace Jgut\Mapping\Tests\Driver\Locator;
 
 use Jgut\Mapping\Driver\Locator\FileLocator;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
- * Mapping file locator tests.
+ * @internal
  */
 class FileLocatorTest extends TestCase
 {
     public function testInvalidPath(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Path "non/existing/path" does not exist.');
 
         (new FileLocator(['non/existing/path'], ['php']))->getMappingFiles();
@@ -31,7 +32,7 @@ class FileLocatorTest extends TestCase
 
     public function testValidPath(): void
     {
-        $paths = [\dirname(__DIR__, 2) . '/Files/Classes', \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php'];
+        $paths = [__DIR__ . '/../../Files/Classes', __DIR__ . '/../../Stubs/AnnotationStub.php'];
         $extensions = ['php'];
 
         $locator = new FileLocator($paths, $extensions);
@@ -42,24 +43,24 @@ class FileLocatorTest extends TestCase
         $routing = $locator->getMappingFiles();
 
         static::assertSame(
-            \dirname(__DIR__, 2) . '/Files/Classes/Annotation/ClassA.php',
-            $routing[0]
+            __DIR__ . '/../../Files/Classes/Annotation/ClassA.php',
+            $routing[0],
         );
         static::assertSame(
-            \dirname(__DIR__, 2) . '/Files/Classes/Annotation/ClassB.php',
-            $routing[1]
+            __DIR__ . '/../../Files/Classes/Annotation/ClassB.php',
+            $routing[1],
         );
         static::assertSame(
-            \dirname(__DIR__, 2) . '/Files/Classes/Attribute/ClassA.php',
-            $routing[2]
+            __DIR__ . '/../../Files/Classes/Attribute/ClassA.php',
+            $routing[2],
         );
         static::assertSame(
-            \dirname(__DIR__, 2) . '/Files/Classes/Attribute/ClassB.php',
-            $routing[3]
+            __DIR__ . '/../../Files/Classes/Attribute/ClassB.php',
+            $routing[3],
         );
         static::assertSame(
-            \dirname(__DIR__, 2) . '/Stubs/AnnotationStub.php',
-            $routing[4]
+            __DIR__ . '/../../Stubs/AnnotationStub.php',
+            $routing[4],
         );
     }
 }

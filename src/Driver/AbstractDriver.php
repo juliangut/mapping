@@ -15,22 +15,12 @@ namespace Jgut\Mapping\Driver;
 
 use Jgut\Mapping\Driver\Locator\FileLocator;
 
-/**
- * Abstract mapping driver.
- */
 abstract class AbstractDriver implements DriverInterface
 {
-    /**
-     * File locator.
-     *
-     * @var FileLocator
-     */
-    protected $locator;
+    protected FileLocator $locator;
 
     /**
-     * AbstractDriver constructor.
-     *
-     * @param string[] $paths
+     * @param array<string> $paths
      */
     public function __construct(array $paths)
     {
@@ -40,7 +30,7 @@ abstract class AbstractDriver implements DriverInterface
     /**
      * Get supported mapping file extensions.
      *
-     * @return string[]
+     * @return array<string>
      */
     abstract protected function getExtensions(): array;
 }

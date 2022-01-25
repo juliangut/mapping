@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Driver\Traits;
 
 use Jgut\Mapping\Exception\DriverException;
+use LibXMLError;
+use SimpleXMLElement;
 
 /**
  * XML file mapping trait.
@@ -22,10 +24,8 @@ trait XmlMappingTrait
 {
     /**
      * Truthly values.
-     *
-     * @var array
      */
-    private static $truthlyValues = [
+    private static array $truthlyValues = [
         'true',
         'on',
         'yes',
@@ -33,10 +33,8 @@ trait XmlMappingTrait
 
     /**
      * Falsy values.
-     *
-     * @var array
      */
-    private static $falsyValues = [
+    private static array $falsyValues = [
         'false',
         'off',
         'no',
@@ -45,14 +43,12 @@ trait XmlMappingTrait
     /**
      * List of boolean values.
      *
-     * @var array
+     * @var array<bool>|null
      */
-    private static $boolValues;
+    private static ?array $boolValues = null;
 
     /**
-     * Get supported mapping file extensions.
-     *
-     * @return string[]
+     * @inheritDoc
      */
     protected function getExtensions(): array
     {
@@ -62,39 +58,35 @@ trait XmlMappingTrait
     /**
      * Load mappings from file.
      *
-     * @param string $mappingFile
-     *
      * @throws DriverException
-     *
-     * @return array
      */
     protected function loadMappingFile(string $mappingFile): array
     {
-        $useInternalErrors = \libxml_use_internal_errors(true);
+        $useInternalErrors = libxml_use_internal_errors(true);
 
-        $mappingData = \simplexml_load_string(\file_get_contents($mappingFile));
+        $mappingData = simplexml_load_string(file_get_contents($mappingFile));
 
-        \libxml_use_internal_errors($useInternalErrors);
+        libxml_use_internal_errors($useInternalErrors);
 
         if ($mappingData === false) {
             // @codeCoverageIgnoreStart
-            $errors = \array_map(
-                function (\LibXMLError $error) {
+            $errors = array_map(
+                static function (LibXMLError $error) {
                     return '"' . $error->message . '"';
                 },
-                \libxml_get_errors()
+                libxml_get_errors(),
             );
             // @codeCoverageIgnoreEnd
 
-            \libxml_clear_errors();
+            libxml_clear_errors();
 
             throw new DriverException(
-                \sprintf('XML mapping file "%s" parsing error: %s.', $mappingFile, \rtrim(\implode(',', $errors), '.'))
+                sprintf('XML mapping file "%s" parsing error: %s.', $mappingFile, rtrim(implode(',', $errors), '.')),
             );
         }
 
         if (self::$boolValues === null) {
-            self::$boolValues = \array_merge(self::$truthlyValues, self::$falsyValues);
+            self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
         }
 
         return $this->parseSimpleXML($mappingData);
@@ -103,23 +95,21 @@ trait XmlMappingTrait
     /**
      * Parse xml to array.
      *
-     * @param \SimpleXMLElement $element
-     *
      * @return string|float|int|bool|array
      */
-    final protected function parseSimpleXML(\SimpleXMLElement $element)
+    final protected function parseSimpleXML(SimpleXMLElement $element)
     {
         $elements = [];
 
         foreach ($element->attributes() as $attribute => $value) {
-            $elements[$attribute] = $value instanceof \SimpleXMLElement ? $this->parseSimpleXML($value) : $value;
+            $elements[$attribute] = $value instanceof SimpleXMLElement ? $this->parseSimpleXML($value) : $value;
         }
 
         foreach ($element->children() as $node => $child) {
-            $elements[$node] = $child instanceof \SimpleXMLElement ? $this->parseSimpleXML($child) : $child;
+            $elements[$node] = $child instanceof SimpleXMLElement ? $this->parseSimpleXML($child) : $child;
         }
 
-        if ($element->count() === 0 && \trim((string) $element) !== '') {
+        if ($element->count() === 0 && trim((string) $element) !== '') {
             $value = $this->getTypedValue((string) $element);
 
             if (\count($elements) === 0) {
@@ -135,8 +125,6 @@ trait XmlMappingTrait
     /**
      * Transforms string to type.
      *
-     * @param string $value
-     *
      * @return bool|float|int|string
      */
     private function getTypedValue(string $value)
@@ -145,7 +133,7 @@ trait XmlMappingTrait
             return \in_array($value, self::$truthlyValues, true);
         }
 
-        if (\is_numeric($value)) {
+        if (is_numeric($value)) {
             return $this->getNumericValue($value);
         }
 
@@ -155,13 +143,11 @@ trait XmlMappingTrait
     /**
      * Get numeric value from string.
      *
-     * @param string $value
-     *
      * @return float|int
      */
     private function getNumericValue(string $value)
     {
-        if (\strpos($value, '.') !== false) {
+        if (mb_strpos($value, '.') !== false) {
             return (float) $value;
         }
 

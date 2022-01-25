@@ -15,13 +15,10 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractAnnotationDriver;
 
-/**
- * Abstract annotation mapping driver stub.
- */
 class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMappingClasses(): array
     {
@@ -29,7 +26,7 @@ class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMetadata(): array
     {

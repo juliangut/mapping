@@ -15,9 +15,6 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractDriverFactory;
 
-/**
- * Empty driver factory stub.
- */
 class EmptyDriverFactoryStub extends AbstractDriverFactory
 {
 }

@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Stubs;
 
+use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\PhpMappingTrait;
 
-/**
- * PHP file mapping driver stub.
- */
-class PhpMappingDriverStub
+class PhpMappingDriverStub implements DriverInterface
 {
     use PhpMappingTrait {
         getExtensions as originalGetExtensions;
@@ -26,9 +24,7 @@ class PhpMappingDriverStub
     }
 
     /**
-     * Get supported mapping file extensions.
-     *
-     * @return string[]
+     * @inheritDoc
      */
     public function getExtensions(): array
     {
@@ -36,14 +32,18 @@ class PhpMappingDriverStub
     }
 
     /**
-     * Load mappings from file.
-     *
-     * @param string $mappingFile
-     *
-     * @return array
+     * @inheritDoc
      */
     public function loadMappingFile(string $mappingFile): array
     {
         return $this->originalLoadMappingFile($mappingFile);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetadata(): array
+    {
+        return [new MetadataStub()];
     }
 }

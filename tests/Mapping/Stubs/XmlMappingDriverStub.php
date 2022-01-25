@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Stubs;
 
+use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\XmlMappingTrait;
 
-/**
- * XML file mapping driver stub.
- */
-class XmlMappingDriverStub
+class XmlMappingDriverStub implements DriverInterface
 {
     use XmlMappingTrait {
         getExtensions as originalGetExtensions;
@@ -28,7 +26,7 @@ class XmlMappingDriverStub
     /**
      * Get supported mapping file extensions.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExtensions(): array
     {
@@ -36,14 +34,18 @@ class XmlMappingDriverStub
     }
 
     /**
-     * Load mappings from file.
-     *
-     * @param string $mappingFile
-     *
-     * @return array
+     * @inheritDoc
      */
     public function loadMappingFile(string $mappingFile): array
     {
         return $this->originalLoadMappingFile($mappingFile);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetadata(): array
+    {
+        return [new MetadataStub()];
     }
 }

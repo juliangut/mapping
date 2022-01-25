@@ -16,15 +16,12 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\AbstractMappingDriver;
 use Jgut\Mapping\Driver\Traits\PhpMappingTrait;
 
-/**
- * Abstract file based mapping driver stub.
- */
 class AbstractMappingDriverStub extends AbstractMappingDriver
 {
     use PhpMappingTrait;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMappingData(): array
     {
@@ -32,7 +29,7 @@ class AbstractMappingDriverStub extends AbstractMappingDriver
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMetadata(): array
     {

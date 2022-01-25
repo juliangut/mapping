@@ -17,13 +17,10 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Jgut\Mapping\Driver\AbstractDriverFactory;
 use Jgut\Mapping\Driver\DriverInterface;
 
-/**
- * Abstract driver factory stub.
- */
 class AbstractDriverFactoryStub extends AbstractDriverFactory
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getPhpDriver(array $paths): DriverInterface
     {
@@ -31,7 +28,7 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getXmlDriver(array $paths): DriverInterface
     {
@@ -39,7 +36,7 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getJsonDriver(array $paths): DriverInterface
     {
@@ -47,7 +44,7 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getYamlDriver(array $paths): DriverInterface
     {
@@ -55,7 +52,7 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getAttributeDriver(array $paths): DriverInterface
     {
@@ -63,7 +60,7 @@ class AbstractDriverFactoryStub extends AbstractDriverFactory
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function getAnnotationDriver(array $paths): DriverInterface
     {

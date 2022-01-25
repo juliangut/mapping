@@ -15,13 +15,10 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractClassDriver;
 
-/**
- * Abstract PHP class attribute mapping driver stub.
- */
 class AbstractAttributeDriverStub extends AbstractClassDriver
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMappingClasses(): array
     {
@@ -29,7 +26,7 @@ class AbstractAttributeDriverStub extends AbstractClassDriver
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function getMetadata(): array
     {

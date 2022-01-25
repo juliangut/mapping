@@ -15,15 +15,12 @@ namespace Jgut\Mapping\Driver;
 
 use Jgut\Mapping\Metadata\MetadataInterface;
 
-/**
- * Mapping driver interface.
- */
 interface DriverInterface
 {
     /**
      * Get mapped metadata.
      *
-     * @return MetadataInterface[]
+     * @return array<MetadataInterface>
      */
     public function getMetadata(): array;
 }

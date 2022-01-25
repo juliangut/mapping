@@ -13,15 +13,10 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver\Traits;
 
-/**
- * PHP file mapping trait.
- */
 trait PhpMappingTrait
 {
     /**
-     * Get supported mapping file extensions.
-     *
-     * @return string[]
+     * @inheritDoc
      */
     protected function getExtensions(): array
     {
@@ -31,9 +26,7 @@ trait PhpMappingTrait
     /**
      * Load mappings from file.
      *
-     * @param string $mappingFile
-     *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function loadMappingFile(string $mappingFile): array
     {

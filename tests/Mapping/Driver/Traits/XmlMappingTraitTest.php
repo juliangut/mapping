@@ -18,17 +18,14 @@ use Jgut\Mapping\Tests\Stubs\XmlMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * XML file mapping trait tests.
+ * @internal
  */
 class XmlMappingTraitTest extends TestCase
 {
-    /**
-     * @var XmlMappingDriverStub
-     */
-    protected $mapping;
+    protected XmlMappingDriverStub $mapping;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -45,7 +42,7 @@ class XmlMappingTraitTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessageMatches('/^XML mapping file ".+" parsing error: \.$/');
 
-        $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/invalid/invalid.xml');
+        $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/invalid/invalid.xml');
     }
 
     public function testLoad(): void
@@ -65,7 +62,7 @@ class XmlMappingTraitTest extends TestCase
                     '_value_' => 'valueThree',
                 ],
             ],
-            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/valid.xml')
+            $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/valid/valid.xml'),
         );
     }
 }

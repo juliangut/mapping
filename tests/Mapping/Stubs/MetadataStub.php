@@ -15,9 +15,6 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Metadata\MetadataInterface;
 
-/**
- * Empty metadata stub.
- */
 class MetadataStub implements MetadataInterface
 {
 }

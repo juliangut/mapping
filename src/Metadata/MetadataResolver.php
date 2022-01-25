@@ -16,31 +16,18 @@ namespace Jgut\Mapping\Metadata;
 use Jgut\Mapping\Driver\DriverFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 
-/**
- * Metadata resolver.
- */
 class MetadataResolver
 {
     /**
      * Driver factory.
-     *
-     * @var DriverFactoryInterface
      */
-    protected $driverFactory;
+    protected DriverFactoryInterface $driverFactory;
 
     /**
      * Metadata cache.
-     *
-     * @var CacheInterface|null
      */
-    protected $cache;
+    protected ?CacheInterface $cache;
 
-    /**
-     * MetadataResolver constructor.
-     *
-     * @param DriverFactoryInterface $driverFactory
-     * @param CacheInterface|null    $cache
-     */
     public function __construct(DriverFactoryInterface $driverFactory, ?CacheInterface $cache = null)
     {
         $this->driverFactory = $driverFactory;
@@ -50,9 +37,9 @@ class MetadataResolver
     /**
      * Get metadata.
      *
-     * @param mixed[] $mappingSources
+     * @param array<string|array<string|object>> $mappingSources
      *
-     * @return MetadataInterface[]
+     * @return array<MetadataInterface>
      */
     public function getMetadata(array $mappingSources): array
     {
@@ -61,16 +48,20 @@ class MetadataResolver
         $cacheKey = $this->getCacheKey($mappingSources);
 
         if ($this->cache !== null && $this->cache->has($cacheKey)) {
-            return $this->cache->get($cacheKey);
+            $cachedMetadata = $this->cache->get($cacheKey);
+
+            if (\is_array($cachedMetadata)) {
+                return $cachedMetadata;
+            }
         }
 
-        $metadata = \array_map(
+        $metadata = array_map(
             function (array $mappingSource): array {
                 return $this->driverFactory->getDriver($mappingSource)->getMetadata();
             },
-            $mappingSources
+            $mappingSources,
         );
-        $metadata = \count($metadata) > 0 ? \array_merge(...$metadata) : [];
+        $metadata = \count($metadata) > 0 ? array_merge(...$metadata) : [];
 
         if ($this->cache !== null) {
             $this->cache->set($cacheKey, $metadata);
@@ -82,44 +73,42 @@ class MetadataResolver
     /**
      * Get cache key.
      *
-     * @param mixed[] $mappingSources
-     *
-     * @return string
+     * @param array<array<string, mixed>> $mappingSources
      */
     protected function getCacheKey(array $mappingSources): string
     {
-        $key = \implode(
+        $key = implode(
             '.',
-            \array_map(
-                function (array $mappingSource): string {
+            array_map(
+                static function (array $mappingSource): string {
                     $path = \is_array($mappingSource['path'])
-                        ? \implode('', $mappingSource['path'])
+                        ? implode('', $mappingSource['path'])
                         : $mappingSource['path'];
 
                     return $mappingSource['type'] . '.' . $path;
                 },
-                $mappingSources
-            )
+                $mappingSources,
+            ),
         );
 
-        return \sha1($key);
+        return sha1($key);
     }
 
     /**
      * Normalize mapping sources format.
      *
-     * @param mixed[] $mappingSources
+     * @param array<string|array<string, string|object>> $mappingSources
      *
-     * @return string[][]
+     * @return array<array<string, string|object>>
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
-        $defaultDriver = \version_compare(\PHP_VERSION, '8.0.0') >= 0
+        $defaultDriver = version_compare(\PHP_VERSION, '8.0.0') >= 0
             ? DriverFactoryInterface::DRIVER_ATTRIBUTE
             : DriverFactoryInterface::DRIVER_ANNOTATION;
 
-        return \array_map(
-            function ($mappingSource) use ($defaultDriver): array {
+        return array_map(
+            static function ($mappingSource) use ($defaultDriver): array {
                 if (!\is_array($mappingSource)) {
                     $mappingSource = [
                         'type' => $defaultDriver,
@@ -129,7 +118,7 @@ class MetadataResolver
 
                 return $mappingSource;
             },
-            $mappingSources
+            $mappingSources,
         );
     }
 }

@@ -16,29 +16,18 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Annotation\AbstractAnnotation;
 
 /**
- * Abstract annotation stub.
- *
  * @Annotation
  * @Target("CLASS")
  */
 class AnnotationStub extends AbstractAnnotation
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;

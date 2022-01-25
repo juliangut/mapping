@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Exception;
 
-/**
- * Annotation exception.
- */
-class AnnotationException extends \RuntimeException
+use RuntimeException;
+
+class AnnotationException extends RuntimeException
 {
 }

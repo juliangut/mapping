@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver;
 
-/**
- * Driver factory interface.
- */
 interface DriverFactoryInterface
 {
     public const DRIVER_PHP = 'php';
@@ -33,9 +30,7 @@ interface DriverFactoryInterface
     /**
      * Get mapping driver.
      *
-     * @param string[] $mappingSource
-     *
-     * @return DriverInterface
+     * @param array<string, string|object> $mappingSource
      */
     public function getDriver(array $mappingSource): DriverInterface;
 }

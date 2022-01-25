@@ -23,9 +23,7 @@ use Symfony\Component\Yaml\Yaml as YamlReader;
 trait YamlMappingTrait
 {
     /**
-     * Get supported mapping file extensions.
-     *
-     * @return string[]
+     * @inheritDoc
      */
     protected function getExtensions(): array
     {
@@ -35,23 +33,19 @@ trait YamlMappingTrait
     /**
      * Load mappings from file.
      *
-     * @param string $mappingFile
-     *
      * @throws DriverException
-     *
-     * @return array
      */
     protected function loadMappingFile(string $mappingFile): array
     {
         try {
             $mappings = YamlReader::parse(
-                \file_get_contents($mappingFile),
-                YamlReader::PARSE_EXCEPTION_ON_INVALID_TYPE
+                file_get_contents($mappingFile),
+                YamlReader::PARSE_EXCEPTION_ON_INVALID_TYPE,
             );
             // @codeCoverageIgnoreStart
         } catch (ParseException $exception) {
             throw new DriverException(
-                \sprintf('YAML mapping file "%s" parsing error: %s.', $mappingFile, \rtrim($exception->getMessage()))
+                sprintf('YAML mapping file "%s" parsing error: %s.', $mappingFile, rtrim($exception->getMessage())),
             );
         }
         // @codeCoverageIgnoreEnd

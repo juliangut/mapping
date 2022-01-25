@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * Metadata resolver tests.
+ * @internal
  */
 class MetadataResolverTest extends TestCase
 {
@@ -34,7 +34,7 @@ class MetadataResolverTest extends TestCase
             ->withConsecutive(
                 [
                     [
-                        'type' => \version_compare(\PHP_VERSION, '8.0.0') >= 0
+                        'type' => version_compare(\PHP_VERSION, '8.0.0') >= 0
                             ? DriverFactoryInterface::DRIVER_ATTRIBUTE
                             : DriverFactoryInterface::DRIVER_ANNOTATION,
                         'path' => __DIR__,
@@ -42,7 +42,7 @@ class MetadataResolverTest extends TestCase
                 ],
                 [
                     ['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => __DIR__],
-                ]
+                ],
             )
             ->willReturn(new AbstractDriverStub([]));
 

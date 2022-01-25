@@ -13,17 +13,16 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver;
 
-/**
- * Abstract file based mapping driver.
- */
+use Jgut\Mapping\Exception\DriverException;
+
 abstract class AbstractMappingDriver extends AbstractDriver
 {
     /**
      * Get mapping data.
      *
-     * @throws \Jgut\Mapping\Exception\DriverException
+     * @throws DriverException
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getMappingData(): array
     {
@@ -44,19 +43,17 @@ abstract class AbstractMappingDriver extends AbstractDriver
     /**
      * Load mappings from file.
      *
-     * @param string $mappingFile
-     *
-     * @return mixed[]
+     * @return array<mixed>
      */
     abstract protected function loadMappingFile(string $mappingFile): array;
 
     /**
      * Merge mapping data.
      *
-     * @param mixed[] $mappingsA
-     * @param mixed[] $mappingsB
+     * @param array<mixed> $mappingsA
+     * @param array<mixed> $mappingsB
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     final protected function mergeMappings(array $mappingsA, array $mappingsB): array
     {

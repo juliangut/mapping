@@ -15,28 +15,17 @@ namespace Jgut\Mapping\Driver;
 
 use Doctrine\Common\Annotations\Reader;
 
-/**
- * Abstract class annotation mapping driver.
- */
 abstract class AbstractAnnotationDriver extends AbstractClassDriver
 {
-    /**
-     * Annotations reader.
-     *
-     * @var Reader
-     */
-    protected $annotationReader;
+    protected Reader $annotationReader;
 
     /**
-     * AbstractAnnotationDriver constructor.
-     *
-     * @param string[] $paths
-     * @param Reader   $annotationReader
+     * @param array<string> $paths
      */
     public function __construct(array $paths, Reader $annotationReader)
     {
-        if (\version_compare(\PHP_VERSION, '8.0.0') >= 0) {
-            @\trigger_error('Annotation usage is discouraged. Use PHP Attributes instead.', \E_USER_DEPRECATED);
+        if (version_compare(\PHP_VERSION, '8.0.0') >= 0) {
+            @trigger_error('Annotation usage is discouraged. Use PHP Attributes instead.', \E_USER_DEPRECATED);
         }
 
         parent::__construct($paths);

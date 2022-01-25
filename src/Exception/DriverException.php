@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Exception;
 
-/**
- * Mapping driver exception.
- */
-class DriverException extends \RuntimeException
+use RuntimeException;
+
+class DriverException extends RuntimeException
 {
 }

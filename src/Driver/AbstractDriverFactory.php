@@ -15,19 +15,12 @@ namespace Jgut\Mapping\Driver;
 
 use Jgut\Mapping\Exception\DriverException;
 
-/**
- * Abstract driver factory.
- */
 abstract class AbstractDriverFactory implements DriverFactoryInterface
 {
     /**
-     * Get mapping driver.
-     *
-     * @param mixed[] $mappingSource
+     * @inheritDoc
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      */
     public function getDriver(array $mappingSource): DriverInterface
     {
@@ -35,10 +28,10 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
             $driver = $mappingSource['driver'];
 
             if (!$driver instanceof DriverInterface) {
-                throw new DriverException(\sprintf(
+                throw new DriverException(sprintf(
                     'Metadata mapping driver should be of the type "%s", "%s" given.',
                     DriverInterface::class,
-                    \is_object($driver) ? \get_class($driver) : \gettype($driver)
+                    \is_object($driver) ? \get_class($driver) : \gettype($driver),
                 ));
             }
 
@@ -46,24 +39,21 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         $supportedKeys = ['type', 'path'];
-        if (\count(\array_intersect($supportedKeys, \array_keys($mappingSource))) === \count($supportedKeys)) {
-            return $this->getDriverImplementation($mappingSource['type'], (array) $mappingSource['path']);
+        if (\count(array_intersect($supportedKeys, array_keys($mappingSource))) === \count($supportedKeys)) {
+            return $this->getDriverImplementation((string) $mappingSource['type'], (array) $mappingSource['path']);
         }
 
         throw new DriverException(
-            'Mapping must be array with "driver" key or "type" and "path" keys.'
+            'Mapping must be array with "driver" key or "type" and "path" keys.',
         );
     }
 
     /**
      * Get mapping driver implementation.
      *
-     * @param string   $type
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      */
     protected function getDriverImplementation(string $type, array $paths): DriverInterface
     {
@@ -88,18 +78,16 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         throw new DriverException(
-            \sprintf('"%s" is not a valid metadata mapping driver.', $type)
+            sprintf('"%s" is not a valid metadata mapping driver.', $type),
         );
     }
 
     /**
      * Get native PHP file based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -111,11 +99,9 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get XML file based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -127,11 +113,9 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get JSON file based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -143,11 +127,9 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get YAML file based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -159,11 +141,9 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get PHP class attribute based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -175,11 +155,9 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     /**
      * Get annotation based mapping driver.
      *
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @throws DriverException
-     *
-     * @return DriverInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

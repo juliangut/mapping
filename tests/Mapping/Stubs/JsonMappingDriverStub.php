@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Stubs;
 
+use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\JsonMappingTrait;
 
-/**
- * JSON file mapping driver stub.
- */
-class JsonMappingDriverStub
+class JsonMappingDriverStub implements DriverInterface
 {
     use JsonMappingTrait {
         getExtensions as originalGetExtensions;
@@ -28,7 +26,7 @@ class JsonMappingDriverStub
     /**
      * Get supported mapping file extensions.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExtensions(): array
     {
@@ -36,14 +34,18 @@ class JsonMappingDriverStub
     }
 
     /**
-     * Load mappings from file.
-     *
-     * @param string $mappingFile
-     *
-     * @return array
+     * @inheritDoc
      */
     public function loadMappingFile(string $mappingFile): array
     {
         return $this->originalLoadMappingFile($mappingFile);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetadata(): array
+    {
+        return [new MetadataStub()];
     }
 }

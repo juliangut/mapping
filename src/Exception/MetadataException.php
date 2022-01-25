@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Exception;
 
-/**
- * Metadata exception.
- */
-class MetadataException extends \RuntimeException
+use RuntimeException;
+
+class MetadataException extends RuntimeException
 {
 }

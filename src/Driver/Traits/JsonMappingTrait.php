@@ -15,15 +15,10 @@ namespace Jgut\Mapping\Driver\Traits;
 
 use Jgut\Mapping\Exception\DriverException;
 
-/**
- * JSON file mapping trait.
- */
 trait JsonMappingTrait
 {
     /**
-     * Get supported mapping file extensions.
-     *
-     * @return string[]
+     * @inheritDoc
      */
     protected function getExtensions(): array
     {
@@ -33,19 +28,15 @@ trait JsonMappingTrait
     /**
      * Load mappings from file.
      *
-     * @param string $mappingFile
-     *
      * @throws DriverException
-     *
-     * @return array
      */
     protected function loadMappingFile(string $mappingFile): array
     {
-        $mappingData = \json_decode(\file_get_contents($mappingFile), true, 512, \JSON_BIGINT_AS_STRING);
+        $mappingData = json_decode(file_get_contents($mappingFile), true, 512, \JSON_BIGINT_AS_STRING);
 
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
+        if (json_last_error() !== \JSON_ERROR_NONE) {
             throw new DriverException(
-                \sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, \rtrim(\json_last_error_msg(), '.'))
+                sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, rtrim(json_last_error_msg(), '.')),
             );
         }
 

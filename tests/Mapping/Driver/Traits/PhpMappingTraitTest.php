@@ -17,17 +17,14 @@ use Jgut\Mapping\Tests\Stubs\PhpMappingDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * PHP file mapping trait tests.
+ * @internal
  */
 class PhpMappingTraitTest extends TestCase
 {
-    /**
-     * @var PhpMappingDriverStub
-     */
-    protected $mapping;
+    protected PhpMappingDriverStub $mapping;
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -49,7 +46,7 @@ class PhpMappingTraitTest extends TestCase
                 'parameterTwo' => 'valueTwo',
                 0 => 'parameterThree',
             ],
-            $this->mapping->loadMappingFile(\dirname(__DIR__, 2) . '/Files/files/valid/validA.php')
+            $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/valid/validA.php'),
         );
     }
 }

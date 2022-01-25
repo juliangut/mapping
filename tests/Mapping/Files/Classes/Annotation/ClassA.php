@@ -16,8 +16,6 @@ namespace Jgut\Mapping\Tests\Files\Classes\Annotation;
 use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 
 /**
- * Dummy class.
- *
  * @Stub(name="myClassA")
  */
 class ClassA

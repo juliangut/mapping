@@ -19,9 +19,10 @@ use Jgut\Mapping\Tests\Files\Classes\Annotation\ClassB;
 use Jgut\Mapping\Tests\Stubs\AbstractAnnotationDriverStub;
 use Jgut\Mapping\Tests\Stubs\AnnotationStub;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
- * Abstract annotation mapping driver tests.
+ * @internal
  */
 class AbstractAnnotationDriverTest extends TestCase
 {
@@ -32,18 +33,18 @@ class AbstractAnnotationDriverTest extends TestCase
             ->getMock();
 
         $driver = new AbstractAnnotationDriverStub(
-            [\dirname(__DIR__) . '/Files/Classes/Annotation'],
-            $annotationReader
+            [__DIR__ . '/../Files/Classes/Annotation'],
+            $annotationReader,
         );
 
         $classes = $driver->getMappingClasses();
 
         static::assertCount(2, $classes);
 
-        static::assertInstanceOf(\ReflectionClass::class, $classes[0]);
+        static::assertInstanceOf(ReflectionClass::class, $classes[0]);
         static::assertSame(ClassA::class, $classes[0]->getName());
 
-        static::assertInstanceOf(\ReflectionClass::class, $classes[1]);
+        static::assertInstanceOf(ReflectionClass::class, $classes[1]);
         static::assertSame(ClassB::class, $classes[1]->getName());
     }
 
@@ -52,8 +53,8 @@ class AbstractAnnotationDriverTest extends TestCase
         $annotationReader = new AnnotationReader();
 
         $driver = new AbstractAnnotationDriverStub(
-            [\dirname(__DIR__) . '/Files/Classes/Annotation'],
-            $annotationReader
+            [__DIR__ . '/../Files/Classes/Annotation'],
+            $annotationReader,
         );
 
         $annotations = $driver->getAnnotations();

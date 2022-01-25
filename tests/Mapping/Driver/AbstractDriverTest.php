@@ -18,7 +18,7 @@ use Jgut\Mapping\Tests\Stubs\AbstractDriverStub;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Abstract mapping driver tests.
+ * @internal
  */
 class AbstractDriverTest extends TestCase
 {
