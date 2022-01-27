@@ -32,5 +32,9 @@ $finder = Finder::create()
 return (new FixerConfig74())
     ->setHeader($header)
     ->enablePhpUnitRules()
-    ->enableTypeInferRules()
+    ->setAdditionalRules([
+        'native_constant_invocation' => [
+            'strict' => version_compare(\PHP_VERSION, '8.0.0') >= 0,
+        ],
+    ])
     ->setFinder($finder);
