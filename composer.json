@@ -35,10 +35,10 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "~0.7",
-    "grifart/phpstan-oneline": "~0.4",
-    "juliangut/php-cs-fixer-config": "dev-master",
     "doctrine/annotations": "^1.10.3",
+    "grifart/phpstan-oneline": "~0.4",
     "infection/infection": "~0.24",
+    "juliangut/php-cs-fixer-config": "dev-master",
     "overtrue/phplint": "^3.0|^4.0",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpmd/phpmd": "^2.10",
@@ -70,6 +70,11 @@
   },
   "config": {
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "infection/extension-installer": true
+    }
   }
 }
