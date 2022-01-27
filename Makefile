@@ -7,7 +7,7 @@ lint-php:
 
 .PHONY: lint-phpcs
 lint-phpcs:
-	vendor/bin/phpcs --standard=PSR12 src
+	vendor/bin/phpcs --standard=PSR12 src tests
 
 .PHONY: lint-phpcs-fixer
 lint-phpcs-fixer:
@@ -43,7 +43,7 @@ qa-phpmnd:
 
 .PHONY: qa-compatibility
 qa-compatibility:
-	vendor/bin/phpcs --standard=PHPCompatibility --runtime-set testVersion 8.1- src
+	vendor/bin/phpcs --standard=PHPCompatibility --runtime-set testVersion 8.1- src tests
 
 .PHONY: qa-phpstan
 qa-phpstan:
