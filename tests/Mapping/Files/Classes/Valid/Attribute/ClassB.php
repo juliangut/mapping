@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Files\Classes\Attribute;
+namespace Jgut\Mapping\Tests\Files\Classes\Valid\Attribute;
 
 use Jgut\Mapping\Tests\Stubs\AttributeStub as Stub;
 
-#[Stub(name: 'myClassA')]
-class ClassA
+#[Stub(name: 'myClassB')]
+class ClassB
 {
 }

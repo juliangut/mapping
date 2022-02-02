@@ -1,4 +1,4 @@
-[![PHP version](https://img.shields.io/badge/PHP-%3E%3D7.3-8892BF.svg?style=flat-square)](http://php.net)
+[![PHP version](https://img.shields.io/badge/PHP-%3E%3D7.4-8892BF.svg?style=flat-square)](http://php.net)
 [![Latest Version](https://img.shields.io/packagist/v/juliangut/mapping.svg?style=flat-square)](https://packagist.org/packages/juliangut/mapping)
 [![License](https://img.shields.io/github/license/juliangut/mapping.svg?style=flat-square)](https://github.com/juliangut/mapping/blob/master/LICENSE)
 
@@ -48,7 +48,7 @@ require './vendor/autoload.php';
 
 ### Drivers
 
-Should retrieve parsed metadata stored in a specific format 
+Should retrieve parsed metadata stored in a specific format
 
 #### File mapping
 
@@ -208,12 +208,44 @@ use Jgut\Mapping\Annotation\AbstractAnnotation;
  * Custom annotation.
  *
  * @Annotation
- * @Target("PROPERTY")
+ * @Target("CLASS")
  */
-class Custom extends AbstractAnnotation
+class Event extends AbstractAnnotation
+{
+    protected string $event;
+
+    protected bool $enabled;
+
+    public function setEvent(string $event): void
+    {
+        $this->event = $event;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDefaultProperty(): ?string
+    {
+        return 'event';
+    }
+}
+```
+
+```php
+/**
+ * @Event("post_deserialize", enabled=true)
+ */
+class Example
 {
 }
 ```
+
+`getDefaultParameter` defines which annotation property is considered the default ("value" by default). In this previous example `event` property will be set to "post_deserialize"
 
 ## Contributing
 

@@ -35,16 +35,13 @@ abstract class AbstractClassDriver extends AbstractDriver
      */
     protected function getMappingClasses(): array
     {
-        /** @var array<class-string<object>> $mappingClasses */
         $mappingClasses = [];
-
-        foreach ($this->locator->getMappingFiles() as $annotationFile) {
-            $mappingClasses[] = $this->loadClassFromFile($annotationFile);
+        foreach ($this->locator->getMappingFiles() as $mappingFile) {
+            $mappingClasses[] = $this->loadClassFromFile($mappingFile);
         }
 
         return array_map(
             static function (string $sourceClass): ReflectionClass {
-                /** @var class-string<object> $sourceClass */
                 return new ReflectionClass($sourceClass);
             },
             array_filter(array_unique($mappingClasses)),
@@ -54,12 +51,14 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * Load fully qualified class name from file.
      *
+     * @return class-string<object>
+     *
      * @SuppressWarnings(PMD.CyclomaticComplexity)
      * @SuppressWarnings(PMD.NPathComplexity)
      */
-    protected function loadClassFromFile(string $annotationFile): string
+    protected function loadClassFromFile(string $mappingFile): string
     {
-        $content = file_get_contents($annotationFile);
+        $content = file_get_contents($mappingFile);
         $tokens = token_get_all($content !== false ? $content : '');
         $hasClass = false;
         $class = null;
@@ -74,6 +73,7 @@ abstract class AbstractClassDriver extends AbstractDriver
             }
 
             if ($hasClass && $token[0] === \T_STRING) {
+                /** @var class-string<object> $class */
                 $class = $namespace . '\\' . $token[1];
 
                 break;

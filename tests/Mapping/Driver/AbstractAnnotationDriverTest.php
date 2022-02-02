@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Tests\Driver;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Jgut\Mapping\Tests\Files\Classes\Annotation\ClassA;
-use Jgut\Mapping\Tests\Files\Classes\Annotation\ClassB;
+use Jgut\Mapping\Exception\AnnotationException;
+use Jgut\Mapping\Tests\Files\Classes\Valid\Annotation\ClassA;
+use Jgut\Mapping\Tests\Files\Classes\Valid\Annotation\ClassB;
 use Jgut\Mapping\Tests\Stubs\AbstractAnnotationDriverStub;
 use Jgut\Mapping\Tests\Stubs\AnnotationStub;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +34,7 @@ class AbstractAnnotationDriverTest extends TestCase
             ->getMock();
 
         $driver = new AbstractAnnotationDriverStub(
-            [__DIR__ . '/../Files/Classes/Annotation'],
+            [__DIR__ . '/../Files/Classes/Valid/Annotation'],
             $annotationReader,
         );
 
@@ -48,13 +49,37 @@ class AbstractAnnotationDriverTest extends TestCase
         static::assertSame(ClassB::class, $classes[1]->getName());
     }
 
-    public function testAnnotations(): void
+    public function testInvalidAnnotationProperty(): void
     {
-        $annotationReader = new AnnotationReader();
+        $this->expectException(AnnotationException::class);
+        $this->expectExceptionMessageMatches('/^Default annotation property "name" does not exist\.$/');
 
         $driver = new AbstractAnnotationDriverStub(
-            [__DIR__ . '/../Files/Classes/Annotation'],
-            $annotationReader,
+            [__DIR__ . '/../Files/Classes/Invalid/Annotation/ClassInvalidProperty.php'],
+            new AnnotationReader(),
+        );
+
+        $driver->getAnnotations();
+    }
+
+    public function testInvalidAnnotationMethod(): void
+    {
+        $this->expectException(AnnotationException::class);
+        $this->expectExceptionMessageMatches('/^Annotation property setter "setPath" does not exist\.$/');
+
+        $driver = new AbstractAnnotationDriverStub(
+            [__DIR__ . '/../Files/Classes/Invalid/Annotation/ClassInvalidMethod.php'],
+            new AnnotationReader(),
+        );
+
+        $driver->getAnnotations();
+    }
+
+    public function testAnnotations(): void
+    {
+        $driver = new AbstractAnnotationDriverStub(
+            [__DIR__ . '/../Files/Classes/Valid/Annotation'],
+            new AnnotationReader(),
         );
 
         $annotations = $driver->getAnnotations();

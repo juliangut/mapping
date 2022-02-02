@@ -32,7 +32,10 @@ class FileLocatorTest extends TestCase
 
     public function testValidPath(): void
     {
-        $paths = [__DIR__ . '/../../Files/Classes', __DIR__ . '/../../Stubs/AnnotationStub.php'];
+        $paths = [
+            __DIR__ . '/../../Files/Classes/Valid',
+            __DIR__ . '/../../Stubs/AnnotationStub.php',
+        ];
         $extensions = ['php'];
 
         $locator = new FileLocator($paths, $extensions);
@@ -43,19 +46,19 @@ class FileLocatorTest extends TestCase
         $routing = $locator->getMappingFiles();
 
         static::assertSame(
-            __DIR__ . '/../../Files/Classes/Annotation/ClassA.php',
+            __DIR__ . '/../../Files/Classes/Valid/Annotation/ClassA.php',
             $routing[0],
         );
         static::assertSame(
-            __DIR__ . '/../../Files/Classes/Annotation/ClassB.php',
+            __DIR__ . '/../../Files/Classes/Valid/Annotation/ClassB.php',
             $routing[1],
         );
         static::assertSame(
-            __DIR__ . '/../../Files/Classes/Attribute/ClassA.php',
+            __DIR__ . '/../../Files/Classes/Valid/Attribute/ClassA.php',
             $routing[2],
         );
         static::assertSame(
-            __DIR__ . '/../../Files/Classes/Attribute/ClassB.php',
+            __DIR__ . '/../../Files/Classes/Valid/Attribute/ClassB.php',
             $routing[3],
         );
         static::assertSame(

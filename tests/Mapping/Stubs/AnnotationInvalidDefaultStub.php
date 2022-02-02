@@ -19,22 +19,8 @@ use Jgut\Mapping\Annotation\AbstractAnnotation;
  * @Annotation
  * @Target("CLASS")
  */
-class AnnotationStub extends AbstractAnnotation
+class AnnotationInvalidDefaultStub extends AbstractAnnotation
 {
-    protected string $name;
-
-    protected string $path;
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    protected function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
     /**
      * @inheritDoc
      */

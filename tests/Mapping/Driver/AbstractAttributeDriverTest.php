@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver;
 
-use Jgut\Mapping\Tests\Files\Classes\Attribute\ClassA;
-use Jgut\Mapping\Tests\Files\Classes\Attribute\ClassB;
+use Jgut\Mapping\Tests\Files\Classes\Valid\Attribute\ClassA;
+use Jgut\Mapping\Tests\Files\Classes\Valid\Attribute\ClassB;
 use Jgut\Mapping\Tests\Stubs\AbstractAttributeDriverStub;
 use Jgut\Mapping\Tests\Stubs\AttributeStub;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class AbstractAttributeDriverTest extends TestCase
 {
     public function testMappings(): void
     {
-        $driver = new AbstractAttributeDriverStub([__DIR__ . '/../Files/Classes/Attribute']);
+        $driver = new AbstractAttributeDriverStub([__DIR__ . '/../Files/Classes/Valid/Attribute']);
 
         $classes = $driver->getMappingClasses();
 
@@ -44,7 +44,7 @@ class AbstractAttributeDriverTest extends TestCase
             static::markTestSkipped('No attributes in PHP < 8.0.');
         }
 
-        $driver = new AbstractAttributeDriverStub([__DIR__ . '/../Files/Classes/Attribute']);
+        $driver = new AbstractAttributeDriverStub([__DIR__ . '/../Files/Classes/Valid/Attribute']);
 
         $attributes = $driver->getAttributes();
 

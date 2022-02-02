@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Files\Classes\Annotation;
+namespace Jgut\Mapping\Tests\Files\Classes\Valid\Annotation;
 
 use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 
 /**
- * @Stub(name="myClassB")
+ * @Stub("myClassA")
  */
-class ClassB
+class ClassA
 {
 }

@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Jgut\Mapping\Tests\Files\Classes\Annotation;
+namespace Jgut\Mapping\Tests\Files\Classes\Invalid\Annotation;
 
 use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 
 /**
- * @Stub(name="myClassA")
+ * @Stub("myClassA", path="path")
  */
-class ClassA
+class ClassInvalidMethod
 {
 }

@@ -20,6 +20,8 @@ use ReflectionClass;
 
 abstract class AbstractAnnotation
 {
+    protected const DEFAULT_ANNOTATION_PROPERTY = 'value';
+
     /**
      * @param array<mixed>|Traversable|mixed $parameters
      *
@@ -28,34 +30,77 @@ abstract class AbstractAnnotation
     public function __construct($parameters)
     {
         if (!\is_array($parameters) && !$parameters instanceof Traversable) {
-            throw new AnnotationException('Parameters must be an iterable.');
+            throw new AnnotationException('Annotation parameters must be an iterable.');
         }
         if ($parameters instanceof Traversable) {
             $parameters = iterator_to_array($parameters);
         }
 
-        $configs = array_map(
+        $defaultProperty = $this->getDefaultProperty();
+        $properties = $this->getAnnotationProperties($parameters, $defaultProperty);
+
+        foreach ($properties as $property) {
+            if (\array_key_exists($property, $parameters)) {
+                $method = $property === self::DEFAULT_ANNOTATION_PROPERTY && $defaultProperty !== null
+                    ? 'set' . ucfirst($defaultProperty)
+                    : 'set' . ucfirst($property);
+
+                if (!method_exists($this, $method)) {
+                    throw new AnnotationException(sprintf('Annotation property setter "%s" does not exist.', $method));
+                }
+
+                /** @var callable $callback */
+                $callback = [$this, $method];
+
+                $callback($parameters[$property]);
+            }
+        }
+    }
+
+    /**
+     * Get annotation properties.
+     *
+     * @param array<string, mixed> $parameters
+     *
+     * @throws AnnotationException
+     *
+     * @return array<string>
+     */
+    private function getAnnotationProperties(array $parameters, ?string $defaultProperty): array
+    {
+        $properties = array_map(
             static fn (ReflectionProperty $property): string => $property->getName(),
             (new ReflectionClass($this))->getProperties(),
         );
 
-        $unknownParameters = array_diff(array_keys($parameters), $configs);
-        if (\count($unknownParameters) > 0) {
+        if ($defaultProperty !== null) {
+            if (!\in_array($defaultProperty, $properties, true)) {
+                throw new AnnotationException(
+                    sprintf('Default annotation property "%s" does not exist.', $defaultProperty),
+                );
+            }
+
+            $properties[] = self::DEFAULT_ANNOTATION_PROPERTY;
+        }
+
+        $unknownProperties = array_diff(array_keys($parameters), $properties);
+        if (\count($unknownProperties) > 0) {
             throw new AnnotationException(
                 sprintf(
-                    'The following annotation parameters are not recognized: %s.',
-                    implode(', ', $unknownParameters),
+                    'The following annotation properties are not recognized: %s.',
+                    implode(', ', $unknownProperties),
                 ),
             );
         }
 
-        foreach ($configs as $config) {
-            if (isset($parameters[$config])) {
-                /** @var callable $callback */
-                $callback = [$this, 'set' . ucfirst($config)];
+        return $properties;
+    }
 
-                $callback($parameters[$config]);
-            }
-        }
+    /**
+     * Get default annotation property.
+     */
+    protected function getDefaultProperty(): ?string
+    {
+        return null;
     }
 }
