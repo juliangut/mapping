@@ -163,6 +163,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getAnnotationDriver(array $paths): DriverInterface
     {
-        throw new DriverException('Annotation metadata mapping driver is not supported.');
+        throw new DriverException('PHP class annotation metadata mapping driver is not supported.');
     }
 }

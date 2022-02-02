@@ -42,7 +42,7 @@ trait JsonMappingTrait
             );
         } catch (JsonException $exception) {
             throw new DriverException(
-                sprintf('JSON mapping file "%s" parsing error.', $mappingFile),
+                sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, $exception->getMessage()),
                 0,
                 $exception,
             );

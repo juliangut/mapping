@@ -40,7 +40,7 @@ class JsonMappingTraitTest extends TestCase
     public function testLoadError(): void
     {
         $this->expectException(DriverException::class);
-        $this->expectExceptionMessageMatches('/^JSON mapping file ".+" parsing error\.$/');
+        $this->expectExceptionMessageMatches('/^JSON mapping file ".+" parsing error: Syntax error\.$/');
 
         $this->mapping->loadMappingFile(__DIR__ . '/../../Files/files/invalid/invalid.json');
     }
