@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Driver\Locator;
 
 use Jgut\Mapping\Exception\DriverException;
-use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
-use RegexIterator;
+use RecursiveIteratorIterator;
 use RecursiveRegexIterator;
+use RegexIterator;
 
 class FileLocator
 {

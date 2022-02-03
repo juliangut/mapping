@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Annotation;
 
 use Jgut\Mapping\Exception\AnnotationException;
-use Traversable;
-use ReflectionProperty;
 use ReflectionClass;
+use ReflectionProperty;
+use Traversable;
 
 abstract class AbstractAnnotation
 {
