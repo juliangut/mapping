@@ -100,10 +100,7 @@ abstract class AbstractClassDriver extends AbstractDriver
                 }
             }
 
-            if (
-                $token[0] === \T_CLASS
-                && (!\is_array($previousToken) || $previousToken[0] !== \T_PAAMAYIM_NEKUDOTAYIM)
-            ) {
+            if ($token[0] === \T_CLASS && (!\is_array($previousToken) || $previousToken[0] !== \T_DOUBLE_COLON)) {
                 $hasClass = true;
             }
             if ($token[0] === \T_NAMESPACE) {
