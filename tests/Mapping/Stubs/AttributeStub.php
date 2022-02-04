@@ -20,13 +20,21 @@ class AttributeStub
 {
     protected string $name;
 
-    public function __construct(string $name)
+    protected ?string $parent;
+
+    public function __construct(string $name, ?string $parent = null)
     {
         $this->name = $name;
+        $this->parent = $parent;
     }
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getParent(): ?string
+    {
+        return $this->parent;
     }
 }

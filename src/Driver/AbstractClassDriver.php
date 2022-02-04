@@ -60,6 +60,7 @@ abstract class AbstractClassDriver extends AbstractDriver
     {
         $content = file_get_contents($mappingFile);
         $tokens = token_get_all($content !== false ? $content : '');
+        $previousToken = false;
         $hasClass = false;
         $class = null;
         $hasNamespace = false;
@@ -99,12 +100,17 @@ abstract class AbstractClassDriver extends AbstractDriver
                 }
             }
 
-            if ($token[0] === \T_CLASS) {
+            if (
+                $token[0] === \T_CLASS
+                && (!\is_array($previousToken) || $previousToken[0] !== \T_PAAMAYIM_NEKUDOTAYIM)
+            ) {
                 $hasClass = true;
             }
             if ($token[0] === \T_NAMESPACE) {
                 $hasNamespace = true;
             }
+
+            $previousToken = $token;
         }
 
         return $class ?? '';

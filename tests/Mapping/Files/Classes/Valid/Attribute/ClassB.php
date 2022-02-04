@@ -15,7 +15,7 @@ namespace Jgut\Mapping\Tests\Files\Classes\Valid\Attribute;
 
 use Jgut\Mapping\Tests\Stubs\AttributeStub as Stub;
 
-#[Stub(name: 'myClassB')]
-class ClassB
+#[Stub(parent: ClassA::class, name: 'myClassB')]
+final class ClassB
 {
 }

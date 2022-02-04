@@ -31,6 +31,8 @@ class AbstractAttributeDriverTest extends TestCase
 
         $classes = $driver->getMappingClasses();
 
+        static::assertCount(2, $classes);
+
         static::assertInstanceOf(ReflectionClass::class, $classes[0]);
         static::assertSame(ClassA::class, $classes[0]->getName());
 
@@ -52,8 +54,10 @@ class AbstractAttributeDriverTest extends TestCase
 
         static::assertInstanceOf(AttributeStub::class, $attributes[0]);
         static::assertSame('myClassA', $attributes[0]->getName());
+        static::assertNull($attributes[0]->getParent());
 
         static::assertInstanceOf(AttributeStub::class, $attributes[1]);
         static::assertSame('myClassB', $attributes[1]->getName());
+        static::assertSame(ClassA::class, $attributes[1]->getParent());
     }
 }
