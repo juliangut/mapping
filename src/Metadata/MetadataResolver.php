@@ -103,7 +103,7 @@ class MetadataResolver
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
-        $defaultDriver = version_compare(\PHP_VERSION, '8.0.0') >= 0
+        $defaultDriver = \PHP_VERSION_ID >= 80_000
             ? DriverFactoryInterface::DRIVER_ATTRIBUTE
             : DriverFactoryInterface::DRIVER_ANNOTATION;
 

@@ -42,7 +42,7 @@ class AbstractAttributeDriverTest extends TestCase
 
     public function testAttributes(): void
     {
-        if (version_compare(\PHP_VERSION, '8.0.0') < 0) {
+        if (\PHP_VERSION_ID < 80_000) {
             static::markTestSkipped('No attributes in PHP < 8.0.');
         }
 

@@ -81,7 +81,7 @@ abstract class AbstractClassDriver extends AbstractDriver
             }
 
             if ($hasNamespace) {
-                if (version_compare(\PHP_VERSION, '8.0.0') >= 0 && $token[0] === \T_NAME_QUALIFIED) {
+                if (\PHP_VERSION_ID >= 80_000 && $token[0] === \T_NAME_QUALIFIED) {
                     $namespace .= $token[1];
 
                     $hasNamespace = false;

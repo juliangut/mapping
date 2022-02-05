@@ -24,7 +24,7 @@ abstract class AbstractAnnotationDriver extends AbstractClassDriver
      */
     public function __construct(array $paths, Reader $annotationReader)
     {
-        if (version_compare(\PHP_VERSION, '8.0.0') >= 0) {
+        if (\PHP_VERSION_ID >= 80_000) {
             @trigger_error('Annotation usage is discouraged. Use PHP Attributes instead.', \E_USER_DEPRECATED);
         }
 

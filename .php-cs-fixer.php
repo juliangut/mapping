@@ -34,7 +34,7 @@ return (new FixerConfig74())
     ->enablePhpUnitRules()
     ->setAdditionalRules([
         'native_constant_invocation' => [
-            'strict' => version_compare(\PHP_VERSION, '8.0.0', '>='),
+            'strict' => \PHP_VERSION_ID >= 80_000,
         ],
     ])
     ->setFinder($finder);
