@@ -34,7 +34,7 @@ class MetadataResolverTest extends TestCase
             ->withConsecutive(
                 [
                     [
-                        'type' => version_compare(\PHP_VERSION, '8.0.0') >= 0
+                        'type' => \PHP_VERSION_ID >= 80_000
                             ? DriverFactoryInterface::DRIVER_ATTRIBUTE
                             : DriverFactoryInterface::DRIVER_ANNOTATION,
                         'path' => __DIR__,
