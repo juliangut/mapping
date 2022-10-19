@@ -24,9 +24,6 @@ class XmlMappingTraitTest extends TestCase
 {
     protected XmlMappingDriverStub $mapping;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         $this->mapping = new XmlMappingDriverStub();

@@ -47,19 +47,11 @@ trait XmlMappingTrait
      */
     private static ?array $boolValues = null;
 
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return ['xml'];
     }
 
-    /**
-     * Load mappings from file.
-     *
-     * @throws DriverException
-     */
     protected function loadMappingFile(string $mappingFile): array
     {
         $useInternalErrors = libxml_use_internal_errors(true);
@@ -71,9 +63,7 @@ trait XmlMappingTrait
         if ($mappingData === false) {
             // @codeCoverageIgnoreStart
             $errors = array_map(
-                static function (LibXMLError $error) {
-                    return '"' . $error->message . '"';
-                },
+                static fn (LibXMLError $error) => '"' . $error->message . '"',
                 libxml_get_errors(),
             );
             // @codeCoverageIgnoreEnd
@@ -89,24 +79,24 @@ trait XmlMappingTrait
             self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
         }
 
-        return $this->parseSimpleXML($mappingData);
+        return $this->parseSimpleXml($mappingData);
     }
 
     /**
      * Parse xml to array.
      *
-     * @return string|float|int|bool|array
+     * @return string|float|int|bool|array<string, string|float|int|bool>
      */
-    final protected function parseSimpleXML(SimpleXMLElement $element)
+    final protected function parseSimpleXml(SimpleXMLElement $element)
     {
         $elements = [];
 
         foreach ($element->attributes() as $attribute => $value) {
-            $elements[$attribute] = $value instanceof SimpleXMLElement ? $this->parseSimpleXML($value) : $value;
+            $elements[$attribute] = $value instanceof SimpleXMLElement ? $this->parseSimpleXml($value) : $value;
         }
 
         foreach ($element->children() as $node => $child) {
-            $elements[$node] = $child instanceof SimpleXMLElement ? $this->parseSimpleXML($child) : $child;
+            $elements[$node] = $child instanceof SimpleXMLElement ? $this->parseSimpleXml($child) : $child;
         }
 
         if ($element->count() === 0 && trim((string) $element) !== '') {
@@ -123,9 +113,7 @@ trait XmlMappingTrait
     }
 
     /**
-     * Transforms string to type.
-     *
-     * @return bool|float|int|string
+     * @return string|float|int|bool
      */
     private function getTypedValue(string $value)
     {
@@ -141,8 +129,6 @@ trait XmlMappingTrait
     }
 
     /**
-     * Get numeric value from string.
-     *
      * @return float|int
      */
     private function getNumericValue(string $value)

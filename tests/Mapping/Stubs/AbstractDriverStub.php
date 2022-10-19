@@ -23,17 +23,11 @@ class AbstractDriverStub extends AbstractDriver
         return $this->locator;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMetadata(): array
     {
         return [new MetadataStub()];

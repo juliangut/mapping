@@ -14,15 +14,16 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractClassDriver;
+use ReflectionClass;
 
 class AbstractAttributeDriverStub extends AbstractClassDriver
 {
     /**
-     * @inheritDoc
+     * @return array<ReflectionClass<object>>
      */
-    public function getMappingClasses(): array
+    public function extractMappingClasses(): array
     {
-        return parent::getMappingClasses();
+        return $this->getMappingClasses();
     }
 
     /**

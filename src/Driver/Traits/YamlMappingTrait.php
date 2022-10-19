@@ -22,19 +22,11 @@ use Symfony\Component\Yaml\Yaml as YamlReader;
  */
 trait YamlMappingTrait
 {
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return ['yml', 'yaml'];
     }
 
-    /**
-     * Load mappings from file.
-     *
-     * @throws DriverException
-     */
     protected function loadMappingFile(string $mappingFile): array
     {
         try {

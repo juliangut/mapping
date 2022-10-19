@@ -29,7 +29,7 @@ class AbstractAttributeDriverTest extends TestCase
     {
         $driver = new AbstractAttributeDriverStub([__DIR__ . '/../Files/Classes/Valid/Attribute']);
 
-        $classes = $driver->getMappingClasses();
+        $classes = $driver->extractMappingClasses();
 
         static::assertCount(2, $classes);
 

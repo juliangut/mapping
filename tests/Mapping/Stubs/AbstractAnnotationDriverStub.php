@@ -14,15 +14,16 @@ declare(strict_types=1);
 namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractAnnotationDriver;
+use ReflectionClass;
 
 class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
 {
     /**
-     * @inheritDoc
+     * @return array<ReflectionClass<object>>
      */
-    public function getMappingClasses(): array
+    public function extractMappingClasses(): array
     {
-        return parent::getMappingClasses();
+        return $this->getMappingClasses();
     }
 
     /**

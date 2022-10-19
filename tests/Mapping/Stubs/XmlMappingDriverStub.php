@@ -23,27 +23,16 @@ class XmlMappingDriverStub implements DriverInterface
         loadMappingFile as originalLoadMappingFile;
     }
 
-    /**
-     * Get supported mapping file extensions.
-     *
-     * @return array<string>
-     */
     public function getExtensions(): array
     {
         return $this->originalGetExtensions();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function loadMappingFile(string $mappingFile): array
     {
         return $this->originalLoadMappingFile($mappingFile);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMetadata(): array
     {
         return [new MetadataStub()];

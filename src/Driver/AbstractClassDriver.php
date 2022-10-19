@@ -18,17 +18,12 @@ use ReflectionClass;
 
 abstract class AbstractClassDriver extends AbstractDriver
 {
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return ['php'];
     }
 
     /**
-     * Get mapping classes.
-     *
      * @throws DriverException
      *
      * @return array<ReflectionClass<object>>
@@ -41,9 +36,7 @@ abstract class AbstractClassDriver extends AbstractDriver
         }
 
         return array_map(
-            static function (string $sourceClass): ReflectionClass {
-                return new ReflectionClass($sourceClass);
-            },
+            static fn (string $sourceClass): ReflectionClass => new ReflectionClass($sourceClass),
             array_filter(array_unique($mappingClasses)),
         );
     }
@@ -52,64 +45,73 @@ abstract class AbstractClassDriver extends AbstractDriver
      * Load fully qualified class name from file.
      *
      * @return class-string<object>
-     *
-     * @SuppressWarnings(PMD.CyclomaticComplexity)
-     * @SuppressWarnings(PMD.NPathComplexity)
      */
     protected function loadClassFromFile(string $mappingFile): string
     {
         $content = file_get_contents($mappingFile);
         $tokens = token_get_all($content !== false ? $content : '');
+
+        $class = '';
+
+        $next = $this->findNextToken($tokens, \T_NAMESPACE);
+        if ($next !== null) {
+            $validTokenTypes = [\T_WHITESPACE, \T_NS_SEPARATOR, \T_STRING];
+            if (\PHP_VERSION_ID >= 80_000) {
+                $validTokenTypes[] = \T_NAME_QUALIFIED;
+            }
+
+            while (
+                \array_key_exists($next + 1, $tokens)
+                && \is_array($tokens[$next + 1])
+                && \in_array($tokens[$next + 1][0], $validTokenTypes, true)
+            ) {
+                $class .= trim($tokens[$next + 1][1]);
+
+                ++$next;
+            }
+
+            $next = $this->findNextToken($tokens, \T_CLASS, $next + 1, \T_DOUBLE_COLON);
+            if ($next !== null) {
+                $next = $this->findNextToken($tokens, \T_STRING, $next + 1);
+                if ($next !== null) {
+                    $class .= '\\' . $tokens[$next][1];
+                }
+            }
+        }
+
+        /** @var class-string<object> $class */
+        return $class;
+    }
+
+    /**
+     * Traverse token stack in search of next token.
+     *
+     * @param array<mixed|array{0: int, 1: string, 2: int}> $tokens
+     */
+    private function findNextToken(array $tokens, int $type, int $start = 0, ?int $escapePreviousType = null): ?int
+    {
         $previousToken = false;
-        $hasClass = false;
-        $class = null;
-        $hasNamespace = false;
-        $namespace = '';
 
-        for ($i = 0, $length = \count($tokens); $i < $length; $i++) {
+        for ($i = $start, $length = \count($tokens); $i < $length; ++$i) {
             $token = $tokens[$i];
-
             if (!\is_array($token)) {
                 continue;
             }
 
-            if ($hasClass && $token[0] === \T_STRING) {
-                /** @var class-string<object> $class */
-                $class = $namespace . '\\' . $token[1];
-
-                break;
-            }
-
-            if ($hasNamespace) {
-                if (\PHP_VERSION_ID >= 80_000 && $token[0] === \T_NAME_QUALIFIED) {
-                    $namespace .= $token[1];
-
-                    $hasNamespace = false;
-                } elseif ($token[0] === \T_STRING) {
-                    do {
-                        $namespace .= $token[1];
-
-                        $token = $tokens[++$i];
-                    } while (
-                        $i < $length
-                        && \is_array($token)
-                        && \in_array($token[0], [\T_NS_SEPARATOR, \T_STRING], true)
-                    );
-
-                    $hasNamespace = false;
-                }
-            }
-
-            if ($token[0] === \T_CLASS && (!\is_array($previousToken) || $previousToken[0] !== \T_DOUBLE_COLON)) {
-                $hasClass = true;
-            }
-            if ($token[0] === \T_NAMESPACE) {
-                $hasNamespace = true;
+            if (
+                $token[0] === $type
+                && (
+                    $escapePreviousType === null
+                    || !\is_array($previousToken)
+                    || $previousToken[0] !== $escapePreviousType
+                )
+            ) {
+                return $i;
             }
 
             $previousToken = $token;
         }
 
-        return $class ?? '';
+        return null;
     }
 }

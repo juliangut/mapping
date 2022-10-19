@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Tests\Driver;
 
+use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Jgut\Mapping\Exception\AnnotationException;
 use Jgut\Mapping\Tests\Files\Classes\Valid\Annotation\ClassA;
 use Jgut\Mapping\Tests\Files\Classes\Valid\Annotation\ClassB;
 use Jgut\Mapping\Tests\Stubs\AbstractAnnotationDriverStub;
@@ -38,7 +38,7 @@ class AbstractAnnotationDriverTest extends TestCase
             $annotationReader,
         );
 
-        $classes = $driver->getMappingClasses();
+        $classes = $driver->extractMappingClasses();
 
         static::assertCount(2, $classes);
 
@@ -52,7 +52,7 @@ class AbstractAnnotationDriverTest extends TestCase
     public function testInvalidAnnotationProperty(): void
     {
         $this->expectException(AnnotationException::class);
-        $this->expectExceptionMessageMatches('/^Default annotation property "name" does not exist\.$/');
+        $this->expectExceptionMessageMatches('/Default annotation property "name" does not exist\./');
 
         $driver = new AbstractAnnotationDriverStub(
             [__DIR__ . '/../Files/Classes/Invalid/Annotation/ClassInvalidProperty.php'],
@@ -65,7 +65,7 @@ class AbstractAnnotationDriverTest extends TestCase
     public function testInvalidAnnotationMethod(): void
     {
         $this->expectException(AnnotationException::class);
-        $this->expectExceptionMessageMatches('/^Annotation property setter "setPath" does not exist\.$/');
+        $this->expectExceptionMessageMatches('/Annotation property setter "setPath" does not exist\./');
 
         $driver = new AbstractAnnotationDriverStub(
             [__DIR__ . '/../Files/Classes/Invalid/Annotation/ClassInvalidMethod.php'],

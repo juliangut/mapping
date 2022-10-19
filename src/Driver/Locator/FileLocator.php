@@ -42,8 +42,6 @@ class FileLocator
     }
 
     /**
-     * Get file paths.
-     *
      * @return array<string>
      */
     public function getPaths(): array
@@ -62,8 +60,6 @@ class FileLocator
     }
 
     /**
-     * Get mapping files.
-     *
      * @throws DriverException
      *
      * @return array<string>
@@ -86,8 +82,6 @@ class FileLocator
     }
 
     /**
-     * Get mapping files from directory.
-     *
      * @return array<string>
      */
     protected function getFilesFromDirectory(string $mappingDirectory): array

@@ -49,8 +49,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get mapping driver implementation.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -83,8 +81,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get native PHP file based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -97,8 +93,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get XML file based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -111,8 +105,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get JSON file based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -125,8 +117,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get YAML file based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -139,8 +129,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get PHP class attribute based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException
@@ -153,8 +141,6 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
     }
 
     /**
-     * Get annotation based mapping driver.
-     *
      * @param array<string> $paths
      *
      * @throws DriverException

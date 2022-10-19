@@ -9,7 +9,7 @@
 
 Base mapping parsing library for any kind of project or library.
 
-This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from Doctrine annotations or files of different formats (PHP, JSON, XML, YAML), so you can focus on the actual parsing of mappings into metadata you can use onwards.
+This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from files of different formats (PHP's Attributes, JSON, XML, YAML) or Doctrine annotations, so you can focus on the actual parsing of mappings into metadata you can use onwards.
 
 ## Examples
 
@@ -114,6 +114,8 @@ $driver->getMetadata();
 
 #### Annotation mapping
 
+_Annotations are deprecated and will be removed when support for PHP 7.4 is dropped. Use Attribute mapping instead_
+
 ```php
 use Doctrine\Common\Annotations\AnnotationReader;
 use Jgut\Mapping\Driver\AbstractAnnotationDriver;
@@ -193,7 +195,7 @@ $metadata = $metadataResolver->getMetadata($mappingSources);
 
 Define where your mapping data is and how it will be parsed
 
-* `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ATTRIBUTE`, `DRIVER_ANNOTATION`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML` or `DRIVER_YAML` **if no driver, defaults to DRIVER_ATTRIBUTE in PHP >=8.0 or DRIVER_ANNOTATION PHP < 8.0**
+* `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ATTRIBUTE`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML`, `DRIVER_YAML` or `DRIVER_ANNOTATION` **if no driver, defaults to DRIVER_ATTRIBUTE in PHP >=8.0 or DRIVER_ANNOTATION PHP < 8.0**
 * `path` a string path or array of paths to where mapping files are located (files or directories) **REQUIRED if no driver**
 * `driver` an already created \Jgut\Mapping\Driver\DriverInterface object **REQUIRED if no type AND path**
 
@@ -208,6 +210,7 @@ use Jgut\Mapping\Annotation\AbstractAnnotation;
  * Custom annotation.
  *
  * @Annotation
+ *
  * @Target("CLASS")
  */
 class Event extends AbstractAnnotation

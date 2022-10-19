@@ -31,9 +31,6 @@ class AbstractDriverFactoryTest extends TestCase
 {
     protected AbstractDriverFactoryStub $factory;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         $this->factory = new AbstractDriverFactoryStub();

@@ -18,19 +18,11 @@ use JsonException;
 
 trait JsonMappingTrait
 {
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return ['json'];
     }
 
-    /**
-     * Load mappings from file.
-     *
-     * @throws DriverException
-     */
     protected function loadMappingFile(string $mappingFile): array
     {
         try {

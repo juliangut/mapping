@@ -23,9 +23,6 @@ class PhpMappingTraitTest extends TestCase
 {
     protected PhpMappingDriverStub $mapping;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         $this->mapping = new PhpMappingDriverStub();

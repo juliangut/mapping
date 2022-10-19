@@ -35,8 +35,6 @@ class MetadataResolver
     }
 
     /**
-     * Get metadata.
-     *
      * @param array<string|array<string|object>> $mappingSources
      *
      * @return array<MetadataInterface>
@@ -57,7 +55,8 @@ class MetadataResolver
 
         $metadata = array_map(
             function (array $mappingSource): array {
-                return $this->driverFactory->getDriver($mappingSource)->getMetadata();
+                return $this->driverFactory->getDriver($mappingSource)
+                    ->getMetadata();
             },
             $mappingSources,
         );

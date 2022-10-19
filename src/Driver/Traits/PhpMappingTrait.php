@@ -15,19 +15,11 @@ namespace Jgut\Mapping\Driver\Traits;
 
 trait PhpMappingTrait
 {
-    /**
-     * @inheritDoc
-     */
     protected function getExtensions(): array
     {
         return ['php'];
     }
 
-    /**
-     * Load mappings from file.
-     *
-     * @return array<mixed>
-     */
     protected function loadMappingFile(string $mappingFile): array
     {
         return require $mappingFile;

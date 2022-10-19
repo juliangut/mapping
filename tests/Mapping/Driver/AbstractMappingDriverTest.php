@@ -34,7 +34,7 @@ class AbstractMappingDriverTest extends TestCase
                 0 => 'parameterThree',
                 1 => 'parameterFour',
             ],
-            $driver->getMappingData(),
+            $driver->extractMappingData(),
         );
     }
 }

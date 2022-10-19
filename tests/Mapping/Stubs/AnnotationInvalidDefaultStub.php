@@ -17,13 +17,11 @@ use Jgut\Mapping\Annotation\AbstractAnnotation;
 
 /**
  * @Annotation
+ *
  * @Target("CLASS")
  */
 class AnnotationInvalidDefaultStub extends AbstractAnnotation
 {
-    /**
-     * @inheritDoc
-     */
     protected function getDefaultProperty(): ?string
     {
         return 'name';

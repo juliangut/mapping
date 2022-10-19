@@ -17,6 +17,7 @@ use Jgut\Mapping\Annotation\AbstractAnnotation;
 
 /**
  * @Annotation
+ *
  * @Target("CLASS")
  */
 class AnnotationStub extends AbstractAnnotation
@@ -35,9 +36,6 @@ class AnnotationStub extends AbstractAnnotation
         $this->name = $name;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getDefaultProperty(): ?string
     {
         return 'name';

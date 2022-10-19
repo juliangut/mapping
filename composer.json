@@ -34,11 +34,10 @@
   "require-dev": {
     "ext-json": "*",
     "ext-libxml": "*",
-    "dealerdirect/phpcodesniffer-composer-installer": "~0.7",
-    "doctrine/annotations": "^1.10.3",
+    "doctrine/annotations": "^1.13.3",
     "grifart/phpstan-oneline": "~0.4",
     "infection/infection": "~0.24",
-    "juliangut/php-cs-fixer-config": "^1.0",
+    "juliangut/easy-coding-standard-config": "^1.0",
     "overtrue/phplint": "^3.0|^4.0",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpmd/phpmd": "^2.10",
@@ -50,7 +49,6 @@
     "povils/phpmnd": "^2.5",
     "roave/security-advisories": "dev-master",
     "sebastian/phpcpd": "^6.0",
-    "squizlabs/php_codesniffer": "^3.6",
     "symfony/yaml": "^5.0.10",
     "thecodingmachine/phpstan-strict-rules": "^1.0"
   },

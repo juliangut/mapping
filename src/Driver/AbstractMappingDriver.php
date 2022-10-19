@@ -18,8 +18,6 @@ use Jgut\Mapping\Exception\DriverException;
 abstract class AbstractMappingDriver extends AbstractDriver
 {
     /**
-     * Get mapping data.
-     *
      * @throws DriverException
      *
      * @return array<mixed>
@@ -41,15 +39,13 @@ abstract class AbstractMappingDriver extends AbstractDriver
     }
 
     /**
-     * Load mappings from file.
+     * @throws DriverException
      *
      * @return array<mixed>
      */
     abstract protected function loadMappingFile(string $mappingFile): array;
 
     /**
-     * Merge mapping data.
-     *
      * @param array<mixed> $mappingsA
      * @param array<mixed> $mappingsB
      *
@@ -58,7 +54,7 @@ abstract class AbstractMappingDriver extends AbstractDriver
     final protected function mergeMappings(array $mappingsA, array $mappingsB): array
     {
         foreach ($mappingsB as $key => $value) {
-            if (isset($mappingsA[$key]) || \array_key_exists($key, $mappingsA)) {
+            if (\array_key_exists($key, $mappingsA) || \array_key_exists($key, $mappingsA)) {
                 if (\is_int($key)) {
                     $mappingsA[] = $value;
                 } elseif (\is_array($value) && \is_array($mappingsA[$key])) {

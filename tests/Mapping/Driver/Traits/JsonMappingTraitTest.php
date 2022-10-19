@@ -24,9 +24,6 @@ class JsonMappingTraitTest extends TestCase
 {
     protected JsonMappingDriverStub $mapping;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         $this->mapping = new JsonMappingDriverStub();

@@ -24,9 +24,6 @@ class YamlMappingTraitTest extends TestCase
 {
     protected YamlMappingDriverStub $mapping;
 
-    /**
-     * @inheritDoc
-     */
     protected function setUp(): void
     {
         $this->mapping = new YamlMappingDriverStub();
