@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use Jgut\ECS\Config\ConfigSet74;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
+use PhpCsFixer\Fixer\ConstantNotation\NativeConstantInvocationFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 $header = <<<'HEADER'
@@ -34,6 +35,11 @@ return static function (ECSConfig $ecsConfig) use ($header): void {
     (new ConfigSet74())
         ->setHeader($header)
         ->enablePhpUnitRules()
+        ->setAdditionalRules([
+            NativeConstantInvocationFixer::class => [
+                'exclude' => ['null', 'false', 'true', 'T_NAME_QUALIFIED'], // Temporal while supporting PHP 7.4
+            ],
+        ])
         ->setAdditionalSkips([
             NoSilencedErrorsSniff::class . '.Discouraged' => [
                 __DIR__ . '/src/Driver/AbstractAnnotationDriver.php', // Temporal while deprecating annotations
