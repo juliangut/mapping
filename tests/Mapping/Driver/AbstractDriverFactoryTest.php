@@ -52,7 +52,10 @@ class AbstractDriverFactoryTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessage('PHP metadata mapping driver is not supported.');
 
-        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_PHP, 'path' => []]);
+        (new EmptyDriverFactoryStub())->getDriver([
+            'type' => DriverFactoryInterface::DRIVER_PHP,
+            'path' => [],
+        ]);
     }
 
     public function testXmlDriverNotImplemented(): void
@@ -60,7 +63,10 @@ class AbstractDriverFactoryTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessage('XML metadata mapping driver is not supported.');
 
-        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_XML, 'path' => []]);
+        (new EmptyDriverFactoryStub())->getDriver([
+            'type' => DriverFactoryInterface::DRIVER_XML,
+            'path' => [],
+        ]);
     }
 
     public function testJsonDriverNotImplemented(): void
@@ -68,7 +74,10 @@ class AbstractDriverFactoryTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessage('JSON metadata mapping driver is not supported.');
 
-        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_JSON, 'path' => []]);
+        (new EmptyDriverFactoryStub())->getDriver([
+            'type' => DriverFactoryInterface::DRIVER_JSON,
+            'path' => [],
+        ]);
     }
 
     public function testYamlDriverNotImplemented(): void
@@ -76,7 +85,10 @@ class AbstractDriverFactoryTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessage('YAML metadata mapping driver is not supported.');
 
-        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_YAML, 'path' => []]);
+        (new EmptyDriverFactoryStub())->getDriver([
+            'type' => DriverFactoryInterface::DRIVER_YAML,
+            'path' => [],
+        ]);
     }
 
     public function testInvalidData(): void
