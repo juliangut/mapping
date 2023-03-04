@@ -23,7 +23,7 @@ abstract class AbstractAnnotation
     protected const DEFAULT_ANNOTATION_PROPERTY = 'value';
 
     /**
-     * @param array<mixed>|Traversable|mixed $parameters
+     * @param array<string, mixed>|Traversable<string, mixed>|mixed $parameters
      *
      * @throws AnnotationException
      */
@@ -37,6 +37,7 @@ abstract class AbstractAnnotation
         }
 
         $defaultProperty = $this->getDefaultProperty();
+        /** @var array<string, mixed> $parameters */
         $properties = $this->getAnnotationProperties($parameters, $defaultProperty);
 
         foreach ($properties as $property) {
@@ -69,7 +70,7 @@ abstract class AbstractAnnotation
     private function getAnnotationProperties(array $parameters, ?string $defaultProperty): array
     {
         $properties = array_map(
-            static fn (ReflectionProperty $property): string => $property->getName(),
+            static fn(ReflectionProperty $property): string => $property->getName(),
             (new ReflectionClass($this))->getProperties(),
         );
 

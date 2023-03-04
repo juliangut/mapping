@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Driver\Traits;
 
+use Jgut\Mapping\Exception\DriverException;
+
 trait PhpMappingTrait
 {
     protected function getExtensions(): array
@@ -22,6 +24,12 @@ trait PhpMappingTrait
 
     protected function loadMappingFile(string $mappingFile): array
     {
-        return require $mappingFile;
+        $mappings = require $mappingFile;
+
+        if (!\is_array($mappings)) {
+            throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
+        }
+
+        return $mappings;
     }
 }

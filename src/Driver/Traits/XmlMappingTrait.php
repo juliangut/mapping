@@ -23,7 +23,7 @@ use SimpleXMLElement;
 trait XmlMappingTrait
 {
     /**
-     * Truthly values.
+     * @var array<string>
      */
     private static array $truthlyValues = [
         'true',
@@ -32,7 +32,7 @@ trait XmlMappingTrait
     ];
 
     /**
-     * Falsy values.
+     * @var array<string>
      */
     private static array $falsyValues = [
         'false',
@@ -43,7 +43,7 @@ trait XmlMappingTrait
     /**
      * List of boolean values.
      *
-     * @var array<bool>|null
+     * @var array<string>|null
      */
     private static ?array $boolValues = null;
 
@@ -54,16 +54,21 @@ trait XmlMappingTrait
 
     protected function loadMappingFile(string $mappingFile): array
     {
+        $fileContents = file_get_contents($mappingFile);
+        if ($fileContents === false) {
+            throw new DriverException(sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
+        }
+
         $useInternalErrors = libxml_use_internal_errors(true);
 
-        $mappingData = simplexml_load_string(file_get_contents($mappingFile));
+        $mappings = simplexml_load_string($fileContents);
 
         libxml_use_internal_errors($useInternalErrors);
 
-        if ($mappingData === false) {
+        if ($mappings === false) {
             // @codeCoverageIgnoreStart
             $errors = array_map(
-                static fn (LibXMLError $error) => '"' . $error->message . '"',
+                static fn(LibXMLError $error) => '"' . $error->message . '"',
                 libxml_get_errors(),
             );
             // @codeCoverageIgnoreEnd
@@ -75,23 +80,26 @@ trait XmlMappingTrait
             );
         }
 
-        if (self::$boolValues === null) {
-            self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
+        $mappings = $this->parseSimpleXml($mappings);
+
+        if (!\is_array($mappings)) {
+            throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
         }
 
-        return $this->parseSimpleXml($mappingData);
+        return $mappings;
     }
 
     /**
-     * Parse xml to array.
+     * Parse XML.
      *
-     * @return string|float|int|bool|array<string, string|float|int|bool>
+     * @return mixed|array<string, mixed>
      */
     final protected function parseSimpleXml(SimpleXMLElement $element)
     {
         $elements = [];
 
-        foreach ($element->attributes() as $attribute => $value) {
+        $attributes = $element->attributes() ?? [];
+        foreach ($attributes as $attribute => $value) {
             $elements[$attribute] = $value instanceof SimpleXMLElement ? $this->parseSimpleXml($value) : $value;
         }
 
@@ -117,6 +125,10 @@ trait XmlMappingTrait
      */
     private function getTypedValue(string $value)
     {
+        if (self::$boolValues === null) {
+            self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
+        }
+
         if (\in_array($value, self::$boolValues, true)) {
             return \in_array($value, self::$truthlyValues, true);
         }

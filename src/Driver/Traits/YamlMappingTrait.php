@@ -29,9 +29,14 @@ trait YamlMappingTrait
 
     protected function loadMappingFile(string $mappingFile): array
     {
+        $fileContents = file_get_contents($mappingFile);
+        if ($fileContents === false) {
+            throw new DriverException(sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
+        }
+
         try {
             $mappings = YamlReader::parse(
-                file_get_contents($mappingFile),
+                $fileContents,
                 YamlReader::PARSE_EXCEPTION_ON_INVALID_TYPE,
             );
             // @codeCoverageIgnoreStart
@@ -43,6 +48,10 @@ trait YamlMappingTrait
             );
         }
         // @codeCoverageIgnoreEnd
+
+        if (!\is_array($mappings)) {
+            throw new DriverException(sprintf('Malformed YAML mapping file "%s".', $mappingFile), 0);
+        }
 
         return $mappings;
     }

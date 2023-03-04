@@ -41,7 +41,10 @@ class AbstractDriverFactoryTest extends TestCase
         $this->expectException(DriverException::class);
         $this->expectExceptionMessage('PHP class annotation metadata mapping driver is not supported.');
 
-        (new EmptyDriverFactoryStub())->getDriver(['type' => DriverFactoryInterface::DRIVER_ANNOTATION, 'path' => []]);
+        (new EmptyDriverFactoryStub())->getDriver([
+            'type' => DriverFactoryInterface::DRIVER_ANNOTATION,
+            'path' => [],
+        ]);
     }
 
     public function testPhpDriverNotImplemented(): void

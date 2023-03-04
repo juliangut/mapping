@@ -38,9 +38,6 @@ class JsonMappingDriverStub implements DriverInterface
         return $this->originalLoadMappingFile($mappingFile);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMetadata(): array
     {
         return [new MetadataStub()];

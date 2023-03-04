@@ -19,49 +19,31 @@ use Jgut\Mapping\Driver\DriverInterface;
 
 class AbstractDriverFactoryStub extends AbstractDriverFactory
 {
-    /**
-     * @inheritDoc
-     */
     protected function getPhpDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getXmlDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getJsonDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getYamlDriver(array $paths): DriverInterface
     {
         return new AbstractMappingDriverStub($paths);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getAttributeDriver(array $paths): DriverInterface
     {
         return new AbstractAttributeDriverStub($paths);
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getAnnotationDriver(array $paths): DriverInterface
     {
         return new AbstractAnnotationDriverStub($paths, new AnnotationReader());

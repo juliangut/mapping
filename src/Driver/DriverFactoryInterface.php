@@ -25,7 +25,7 @@ interface DriverFactoryInterface
     /**
      * Get mapping driver.
      *
-     * @param array<string, string|object> $mappingSource
+     * @param array{driver?: string|object, type?: string, path?: string|array<string>} $mappingSource
      */
     public function getDriver(array $mappingSource): DriverInterface;
 }

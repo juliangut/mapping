@@ -35,7 +35,7 @@ class MetadataResolver
     }
 
     /**
-     * @param array<string|array<string|object>> $mappingSources
+     * @param array<string|array{driver?: string|object, type?: string, path?: string|array<string>}> $mappingSources
      *
      * @return array<MetadataInterface>
      */
@@ -49,6 +49,7 @@ class MetadataResolver
             $cachedMetadata = $this->cache->get($cacheKey);
 
             if (\is_array($cachedMetadata)) {
+                /** @var array<MetadataInterface> $cachedMetadata */
                 return $cachedMetadata;
             }
         }
@@ -96,9 +97,9 @@ class MetadataResolver
     /**
      * Normalize mapping sources format.
      *
-     * @param array<string|array<string, string|object>> $mappingSources
+     * @param array<string|array{driver?: string|object, type?: string, path?: string|array<string>}> $mappingSources
      *
-     * @return array<array<string, string|object>>
+     * @return array<array{driver?: string|object, type?: string, path?: string|array<string>}>
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {

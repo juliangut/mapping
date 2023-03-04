@@ -18,8 +18,6 @@ use Jgut\Mapping\Exception\DriverException;
 abstract class AbstractDriverFactory implements DriverFactoryInterface
 {
     /**
-     * @inheritDoc
-     *
      * @throws DriverException
      */
     public function getDriver(array $mappingSource): DriverInterface
@@ -38,9 +36,8 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
             return $driver;
         }
 
-        $supportedKeys = ['type', 'path'];
-        if (\count(array_intersect($supportedKeys, array_keys($mappingSource))) === \count($supportedKeys)) {
-            return $this->getDriverImplementation((string) $mappingSource['type'], (array) $mappingSource['path']);
+        if (\array_key_exists('type', $mappingSource) && \array_key_exists('path', $mappingSource)) {
+            return $this->getDriverImplementation($mappingSource['type'], (array) $mappingSource['path']);
         }
 
         throw new DriverException(

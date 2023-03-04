@@ -23,25 +23,16 @@ class PhpMappingDriverStub implements DriverInterface
         loadMappingFile as originalLoadMappingFile;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getExtensions(): array
     {
         return $this->originalGetExtensions();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function loadMappingFile(string $mappingFile): array
     {
         return $this->originalLoadMappingFile($mappingFile);
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMetadata(): array
     {
         return [new MetadataStub()];

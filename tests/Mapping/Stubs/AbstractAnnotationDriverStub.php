@@ -26,9 +26,6 @@ class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
         return $this->getMappingClasses();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getMetadata(): array
     {
         return [];

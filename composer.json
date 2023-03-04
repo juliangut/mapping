@@ -34,6 +34,7 @@
   "require-dev": {
     "ext-json": "*",
     "ext-libxml": "*",
+    "ext-simplexml": "*",
     "doctrine/annotations": "^1.13.3",
     "grifart/phpstan-oneline": "~0.4",
     "infection/infection": "~0.24",
