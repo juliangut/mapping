@@ -76,7 +76,7 @@ class MetadataResolver
     /**
      * Get cache key.
      *
-     * @param array<array<string, mixed>> $mappingSources
+     * @param array<Source> $mappingSources
      */
     protected function getCacheKey(array $mappingSources): string
     {
