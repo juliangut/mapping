@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Metadata;
 use Jgut\Mapping\Driver\DriverFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 
+/**
+ * @phpstan-type Source string|array{driver?: string|object, type?: string, path?: string|array<string>}
+ */
 class MetadataResolver
 {
     /**
@@ -35,7 +38,7 @@ class MetadataResolver
     }
 
     /**
-     * @param array<string|array{driver?: string|object, type?: string, path?: string|array<string>}> $mappingSources
+     * @param array<Source> $mappingSources
      *
      * @return array<MetadataInterface>
      */
@@ -97,9 +100,9 @@ class MetadataResolver
     /**
      * Normalize mapping sources format.
      *
-     * @param array<string|array{driver?: string|object, type?: string, path?: string|array<string>}> $mappingSources
+     * @param array<Source> $mappingSources
      *
-     * @return array<array{driver?: string|object, type?: string, path?: string|array<string>}>
+     * @return array<Source>
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
