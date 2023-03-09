@@ -9,11 +9,11 @@
 
 Base mapping parsing library for any kind of project or library.
 
-This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings either from files of different formats (PHP's Attributes, JSON, XML, YAML) or Doctrine annotations, so you can focus on the actual parsing of mappings into metadata you can use onwards.
+This library frees you from the most tedious part of mapping parsing by providing a set of functionalities to easily load mappings from PHP's Attributes or files of different formats (PHP, JSON, XML, YAML), so you can focus on the actual parsing of mappings into metadata you can use onwards.
 
 ## Examples
 
-Full implementation examples of this library can be found at
+Examples of packages fully implementing this library can be found at
 
 * [juliangut/slim-routing](https://github.com/juliangut/slim-routing)
 * [juliangut/json-api](https://github.com/juliangut/json-api)
@@ -24,12 +24,6 @@ Full implementation examples of this library can be found at
 
 ```
 composer require juliangut/mapping
-```
-
-To use mappings in class annotations
-
-```
-composer require doctrine/annotations
 ```
 
 To use yaml files mappings
@@ -115,6 +109,10 @@ $driver->getMetadata();
 #### Annotation mapping
 
 _Annotations are deprecated and will be removed when support for PHP 7.4 is dropped. Use Attribute mapping instead_
+
+```
+composer require doctrine/annotations
+```
 
 ```php
 use Doctrine\Common\Annotations\AnnotationReader;
