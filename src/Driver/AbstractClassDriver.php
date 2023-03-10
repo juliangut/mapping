@@ -44,9 +44,9 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * Load fully qualified class name from file.
      *
-     * @return class-string<object>
+     * @return null|class-string<object>
      */
-    protected function loadClassFromFile(string $mappingFile): string
+    protected function loadClassFromFile(string $mappingFile): ?string
     {
         $content = file_get_contents($mappingFile);
         $tokens = token_get_all($content !== false ? $content : '');
@@ -76,6 +76,8 @@ abstract class AbstractClassDriver extends AbstractDriver
                 if ($next !== null) {
                     $class .= '\\' . $tokens[$next][1];
                 }
+            } else {
+                return null;
             }
         }
 
