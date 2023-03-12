@@ -70,15 +70,23 @@ abstract class AbstractClassDriver extends AbstractDriver
                 ++$next;
             }
 
-            $next = $this->findNextToken($tokens, \T_CLASS, $next + 1, \T_DOUBLE_COLON);
-            if ($next !== null) {
-                $next = $this->findNextToken($tokens, \T_STRING, $next + 1);
-                if ($next !== null) {
-                    $class .= '\\' . $tokens[$next][1];
-                }
-            } else {
+            if (
+                $this->findNextToken($tokens, \T_TRAIT, $next + 1) !== null // Exclude traits
+                || $this->findNextToken($tokens, \T_INTERFACE, $next + 1) !== null // Exclude interfaces
+            ) {
                 return null;
             }
+
+            $next = $this->findNextToken($tokens, \T_CLASS, $next + 1, \T_DOUBLE_COLON);
+            if ($next === null) {
+                return null;
+            }
+
+            $next = $this->findNextToken($tokens, \T_STRING, $next + 1);
+            if ($next !== null) {
+                $class .= '\\' . $tokens[$next][1];
+            }
+
         }
 
         /** @var class-string<object> $class */
