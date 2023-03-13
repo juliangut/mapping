@@ -44,7 +44,7 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * Load fully qualified class name from file.
      *
-     * @return null|class-string<object>
+     * @return class-string<object>|null
      */
     protected function loadClassFromFile(string $mappingFile): ?string
     {
@@ -53,12 +53,9 @@ abstract class AbstractClassDriver extends AbstractDriver
 
         $class = '';
 
-        $next = $this->findNextToken($tokens, \T_NAMESPACE);
+        $next = $this->findNextToken($tokens, [\T_NAMESPACE]);
         if ($next !== null) {
-            $validTokenTypes = [\T_WHITESPACE, \T_NS_SEPARATOR, \T_STRING];
-            if (\PHP_VERSION_ID >= 80_000) {
-                $validTokenTypes[] = T_NAME_QUALIFIED;
-            }
+            $validTokenTypes = $this->getValidTokenTypes();
 
             while (
                 \array_key_exists($next + 1, $tokens)
@@ -70,23 +67,20 @@ abstract class AbstractClassDriver extends AbstractDriver
                 ++$next;
             }
 
-            if (
-                $this->findNextToken($tokens, \T_TRAIT, $next + 1) !== null // Exclude traits
-                || $this->findNextToken($tokens, \T_INTERFACE, $next + 1) !== null // Exclude interfaces
-            ) {
+            // Exclude traits and interfaces
+            if ($this->findNextToken($tokens, [\T_TRAIT, \T_INTERFACE], $next + 1) !== null) {
                 return null;
             }
 
-            $next = $this->findNextToken($tokens, \T_CLASS, $next + 1, \T_DOUBLE_COLON);
+            $next = $this->findNextToken($tokens, [\T_CLASS], $next + 1, \T_DOUBLE_COLON);
             if ($next === null) {
                 return null;
             }
 
-            $next = $this->findNextToken($tokens, \T_STRING, $next + 1);
+            $next = $this->findNextToken($tokens, [\T_STRING], $next + 1);
             if ($next !== null) {
                 $class .= '\\' . $tokens[$next][1];
             }
-
         }
 
         /** @var class-string<object> $class */
@@ -97,8 +91,9 @@ abstract class AbstractClassDriver extends AbstractDriver
      * Traverse token stack in search of next token.
      *
      * @param array<mixed|array{0: int, 1: string, 2: int}> $tokens
+     * @param array<int>                                    $types
      */
-    private function findNextToken(array $tokens, int $type, int $start = 0, ?int $escapePreviousType = null): ?int
+    private function findNextToken(array $tokens, array $types, int $start = 0, ?int $escapePreviousType = null): ?int
     {
         $previousToken = false;
 
@@ -109,7 +104,7 @@ abstract class AbstractClassDriver extends AbstractDriver
             }
 
             if (
-                $token[0] === $type
+                \in_array($token[0], $types, true)
                 && (
                     $escapePreviousType === null
                     || !\is_array($previousToken)
@@ -123,5 +118,18 @@ abstract class AbstractClassDriver extends AbstractDriver
         }
 
         return null;
+    }
+
+    /**
+     * @return array<int>
+     */
+    private function getValidTokenTypes(): array
+    {
+        $validTokenTypes = [\T_WHITESPACE, \T_NS_SEPARATOR, \T_STRING];
+        if (\PHP_VERSION_ID >= 80_000) {
+            $validTokenTypes[] = T_NAME_QUALIFIED;
+        }
+
+        return $validTokenTypes;
     }
 }
