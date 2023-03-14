@@ -51,37 +51,40 @@ abstract class AbstractClassDriver extends AbstractDriver
         $content = file_get_contents($mappingFile);
         $tokens = token_get_all($content !== false ? $content : '');
 
+        $next = $this->findNextToken($tokens, [\T_NAMESPACE]);
+        if ($next === null) {
+            return null;
+        }
+
+        $validTokenTypes = $this->getValidTokenTypes();
         $class = '';
 
-        $next = $this->findNextToken($tokens, [\T_NAMESPACE]);
-        if ($next !== null) {
-            $validTokenTypes = $this->getValidTokenTypes();
+        while (
+            \array_key_exists($next + 1, $tokens)
+            && \is_array($tokens[$next + 1])
+            && \in_array($tokens[$next + 1][0], $validTokenTypes, true)
+        ) {
+            $class .= trim($tokens[$next + 1][1]);
 
-            while (
-                \array_key_exists($next + 1, $tokens)
-                && \is_array($tokens[$next + 1])
-                && \in_array($tokens[$next + 1][0], $validTokenTypes, true)
-            ) {
-                $class .= trim($tokens[$next + 1][1]);
-
-                ++$next;
-            }
-
-            // Exclude traits and interfaces
-            if ($this->findNextToken($tokens, [\T_TRAIT, \T_INTERFACE], $next + 1) !== null) {
-                return null;
-            }
-
-            $next = $this->findNextToken($tokens, [\T_CLASS], $next + 1, \T_DOUBLE_COLON);
-            if ($next === null) {
-                return null;
-            }
-
-            $next = $this->findNextToken($tokens, [\T_STRING], $next + 1);
-            if ($next !== null) {
-                $class .= '\\' . $tokens[$next][1];
-            }
+            ++$next;
         }
+
+        // Exclude traits and interfaces
+        if ($this->findNextToken($tokens, [\T_TRAIT, \T_INTERFACE], $next + 1) !== null) {
+            return null;
+        }
+
+        $next = $this->findNextToken($tokens, [\T_CLASS], $next + 1, \T_DOUBLE_COLON);
+        if ($next === null) {
+            return null;
+        }
+
+        $next = $this->findNextToken($tokens, [\T_STRING], $next + 1);
+        if ($next === null) {
+            return null;
+        }
+
+        $class .= '\\' . $tokens[$next][1];
 
         /** @var class-string<object> $class */
         return $class;
