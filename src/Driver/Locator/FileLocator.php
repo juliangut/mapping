@@ -21,25 +21,16 @@ use RegexIterator;
 
 class FileLocator
 {
-    /**
-     * @var array<string>
-     */
-    protected array $paths = [];
-
-    /**
-     * @var array<string>
-     */
-    protected array $extensions;
-
-    /**
-     * @param array<string> $paths
-     * @param array<string> $extensions
-     */
-    public function __construct(array $paths, array $extensions)
-    {
-        $this->paths = $paths;
-        $this->extensions = $extensions;
-    }
+    public function __construct(
+        /**
+         * @var list<string>
+         */
+        protected array $paths,
+        /**
+         * @var list<string>
+         */
+        protected array $extensions,
+    ) {}
 
     /**
      * @return array<string>

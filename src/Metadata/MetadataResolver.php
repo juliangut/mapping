@@ -22,20 +22,12 @@ use Psr\SimpleCache\CacheInterface;
 class MetadataResolver
 {
     /**
-     * Driver factory.
+     * @param CacheInterface<mixed>|null $cache
      */
-    protected DriverFactoryInterface $driverFactory;
-
-    /**
-     * Metadata cache.
-     */
-    protected ?CacheInterface $cache;
-
-    public function __construct(DriverFactoryInterface $driverFactory, ?CacheInterface $cache = null)
-    {
-        $this->driverFactory = $driverFactory;
-        $this->cache = $cache;
-    }
+    public function __construct(
+        protected DriverFactoryInterface $driverFactory,
+        protected ?CacheInterface $cache = null,
+    ) {}
 
     /**
      * @param array<Source> $mappingSources
@@ -94,7 +86,7 @@ class MetadataResolver
             ),
         );
 
-        return sha1($key);
+        return hash('sha256', $key);
     }
 
     /**
@@ -106,9 +98,7 @@ class MetadataResolver
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
-        $defaultDriver = \PHP_VERSION_ID >= 80_000
-            ? DriverFactoryInterface::DRIVER_ATTRIBUTE
-            : DriverFactoryInterface::DRIVER_ANNOTATION;
+        $defaultDriver = DriverFactoryInterface::DRIVER_ATTRIBUTE;
 
         return array_map(
             static function ($mappingSource) use ($defaultDriver): array {

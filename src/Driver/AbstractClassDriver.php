@@ -128,11 +128,6 @@ abstract class AbstractClassDriver extends AbstractDriver
      */
     private function getValidTokenTypes(): array
     {
-        $validTokenTypes = [\T_WHITESPACE, \T_NS_SEPARATOR, \T_STRING];
-        if (\PHP_VERSION_ID >= 80_000) {
-            $validTokenTypes[] = T_NAME_QUALIFIED;
-        }
-
-        return $validTokenTypes;
+        return [\T_WHITESPACE, \T_NS_SEPARATOR, \T_STRING, \T_NAME_QUALIFIED];
     }
 }

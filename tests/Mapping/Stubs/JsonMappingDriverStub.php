@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\JsonMappingTrait;
 
+/**
+ * @internal
+ */
 class JsonMappingDriverStub implements DriverInterface
 {
     use JsonMappingTrait {

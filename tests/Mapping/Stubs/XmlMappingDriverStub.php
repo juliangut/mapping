@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\XmlMappingTrait;
 
+/**
+ * @internal
+ */
 class XmlMappingDriverStub implements DriverInterface
 {
     use XmlMappingTrait {

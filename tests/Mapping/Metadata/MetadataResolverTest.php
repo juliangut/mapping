@@ -31,12 +31,10 @@ class MetadataResolverTest extends TestCase
             ->getMock();
         $factory->expects(static::exactly(2))
             ->method('getDriver')
-            ->withConsecutive(
+            ->willReturnOnConsecutiveCalls(
                 [
                     [
-                        'type' => \PHP_VERSION_ID >= 80_000
-                            ? DriverFactoryInterface::DRIVER_ATTRIBUTE
-                            : DriverFactoryInterface::DRIVER_ANNOTATION,
+                        'type' => DriverFactoryInterface::DRIVER_ATTRIBUTE,
                         'path' => __DIR__,
                     ],
                 ],

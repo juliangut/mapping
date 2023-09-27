@@ -17,6 +17,9 @@ use Jgut\Mapping\Driver\AbstractMappingDriver;
 use Jgut\Mapping\Driver\Traits\PhpMappingTrait;
 use ReflectionClass;
 
+/**
+ * @internal
+ */
 class AbstractMappingDriverStub extends AbstractMappingDriver
 {
     use PhpMappingTrait;

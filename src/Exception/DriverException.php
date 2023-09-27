@@ -15,6 +15,4 @@ namespace Jgut\Mapping\Exception;
 
 use RuntimeException;
 
-class DriverException extends RuntimeException
-{
-}
+class DriverException extends RuntimeException {}

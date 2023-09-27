@@ -17,19 +17,15 @@ use Doctrine\Common\Annotations\Reader;
 
 abstract class AbstractAnnotationDriver extends AbstractClassDriver
 {
-    protected Reader $annotationReader;
-
     /**
-     * @param array<string> $paths
+     * @param list<string> $paths
      */
-    public function __construct(array $paths, Reader $annotationReader)
-    {
-        if (\PHP_VERSION_ID >= 80_000) {
-            @trigger_error('Annotations are deprecated. Use PHP Attributes instead.', \E_USER_DEPRECATED);
-        }
+    public function __construct(
+        array $paths,
+        protected Reader $annotationReader,
+    ) {
+        @trigger_error('Annotations are deprecated. Use PHP Attributes instead.', \E_USER_DEPRECATED);
 
         parent::__construct($paths);
-
-        $this->annotationReader = $annotationReader;
     }
 }

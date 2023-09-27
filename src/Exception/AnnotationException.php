@@ -15,6 +15,4 @@ namespace Jgut\Mapping\Exception;
 
 use RuntimeException;
 
-class AnnotationException extends RuntimeException
-{
-}
+class AnnotationException extends RuntimeException {}

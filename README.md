@@ -1,4 +1,4 @@
-[![PHP version](https://img.shields.io/badge/PHP-%3E%3D7.4-8892BF.svg?style=flat-square)](http://php.net)
+[![PHP version](https://img.shields.io/badge/PHP-%3E%3D8.0-8892BF.svg?style=flat-square)](http://php.net)
 [![Latest Version](https://img.shields.io/packagist/v/juliangut/mapping.svg?style=flat-square)](https://packagist.org/packages/juliangut/mapping)
 [![License](https://img.shields.io/github/license/juliangut/mapping.svg?style=flat-square)](https://github.com/juliangut/mapping/blob/master/LICENSE)
 
@@ -108,7 +108,7 @@ $driver->getMetadata();
 
 #### Annotation mapping
 
-_Annotations are deprecated and will be removed when support for PHP 7.4 is dropped. Use Attribute mapping instead_
+_Annotations are deprecated and discouraged. Use Attribute mapping instead_
 
 ```
 composer require doctrine/annotations
@@ -193,7 +193,7 @@ $metadata = $metadataResolver->getMetadata($mappingSources);
 
 Define where your mapping data is and how it will be parsed
 
-* `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ATTRIBUTE`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML`, `DRIVER_YAML` or `DRIVER_ANNOTATION` **if no driver, defaults to DRIVER_ATTRIBUTE in PHP >=8.0 or DRIVER_ANNOTATION PHP < 8.0**
+* `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ATTRIBUTE`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML`, `DRIVER_YAML` or `DRIVER_ANNOTATION` **if no driver, defaults to DRIVER_ATTRIBUTE**
 * `path` a string path or array of paths to where mapping files are located (files or directories) **REQUIRED if no driver**
 * `driver` an already created \Jgut\Mapping\Driver\DriverInterface object **REQUIRED if no type AND path**
 

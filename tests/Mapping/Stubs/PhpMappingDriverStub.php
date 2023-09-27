@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\DriverInterface;
 use Jgut\Mapping\Driver\Traits\PhpMappingTrait;
 
+/**
+ * @internal
+ */
 class PhpMappingDriverStub implements DriverInterface
 {
     use PhpMappingTrait {

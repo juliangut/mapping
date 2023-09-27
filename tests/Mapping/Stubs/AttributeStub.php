@@ -18,15 +18,10 @@ use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 class AttributeStub
 {
-    protected string $name;
-
-    protected ?string $parent;
-
-    public function __construct(string $name, ?string $parent = null)
-    {
-        $this->name = $name;
-        $this->parent = $parent;
-    }
+    public function __construct(
+        protected string $name,
+        protected ?string $parent = null,
+    ) {}
 
     public function getName(): string
     {

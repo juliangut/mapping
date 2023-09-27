@@ -29,7 +29,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
                 throw new DriverException(sprintf(
                     'Metadata mapping driver should be of the type "%s", "%s" given.',
                     DriverInterface::class,
-                    \is_object($driver) ? \get_class($driver) : \gettype($driver),
+                    \is_object($driver) ? $driver::class : \gettype($driver),
                 ));
             }
 

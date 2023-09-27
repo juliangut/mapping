@@ -15,6 +15,7 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Driver\AbstractDriverFactory;
 
-class EmptyDriverFactoryStub extends AbstractDriverFactory
-{
-}
+/**
+ * @internal
+ */
+class EmptyDriverFactoryStub extends AbstractDriverFactory {}

@@ -18,6 +18,4 @@ use Jgut\Mapping\Tests\Stubs\AnnotationInvalidDefaultStub as Stub;
 /**
  * @Stub()
  */
-class ClassInvalidProperty
-{
-}
+class ClassInvalidProperty {}

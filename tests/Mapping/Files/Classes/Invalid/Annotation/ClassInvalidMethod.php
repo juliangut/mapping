@@ -18,6 +18,4 @@ use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 /**
  * @Stub("myClassA", path="path")
  */
-class ClassInvalidMethod
-{
-}
+class ClassInvalidMethod {}

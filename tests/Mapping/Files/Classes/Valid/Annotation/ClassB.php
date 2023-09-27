@@ -18,6 +18,4 @@ use Jgut\Mapping\Tests\Stubs\AnnotationStub as Stub;
 /**
  * @Stub(name="myClassB")
  */
-class ClassB
-{
-}
+class ClassB {}

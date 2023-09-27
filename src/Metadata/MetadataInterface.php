@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Jgut\Mapping\Metadata;
 
-interface MetadataInterface
-{
-}
+interface MetadataInterface {}

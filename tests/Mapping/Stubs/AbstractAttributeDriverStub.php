@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\AbstractClassDriver;
 use ReflectionClass;
 
+/**
+ * @internal
+ */
 class AbstractAttributeDriverStub extends AbstractClassDriver
 {
     /**

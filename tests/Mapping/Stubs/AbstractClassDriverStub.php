@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\AbstractClassDriver;
 use Jgut\Mapping\Metadata\MetadataInterface;
 
+/**
+ * @internal
+ */
 class AbstractClassDriverStub extends AbstractClassDriver
 {
     /**

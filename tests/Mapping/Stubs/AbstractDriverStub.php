@@ -16,6 +16,9 @@ namespace Jgut\Mapping\Tests\Stubs;
 use Jgut\Mapping\Driver\AbstractDriver;
 use Jgut\Mapping\Driver\Locator\FileLocator;
 
+/**
+ * @internal
+ */
 class AbstractDriverStub extends AbstractDriver
 {
     public function getLocator(): FileLocator

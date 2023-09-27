@@ -20,7 +20,7 @@ abstract class AbstractDriver implements DriverInterface
     protected FileLocator $locator;
 
     /**
-     * @param array<string> $paths
+     * @param list<string> $paths
      */
     public function __construct(array $paths)
     {
@@ -30,7 +30,7 @@ abstract class AbstractDriver implements DriverInterface
     /**
      * Get supported mapping file extensions.
      *
-     * @return array<string>
+     * @return list<string>
      */
     abstract protected function getExtensions(): array;
 }

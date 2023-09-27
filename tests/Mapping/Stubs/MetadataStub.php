@@ -15,6 +15,7 @@ namespace Jgut\Mapping\Tests\Stubs;
 
 use Jgut\Mapping\Metadata\MetadataInterface;
 
-class MetadataStub implements MetadataInterface
-{
-}
+/**
+ * @internal
+ */
+class MetadataStub implements MetadataInterface {}

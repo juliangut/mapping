@@ -15,13 +15,11 @@ namespace Jgut\Mapping\Tests\Files\Classes\Invalid\Attribute;
 
 trait TraitA
 {
-    public function methodA(): void
-    {
-    }
+    public function methodA(): void {}
 
     public function methodB(): void
     {
-        $var = new class() {};
-        echo \get_class($var);
+        $var = new class () {};
+        echo $var::class;
     }
 }

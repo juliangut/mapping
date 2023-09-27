@@ -15,6 +15,4 @@ namespace Jgut\Mapping\Exception;
 
 use RuntimeException;
 
-class MetadataException extends RuntimeException
-{
-}
+class MetadataException extends RuntimeException {}
