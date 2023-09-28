@@ -29,7 +29,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
                 throw new DriverException(sprintf(
                     'Metadata mapping driver should be of the type "%s", "%s" given.',
                     DriverInterface::class,
-                    \is_object($driver) ? $driver::class : \gettype($driver),
+                    $driver::class,
                 ));
             }
 
@@ -52,29 +52,15 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
      */
     protected function getDriverImplementation(string $type, array $paths): DriverInterface
     {
-        switch ($type) {
-            case DriverFactoryInterface::DRIVER_PHP:
-                return $this->getPhpDriver($paths);
-
-            case DriverFactoryInterface::DRIVER_XML:
-                return $this->getXmlDriver($paths);
-
-            case DriverFactoryInterface::DRIVER_JSON:
-                return $this->getJsonDriver($paths);
-
-            case DriverFactoryInterface::DRIVER_YAML:
-                return $this->getYamlDriver($paths);
-
-            case DriverFactoryInterface::DRIVER_ATTRIBUTE:
-                return $this->getAttributeDriver($paths);
-
-            case DriverFactoryInterface::DRIVER_ANNOTATION:
-                return $this->getAnnotationDriver($paths);
-        }
-
-        throw new DriverException(
-            sprintf('"%s" is not a valid metadata mapping driver.', $type),
-        );
+        return match ($type) {
+            DriverFactoryInterface::DRIVER_PHP => $this->getPhpDriver($paths),
+            DriverFactoryInterface::DRIVER_XML => $this->getXmlDriver($paths),
+            DriverFactoryInterface::DRIVER_JSON => $this->getJsonDriver($paths),
+            DriverFactoryInterface::DRIVER_YAML => $this->getYamlDriver($paths),
+            DriverFactoryInterface::DRIVER_ATTRIBUTE => $this->getAttributeDriver($paths),
+            DriverFactoryInterface::DRIVER_ANNOTATION => $this->getAnnotationDriver($paths),
+            default => throw new DriverException(sprintf('"%s" is not a valid metadata mapping driver.', $type)),
+        };
     }
 
     /**

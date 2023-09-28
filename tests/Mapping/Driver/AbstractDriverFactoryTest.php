@@ -21,6 +21,7 @@ use Jgut\Mapping\Tests\Stubs\AbstractDriverFactoryStub;
 use Jgut\Mapping\Tests\Stubs\AbstractMappingDriverStub;
 use Jgut\Mapping\Tests\Stubs\EmptyDriverFactoryStub;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @SuppressWarnings(PMD.TooManyPublicMethods)
@@ -111,10 +112,10 @@ class AbstractDriverFactoryTest extends TestCase
     {
         $this->expectException(DriverException::class);
         $this->expectExceptionMessageMatches(
-            '/^Metadata mapping driver should be of the type ".+", "string" given\.$/',
+            '/^Metadata mapping driver should be of the type ".+", "stdClass" given\.$/',
         );
 
-        $this->factory->getDriver(['driver' => 'invalid']);
+        $this->factory->getDriver(['driver' => new stdClass()]);
     }
 
     public function testDriver(): void

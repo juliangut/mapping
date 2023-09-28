@@ -23,7 +23,7 @@ use SimpleXMLElement;
 trait XmlMappingTrait
 {
     /**
-     * @var array<string>
+     * @var list<string>
      */
     private static array $truthlyValues = [
         'true',
@@ -32,7 +32,7 @@ trait XmlMappingTrait
     ];
 
     /**
-     * @var array<string>
+     * @var list<string>
      */
     private static array $falsyValues = [
         'false',
@@ -43,7 +43,7 @@ trait XmlMappingTrait
     /**
      * List of boolean values.
      *
-     * @var array<string>|null
+     * @var list<string>|null
      */
     private static ?array $boolValues = null;
 
@@ -145,7 +145,7 @@ trait XmlMappingTrait
      */
     private function getNumericValue(string $value)
     {
-        if (mb_strpos($value, '.') !== false) {
+        if (str_contains($value, '.')) {
             return (float) $value;
         }
 

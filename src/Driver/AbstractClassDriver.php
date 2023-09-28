@@ -26,7 +26,7 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * @throws DriverException
      *
-     * @return array<ReflectionClass<object>>
+     * @return list<ReflectionClass<object>>
      */
     protected function getMappingClasses(): array
     {
@@ -35,10 +35,10 @@ abstract class AbstractClassDriver extends AbstractDriver
             $mappingClasses[] = $this->loadClassFromFile($mappingFile);
         }
 
-        return array_map(
+        return array_values(array_map(
             static fn(string $sourceClass): ReflectionClass => new ReflectionClass($sourceClass),
             array_filter(array_unique($mappingClasses)),
-        );
+        ));
     }
 
     /**

@@ -20,7 +20,7 @@ interface DriverInterface
     /**
      * Get mapped metadata.
      *
-     * @return array<MetadataInterface>
+     * @return list<MetadataInterface>
      */
     public function getMetadata(): array;
 }

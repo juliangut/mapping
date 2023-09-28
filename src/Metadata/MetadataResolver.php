@@ -17,7 +17,7 @@ use Jgut\Mapping\Driver\DriverFactoryInterface;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * @phpstan-type Source string|array{driver?: string|object, type?: string, path?: string|array<string>}
+ * @phpstan-type Source array{driver?: object, type?: string, path?: string|list<string>}
  */
 class MetadataResolver
 {
@@ -37,9 +37,9 @@ class MetadataResolver
     }
 
     /**
-     * @param array<Source> $mappingSources
+     * @param list<string|Source> $mappingSources
      *
-     * @return array<MetadataInterface>
+     * @return list<MetadataInterface>
      */
     public function getMetadata(array $mappingSources): array
     {
@@ -51,7 +51,7 @@ class MetadataResolver
             $cachedMetadata = $this->cache->get($cacheKey);
 
             if (\is_array($cachedMetadata)) {
-                /** @var array<MetadataInterface> $cachedMetadata */
+                /** @var list<MetadataInterface> $cachedMetadata */
                 return $cachedMetadata;
             }
         }
@@ -75,7 +75,7 @@ class MetadataResolver
     /**
      * Get cache key.
      *
-     * @param array<Source> $mappingSources
+     * @param list<Source> $mappingSources
      */
     protected function getCacheKey(array $mappingSources): string
     {
@@ -83,6 +83,11 @@ class MetadataResolver
             '.',
             array_map(
                 static function (array $mappingSource): string {
+                    if (\array_key_exists('driver', $mappingSource)) {
+                        return '';
+                    }
+
+                    /** @var array{type: string, path: string|list<string>} $mappingSource */
                     $path = \is_array($mappingSource['path'])
                         ? implode('', $mappingSource['path'])
                         : $mappingSource['path'];
@@ -99,19 +104,21 @@ class MetadataResolver
     /**
      * Normalize mapping sources format.
      *
-     * @param array<Source> $mappingSources
+     * @param list<string|Source> $mappingSources
      *
-     * @return array<Source>
+     * @return list<Source>
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
-        $defaultDriver = DriverFactoryInterface::DRIVER_ATTRIBUTE;
+        return array_values(array_map(
+            static function ($mappingSource): array {
+                if (\is_array($mappingSource) && \array_key_exists('driver', $mappingSource)) {
+                    return ['driver' => $mappingSource['driver']];
+                }
 
-        return array_map(
-            static function ($mappingSource) use ($defaultDriver): array {
                 if (!\is_array($mappingSource)) {
                     $mappingSource = [
-                        'type' => $defaultDriver,
+                        'type' => DriverFactoryInterface::DRIVER_ATTRIBUTE,
                         'path' => $mappingSource,
                     ];
                 }
@@ -119,6 +126,6 @@ class MetadataResolver
                 return $mappingSource;
             },
             $mappingSources,
-        );
+        ));
     }
 }
