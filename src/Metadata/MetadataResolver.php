@@ -21,6 +21,8 @@ use Psr\SimpleCache\CacheInterface;
  */
 class MetadataResolver
 {
+    protected string $cachePrefix = '';
+
     /**
      * @param CacheInterface<mixed>|null $cache
      */
@@ -28,6 +30,11 @@ class MetadataResolver
         protected DriverFactoryInterface $driverFactory,
         protected ?CacheInterface $cache = null,
     ) {}
+
+    public function setCachePrefix(string $cachePrefix): void
+    {
+        $this->cachePrefix = $cachePrefix;
+    }
 
     /**
      * @param array<Source> $mappingSources
@@ -86,7 +93,7 @@ class MetadataResolver
             ),
         );
 
-        return hash('sha256', $key);
+        return $this->cachePrefix . hash('sha256', $key);
     }
 
     /**
