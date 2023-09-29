@@ -57,9 +57,6 @@ class PhpDriver extends AbstractMappingDriver
 {
     use PhpMappingTrait;
 
-    /**
-     * @return MetadataInterface[]
-     */
     public function getMetadata(): array
     {
         $mappingData = $this->getMappingData();
@@ -88,14 +85,11 @@ use Jgut\Mapping\Metadata\MetadataInterface;
 
 class AttributeDriver extends AbstractClassDriver
 {
-    /**
-     * @return MetadataInterface[]
-     */
     public function getMetadata(): array
     {
         $mappingClasses = $this->getMappingClasses();
 
-        // Parse class attributes with PHP's reflection
+        // Parse class attributes with PHP Reflection
 
         // Return your parsed metadata
     }
@@ -121,9 +115,6 @@ use Jgut\Mapping\Metadata\MetadataInterface;
 
 class AnnotationDriver extends AbstractAnnotationDriver
 {
-    /**
-     * @return MetadataInterface[]
-     */
     public function getMetadata(): array
     {
         $mappingClasses = $this->getMappingClasses();
@@ -195,7 +186,7 @@ Define where your mapping data is and how it will be parsed
 
 * `type` one of \Jgut\Mapping\Driver\DriverFactoryInterface constants: `DRIVER_ATTRIBUTE`, `DRIVER_PHP`, `DRIVER_JSON`, `DRIVER_XML`, `DRIVER_YAML` or `DRIVER_ANNOTATION` **if no driver, defaults to DRIVER_ATTRIBUTE**
 * `path` a string path or array of paths to where mapping files are located (files or directories) **REQUIRED if no driver**
-* `driver` an already created \Jgut\Mapping\Driver\DriverInterface object **REQUIRED if no type AND path**
+* `driver` an already created \Jgut\Mapping\Driver\DriverInterface object **required if no type AND path**
 
 ### Annotations
 
@@ -205,8 +196,6 @@ Base AbstractAnnotation class is provided to ease annotations creation.
 use Jgut\Mapping\Annotation\AbstractAnnotation;
 
 /**
- * Custom annotation.
- *
  * @Annotation
  *
  * @Target("CLASS")
@@ -227,9 +216,6 @@ class Event extends AbstractAnnotation
         $this->enabled = $enabled;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function getDefaultProperty(): ?string
     {
         return 'event';
