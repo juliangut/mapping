@@ -120,10 +120,7 @@ trait XmlMappingTrait
         return $elements;
     }
 
-    /**
-     * @return string|float|int|bool
-     */
-    private function getTypedValue(string $value)
+    private function getTypedValue(string $value): float|bool|int|string
     {
         if (self::$boolValues === null) {
             self::$boolValues = array_merge(self::$truthlyValues, self::$falsyValues);
@@ -140,10 +137,7 @@ trait XmlMappingTrait
         return $value;
     }
 
-    /**
-     * @return float|int
-     */
-    private function getNumericValue(string $value)
+    private function getNumericValue(string $value): float|int
     {
         if (str_contains($value, '.')) {
             return (float) $value;
