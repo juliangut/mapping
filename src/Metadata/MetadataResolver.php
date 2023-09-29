@@ -77,23 +77,21 @@ class MetadataResolver
      */
     protected function getCacheKey(array $mappingSources): string
     {
-        $key = implode(
-            '.',
-            array_map(
-                static function (array $mappingSource): string {
-                    if (\array_key_exists('driver', $mappingSource)) {
-                        return '';
-                    }
+        $key = array_reduce(
+            $mappingSources,
+            static function (string $key, array $mappingSource): string {
+                if (\array_key_exists('driver', $mappingSource)) {
+                    return sprintf('%s::driver:%s', $key, $mappingSource['driver']::class);
+                }
 
-                    /** @var array{type: string, path: string|list<string>} $mappingSource */
-                    $path = \is_array($mappingSource['path'])
-                        ? implode('', $mappingSource['path'])
-                        : $mappingSource['path'];
+                /** @var array{type: string, path: string|list<string>} $mappingSource */
+                $path = \is_array($mappingSource['path'])
+                    ? implode('', $mappingSource['path'])
+                    : $mappingSource['path'];
 
-                    return $mappingSource['type'] . '.' . $path;
-                },
-                $mappingSources,
-            ),
+                return sprintf('%s::%s:%s', $key, $mappingSource['type'], $path);
+            },
+            'mapping',
         );
 
         return $this->cachePrefix . hash('sha256', $key);
