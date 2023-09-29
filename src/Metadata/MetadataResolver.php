@@ -65,9 +65,7 @@ class MetadataResolver
         );
         $metadata = \count($metadata) > 0 ? array_merge(...$metadata) : [];
 
-        if ($this->cache !== null) {
-            $this->cache->set($cacheKey, $metadata);
-        }
+        $this->cache?->set($cacheKey, $metadata);
 
         return $metadata;
     }
