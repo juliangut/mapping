@@ -29,7 +29,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^8.0",
-    "psr/simple-cache": "^2.0|^3.0"
+    "psr/simple-cache": "^1.0|^2.0|^3.0"
   },
   "require-dev": {
     "ext-json": "*",
@@ -37,7 +37,7 @@
     "ext-simplexml": "*",
     "doctrine/annotations": "^2.0",
     "infection/infection": "~0.25|~0.27",
-    "juliangut/easy-coding-standard-config": "^1.12",
+    "juliangut/easy-coding-standard-config": "^1.14",
     "juliangut/phpstan-config": "^1.1",
     "overtrue/phplint": "^9.0",
     "phpcompatibility/php-compatibility": "^9.3",
@@ -45,11 +45,10 @@
     "phpunit/phpunit": "^9.6|^10.4",
     "povils/phpmnd": "^3.2",
     "roave/security-advisories": "dev-master",
-    "symfony/yaml": "^6.0"
+    "symfony/yaml": "^6.0|^7.0"
   },
   "suggest": {
-    "doctrine/annotations": "(^1.4) In order to load mappings from class annotations",
-    "symfony/yaml": "(^3.1) In order to load mappings from YAML files"
+    "symfony/yaml": "In order to load mappings from YAML files (>=6.0)"
   },
   "autoload": {
     "psr-4": {

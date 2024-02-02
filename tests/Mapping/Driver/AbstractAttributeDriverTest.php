@@ -1,12 +1,10 @@
 <?php
 
 /*
- * mapping (https://github.com/juliangut/mapping).
- * Mapping parsing base library.
+ * (c) 2017-2024 Julián Gutiérrez <juliangut@gmail.com>
  *
  * @license BSD-3-Clause
  * @link https://github.com/juliangut/mapping
- * @author Julián Gutiérrez <juliangut@gmail.com>
  */
 
 declare(strict_types=1);

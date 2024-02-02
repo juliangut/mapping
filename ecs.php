@@ -1,12 +1,10 @@
 <?php
 
 /*
- * mapping (https://github.com/juliangut/mapping).
- * Mapping parsing base library.
+ * (c) 2017-2024 Julián Gutiérrez <juliangut@gmail.com>
  *
  * @license BSD-3-Clause
  * @link https://github.com/juliangut/mapping
- * @author Julián Gutiérrez <juliangut@gmail.com>
  */
 
 declare(strict_types=1);
@@ -15,29 +13,35 @@ use Jgut\ECS\Config\ConfigSet80;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
-$header = <<<'HEADER'
-mapping (https://github.com/juliangut/mapping).
-Mapping parsing base library.
+$configSet = (new ConfigSet80())
+    ->setHeader(<<<'HEADER'
+    (c) 2017-{{year}} Julián Gutiérrez <juliangut@gmail.com>
 
-@license BSD-3-Clause
-@link https://github.com/juliangut/mapping
-@author Julián Gutiérrez <juliangut@gmail.com>
-HEADER;
-
-return static function (ECSConfig $ecsConfig) use ($header): void {
-    $ecsConfig->paths([
-        __FILE__,
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
+    @license BSD-3-Clause
+    @link https://github.com/juliangut/mapping
+    HEADER)
+    ->enablePhpUnitRules()
+    ->setAdditionalSkips([
+        NoSilencedErrorsSniff::class . '.Forbidden' => [
+            __DIR__ . '/src/Driver/AbstractAnnotationDriver.php', // Temporal while deprecating annotations
+        ],
     ]);
+$paths = [
+    __FILE__,
+    __DIR__ . '/src',
+    __DIR__ . '/tests',
+];
 
-    (new ConfigSet80())
-        ->setHeader($header)
-        ->enablePhpUnitRules()
-        ->setAdditionalSkips([
-            NoSilencedErrorsSniff::class . '.Forbidden' => [
-                __DIR__ . '/src/Driver/AbstractAnnotationDriver.php', // Temporal while deprecating annotations
-            ],
-        ])
-        ->configure($ecsConfig);
-};
+if (!method_exists(ECSConfig::class, 'configure')) {
+    return static function (ECSConfig $ecsConfig) use ($configSet, $paths): void {
+        $ecsConfig->paths($paths);
+        $ecsConfig->cacheDirectory('.ecs.cache');
+
+        $configSet->configure($ecsConfig);
+    };
+}
+
+return $configSet
+    ->configureBuilder()
+    ->withCache('.ecs.cache')
+    ->withPaths($paths);
