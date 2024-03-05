@@ -35,7 +35,6 @@ $paths = [
 if (!method_exists(ECSConfig::class, 'configure')) {
     return static function (ECSConfig $ecsConfig) use ($configSet, $paths): void {
         $ecsConfig->paths($paths);
-        $ecsConfig->cacheDirectory('.ecs.cache');
 
         $configSet->configure($ecsConfig);
     };
@@ -43,5 +42,4 @@ if (!method_exists(ECSConfig::class, 'configure')) {
 
 return $configSet
     ->configureBuilder()
-    ->withCache('.ecs.cache')
     ->withPaths($paths);
