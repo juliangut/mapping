@@ -20,7 +20,7 @@ use ReflectionClass;
 class AbstractAttributeDriverStub extends AbstractClassDriver
 {
     /**
-     * @return array<ReflectionClass<object>>
+     * @return list<ReflectionClass<object>>
      */
     public function extractMappingClasses(): array
     {

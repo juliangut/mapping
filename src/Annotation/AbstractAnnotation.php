@@ -63,7 +63,7 @@ abstract class AbstractAnnotation
      *
      * @throws AnnotationException
      *
-     * @return array<string>
+     * @return list<string>
      */
     private function getAnnotationProperties(array $parameters, ?string $defaultProperty): array
     {

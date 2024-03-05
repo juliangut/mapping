@@ -91,8 +91,8 @@ abstract class AbstractClassDriver extends AbstractDriver
     /**
      * Traverse token stack in search of next token.
      *
-     * @param array<mixed|array{0: int, 1: string, 2: int}> $tokens
-     * @param array<int>                                    $types
+     * @param list<mixed|array{0: int, 1: string, 2: int}> $tokens
+     * @param list<int>                                    $types
      */
     private function findNextToken(array $tokens, array $types, int $start = 0, ?int $escapePreviousType = null): ?int
     {
@@ -122,7 +122,7 @@ abstract class AbstractClassDriver extends AbstractDriver
     }
 
     /**
-     * @return array<int>
+     * @return list<int>
      */
     private function getValidTokenTypes(): array
     {

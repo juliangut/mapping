@@ -22,7 +22,7 @@ class AbstractClassDriverStub extends AbstractClassDriver
     /**
      * Get mapped metadata.
      *
-     * @return array<MetadataInterface>
+     * @return list<MetadataInterface>
      */
     public function getMetadata(): array
     {

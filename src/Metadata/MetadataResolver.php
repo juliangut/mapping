@@ -104,7 +104,7 @@ class MetadataResolver
      */
     protected function normalizeMappingSources(array $mappingSources): array
     {
-        return array_values(array_map(
+        return array_map(
             static function ($mappingSource): array {
                 if (\is_array($mappingSource) && \array_key_exists('driver', $mappingSource)) {
                     return ['driver' => $mappingSource['driver']];
@@ -120,6 +120,6 @@ class MetadataResolver
                 return $mappingSource;
             },
             $mappingSources,
-        ));
+        );
     }
 }

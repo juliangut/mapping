@@ -35,7 +35,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
         }
 
         if (\array_key_exists('type', $mappingSource) && \array_key_exists('path', $mappingSource)) {
-            return $this->getDriverImplementation($mappingSource['type'], array_values((array) $mappingSource['path']));
+            return $this->getDriverImplementation($mappingSource['type'], (array) $mappingSource['path']);
         }
 
         throw new DriverException(

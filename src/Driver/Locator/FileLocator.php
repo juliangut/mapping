@@ -31,7 +31,7 @@ class FileLocator
     ) {}
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     public function getPaths(): array
     {
@@ -41,7 +41,7 @@ class FileLocator
     /**
      * Get supported file extensions.
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function getExtensions(): array
     {
@@ -51,7 +51,7 @@ class FileLocator
     /**
      * @throws DriverException
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function getMappingFiles(): array
     {
@@ -71,7 +71,7 @@ class FileLocator
     }
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
     protected function getFilesFromDirectory(string $mappingDirectory): array
     {
@@ -81,7 +81,7 @@ class FileLocator
         $recursiveIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($mappingDirectory));
         $regexIterator = new RegexIterator($recursiveIterator, $filePattern, RecursiveRegexIterator::GET_MATCH);
 
-        /** @var array<string> $mappingFile */
+        /** @var list<string> $mappingFile */
         foreach ($regexIterator as $mappingFile) {
             $mappingPaths[] = $mappingFile[0];
         }

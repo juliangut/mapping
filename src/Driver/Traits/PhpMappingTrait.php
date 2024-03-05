@@ -28,6 +28,7 @@ trait PhpMappingTrait
             throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
         }
 
+        /** @var array<int|string, mixed> $mappings */
         return $mappings;
     }
 }

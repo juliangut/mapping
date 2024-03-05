@@ -51,6 +51,7 @@ trait YamlMappingTrait
             throw new DriverException(sprintf('Malformed YAML mapping file "%s".', $mappingFile), 0);
         }
 
+        /** @var array<int|string, mixed> $mappings */
         return $mappings;
     }
 }

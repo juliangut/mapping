@@ -27,7 +27,7 @@ class YamlMappingDriverStub implements DriverInterface
     /**
      * Get supported mapping file extensions.
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function getExtensions(): array
     {

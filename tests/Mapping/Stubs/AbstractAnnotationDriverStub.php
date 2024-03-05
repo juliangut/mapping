@@ -20,7 +20,7 @@ use ReflectionClass;
 class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
 {
     /**
-     * @return array<ReflectionClass<object>>
+     * @return list<ReflectionClass<object>>
      */
     public function extractMappingClasses(): array
     {
@@ -33,7 +33,7 @@ class AbstractAnnotationDriverStub extends AbstractAnnotationDriver
     }
 
     /**
-     * @return array<mixed>
+     * @return list<mixed>
      */
     public function getAnnotations(): array
     {

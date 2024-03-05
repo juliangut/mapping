@@ -18,7 +18,7 @@ abstract class AbstractMappingDriver extends AbstractDriver
     /**
      * @throws DriverException
      *
-     * @return array<mixed>
+     * @return array<int|string, mixed>
      */
     protected function getMappingData(): array
     {
@@ -39,15 +39,15 @@ abstract class AbstractMappingDriver extends AbstractDriver
     /**
      * @throws DriverException
      *
-     * @return array<mixed>
+     * @return array<int|string, mixed>
      */
     abstract protected function loadMappingFile(string $mappingFile): array;
 
     /**
-     * @param array<mixed> $mappingsA
-     * @param array<mixed> $mappingsB
+     * @param array<int|string, mixed|array<int|string, mixed>> $mappingsA
+     * @param array<int|string, mixed|array<int|string, mixed>> $mappingsB
      *
-     * @return array<mixed>
+     * @return array<int|string, mixed>
      */
     final protected function mergeMappings(array $mappingsA, array $mappingsB): array
     {
@@ -56,7 +56,10 @@ abstract class AbstractMappingDriver extends AbstractDriver
                 if (\is_int($key)) {
                     $mappingsA[] = $value;
                 } elseif (\is_array($value) && \is_array($mappingsA[$key])) {
-                    $mappingsA[$key] = $this->mergeMappings($mappingsA[$key], $value);
+                    /** @var array<int|string, mixed> $valueA */
+                    $valueA = $mappingsA[$key];
+                    /** @var array<int|string, mixed> $value */
+                    $mappingsA[$key] = $this->mergeMappings($valueA, $value);
                 } else {
                     $mappingsA[$key] = $value;
                 }

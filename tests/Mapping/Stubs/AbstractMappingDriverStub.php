@@ -23,7 +23,7 @@ class AbstractMappingDriverStub extends AbstractMappingDriver
     use PhpMappingTrait;
 
     /**
-     * @return array<ReflectionClass<object>>
+     * @return list<ReflectionClass<object>>
      */
     public function extractMappingData(): array
     {
