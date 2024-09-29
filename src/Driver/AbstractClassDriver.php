@@ -35,7 +35,7 @@ abstract class AbstractClassDriver extends AbstractDriver
 
         return array_values(array_map(
             static fn(string $sourceClass): ReflectionClass => new ReflectionClass($sourceClass),
-            array_filter(array_unique($mappingClasses)),
+            array_filter(array_unique($mappingClasses), static fn(?string $sourceClass): bool => $sourceClass !== null),
         ));
     }
 
