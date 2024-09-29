@@ -29,7 +29,7 @@ trait YamlMappingTrait
     {
         $fileContents = file_get_contents($mappingFile);
         if ($fileContents === false) {
-            throw new DriverException(sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
+            throw new DriverException(\sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
         }
 
         try {
@@ -40,7 +40,7 @@ trait YamlMappingTrait
             // @codeCoverageIgnoreStart
         } catch (ParseException $exception) {
             throw new DriverException(
-                sprintf('YAML mapping file "%s" parsing error: %s.', $mappingFile, rtrim($exception->getMessage())),
+                \sprintf('YAML mapping file "%s" parsing error: %s.', $mappingFile, rtrim($exception->getMessage())),
                 0,
                 $exception,
             );
@@ -48,7 +48,7 @@ trait YamlMappingTrait
         // @codeCoverageIgnoreEnd
 
         if (!\is_array($mappings)) {
-            throw new DriverException(sprintf('Malformed YAML mapping file "%s".', $mappingFile), 0);
+            throw new DriverException(\sprintf('Malformed YAML mapping file "%s".', $mappingFile), 0);
         }
 
         /** @var array<int|string, mixed> $mappings */

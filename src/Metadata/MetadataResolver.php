@@ -79,7 +79,7 @@ class MetadataResolver
             $mappingSources,
             static function (string $key, array $mappingSource): string {
                 if (\array_key_exists('driver', $mappingSource)) {
-                    return sprintf('%s::driver:%s', $key, $mappingSource['driver']::class);
+                    return \sprintf('%s::driver:%s', $key, $mappingSource['driver']::class);
                 }
 
                 /** @var array{type: string, path: string|list<string>} $mappingSource */
@@ -87,7 +87,7 @@ class MetadataResolver
                     ? implode('', $mappingSource['path'])
                     : $mappingSource['path'];
 
-                return sprintf('%s::%s:%s', $key, $mappingSource['type'], $path);
+                return \sprintf('%s::%s:%s', $key, $mappingSource['type'], $path);
             },
             'mapping',
         );

@@ -24,7 +24,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
             $driver = $mappingSource['driver'];
 
             if (!$driver instanceof DriverInterface) {
-                throw new DriverException(sprintf(
+                throw new DriverException(\sprintf(
                     'Metadata mapping driver should be of the type "%s", "%s" given.',
                     DriverInterface::class,
                     $driver::class,
@@ -57,7 +57,7 @@ abstract class AbstractDriverFactory implements DriverFactoryInterface
             DriverFactoryInterface::DRIVER_YAML => $this->getYamlDriver($paths),
             DriverFactoryInterface::DRIVER_ATTRIBUTE => $this->getAttributeDriver($paths),
             DriverFactoryInterface::DRIVER_ANNOTATION => $this->getAnnotationDriver($paths),
-            default => throw new DriverException(sprintf('"%s" is not a valid metadata mapping driver.', $type)),
+            default => throw new DriverException(\sprintf('"%s" is not a valid metadata mapping driver.', $type)),
         };
     }
 

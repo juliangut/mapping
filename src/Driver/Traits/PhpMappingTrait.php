@@ -25,7 +25,7 @@ trait PhpMappingTrait
         $mappings = require $mappingFile;
 
         if (!\is_array($mappings)) {
-            throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
+            throw new DriverException(\sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
         }
 
         /** @var array<int|string, mixed> $mappings */

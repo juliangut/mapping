@@ -45,7 +45,7 @@ abstract class AbstractAnnotation
                     : 'set' . ucfirst($property);
 
                 if (!method_exists($this, $method)) {
-                    throw new AnnotationException(sprintf('Annotation property setter "%s" does not exist.', $method));
+                    throw new AnnotationException(\sprintf('Annotation property setter "%s" does not exist.', $method));
                 }
 
                 /** @var callable $callback */
@@ -75,7 +75,7 @@ abstract class AbstractAnnotation
         if ($defaultProperty !== null) {
             if (!\in_array($defaultProperty, $properties, true)) {
                 throw new AnnotationException(
-                    sprintf('Default annotation property "%s" does not exist.', $defaultProperty),
+                    \sprintf('Default annotation property "%s" does not exist.', $defaultProperty),
                 );
             }
 
@@ -85,7 +85,7 @@ abstract class AbstractAnnotation
         $unknownProperties = array_diff(array_keys($parameters), $properties);
         if (\count($unknownProperties) > 0) {
             throw new AnnotationException(
-                sprintf(
+                \sprintf(
                     'The following annotation properties are not recognized: %s.',
                     implode(', ', $unknownProperties),
                 ),

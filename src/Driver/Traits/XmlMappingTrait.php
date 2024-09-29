@@ -54,7 +54,7 @@ trait XmlMappingTrait
     {
         $fileContents = file_get_contents($mappingFile);
         if ($fileContents === false) {
-            throw new DriverException(sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
+            throw new DriverException(\sprintf('XML mapping file "%s" read failed.', $mappingFile), 0);
         }
 
         $useInternalErrors = libxml_use_internal_errors(true);
@@ -74,14 +74,14 @@ trait XmlMappingTrait
             libxml_clear_errors();
 
             throw new DriverException(
-                sprintf('XML mapping file "%s" parsing error: %s.', $mappingFile, rtrim(implode(',', $errors), '.')),
+                \sprintf('XML mapping file "%s" parsing error: %s.', $mappingFile, rtrim(implode(',', $errors), '.')),
             );
         }
 
         $mappings = $this->parseSimpleXml($mappings);
 
         if (!\is_array($mappings)) {
-            throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
+            throw new DriverException(\sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
         }
 
         /** @var array<int|string, mixed> $mappings */

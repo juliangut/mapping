@@ -25,7 +25,7 @@ trait JsonMappingTrait
     {
         $fileContents = file_get_contents($mappingFile);
         if ($fileContents === false) {
-            throw new DriverException(sprintf('JSON mapping file "%s" read failed.', $mappingFile), 0);
+            throw new DriverException(\sprintf('JSON mapping file "%s" read failed.', $mappingFile), 0);
         }
 
         try {
@@ -37,14 +37,14 @@ trait JsonMappingTrait
             );
         } catch (JsonException $exception) {
             throw new DriverException(
-                sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, $exception->getMessage()),
+                \sprintf('JSON mapping file "%s" parsing error: %s.', $mappingFile, $exception->getMessage()),
                 0,
                 $exception,
             );
         }
 
         if (!\is_array($mappings)) {
-            throw new DriverException(sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
+            throw new DriverException(\sprintf('Malformed XML mapping file "%s".', $mappingFile), 0);
         }
 
         /** @var array<int|string, mixed> $mappings */
