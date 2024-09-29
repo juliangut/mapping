@@ -37,7 +37,7 @@
     "ext-simplexml": "*",
     "doctrine/annotations": "^2.0",
     "infection/infection": "~0.25|~0.27",
-    "juliangut/easy-coding-standard-config": "^1.15",
+    "juliangut/easy-coding-standard-config": "^1.19",
     "juliangut/phpstan-config": "^1.2",
     "overtrue/phplint": "^9.0",
     "phpcompatibility/php-compatibility": "^9.3",
