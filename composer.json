@@ -42,7 +42,7 @@
     "overtrue/phplint": "^9.0",
     "phpcompatibility/php-compatibility": "^9.3",
     "phpmd/phpmd": "^2.14",
-    "phpunit/phpunit": "^9.6|^10.4",
+    "phpunit/phpunit": "^11.5.0",
     "povils/phpmnd": "^3.2",
     "roave/security-advisories": "dev-master",
     "symfony/yaml": "^6.0|^7.0"
